@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 
-class BasicCleaner:
+class BasicProcessor:
     def smart_remove_unnamed(
         df: pd.DataFrame,
         empty_threshold: float = 0.95,
@@ -57,6 +57,6 @@ class BasicCleaner:
 if __name__ == "__main__":
     path = r"D:\Project\AutoDML\temp\Salary_Dataset.csv"
     df = pd.read_csv(path)
-    df, dropped = BasicCleaner.smart_remove_unnamed(df)
+    df, dropped = BasicProcessor.smart_remove_unnamed(df)
     print(df.head())
     print(dropped)

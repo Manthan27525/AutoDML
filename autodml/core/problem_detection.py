@@ -21,25 +21,27 @@ class ProblemDetector:
         unique_count = target.nunique()
         total_count = len(target)
 
+        s = ""
+
         if (
             target.dtype == "object"
             or target.dtype.name == "category"
             or target.dtype == "bool"
         ):
-            return "Classification"
+            s = "Classification"
 
         if np.issubdtype(target.dtype, np.floating):
             if unique_count <= 10:
                 return "Classification (Low cardinality Float)"
-            return "Regression"
+            s = "Regression"
 
         if np.issubdtype(target.dtype, np.integer):
             if unique_count <= 20 or (unique_count / total_count) < threshold:
-                return "Classification"
+                s = "Classification"
             else:
-                return "Regression"
+                s = "Regression"
 
-        return "Unknown"
+        return s
 
 
 if __name__ == "__main__":

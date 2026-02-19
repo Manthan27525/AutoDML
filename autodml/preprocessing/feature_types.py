@@ -5,20 +5,15 @@ import numpy as np
 
 
 class FeatureDetector:
+    @staticmethod
     def auto_detect_feature_types(df, cat_unique_ratio=0.05, text_avg_len=30):
         """
         Automatically detect feature types: numeric, categorical, datetime, text
         """
 
-        feature_types = {
-            "numeric": [],
-            "categorical": [],
-            "datetime": [],
-            "text": [],
-            "unknown": [],
-        }
+        feature_types = {"numeric": [], "categorical": [], "datetime": []}
 
-        n_rows = len(df)
+        # n_rows = df.shape[0]
 
         for col in df.columns:
             series = df[col]

@@ -2,7 +2,7 @@ import pandas as pd
 
 
 class MissingAnalyzer:
-    @staticmethod  # Added decorator since 'self' isn't used
+    @staticmethod
     def analyze(df):
         analysis = {}
         total_rows = len(df)
@@ -16,12 +16,22 @@ class MissingAnalyzer:
             }
         return analysis
 
+    def missing_cols(df):
+        a = MissingAnalyzer.analyze(df)
+        cols = []
+        for i in a.keys():
+            if a[i]["missing count"] == 0:
+                continue
+            else:
+                cols.append(i)
+        return cols
+
 
 if __name__ == "__main__":
     path = r"D:\Project\AutoDML\temp\Student_Performance.csv"
     try:
         df = pd.read_csv(path)
-        analysis = MissingAnalyzer.analyze(df)
-        print(analysis)
+        cols = MissingAnalyzer.missing_cols(df)
+        print(cols)
     except FileNotFoundError:
         print("File not found. Please check your path.")
