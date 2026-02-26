@@ -1,0 +1,256 @@
+2026-02-26 13:30:03,613 - __main__ - INFO - Starting data validation
+2026-02-26 13:30:03,613 - __main__ - INFO - Validation Completed
+2026-02-26 13:30:03,613 - __main__ - INFO - Starting Unwanted Column Removal
+2026-02-26 13:30:03,613 - __main__ - INFO - Unwanted column removal completed.
+2026-02-26 13:30:03,613 - __main__ - INFO - Starting Automatic Feature Type Detection
+2026-02-26 13:30:03,639 - __main__ - ERROR - Error while Feature Type Detection
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\preprocessing.py", line 156, in detect_feature_types
+    pd.to_datetime(series, errors="raise")
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 1068, in to_datetime
+    cache_array = _maybe_cache(arg, format, cache, convert_listlike)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 249, in _maybe_cache
+    cache_dates = convert_listlike(unique_dates, format)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 437, in _convert_listlike_datetimes
+    result, tz_parsed = objects_to_datetime64(
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\arrays\datetimes.py", line 2415, in objects_to_datetime64
+    result, tz_parsed = tslib.array_to_datetime(
+  File "pandas/_libs/tslib.pyx", line 412, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslib.pyx", line 596, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslib.pyx", line 553, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslibs/conversion.pyx", line 641, in pandas._libs.tslibs.conversion.convert_str_to_tsobject
+  File "pandas/_libs/tslibs/parsing.pyx", line 336, in pandas._libs.tslibs.parsing.parse_datetime_string
+  File "pandas/_libs/tslibs/parsing.pyx", line 666, in pandas._libs.tslibs.parsing.dateutil_parse
+pandas._libs.tslibs.parsing.DateParseError: Unknown datetime string format, unable to parse: Yes, at position 0
+2026-02-26 13:30:03,714 - __main__ - ERROR - Error during feature type detection.
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\preprocessing.py", line 156, in detect_feature_types
+    pd.to_datetime(series, errors="raise")
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 1068, in to_datetime
+    cache_array = _maybe_cache(arg, format, cache, convert_listlike)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 249, in _maybe_cache
+    cache_dates = convert_listlike(unique_dates, format)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 437, in _convert_listlike_datetimes
+    result, tz_parsed = objects_to_datetime64(
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\arrays\datetimes.py", line 2415, in objects_to_datetime64
+    result, tz_parsed = tslib.array_to_datetime(
+  File "pandas/_libs/tslib.pyx", line 412, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslib.pyx", line 596, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslib.pyx", line 553, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslibs/conversion.pyx", line 641, in pandas._libs.tslibs.conversion.convert_str_to_tsobject
+  File "pandas/_libs/tslibs/parsing.pyx", line 336, in pandas._libs.tslibs.parsing.parse_datetime_string
+  File "pandas/_libs/tslibs/parsing.pyx", line 666, in pandas._libs.tslibs.parsing.dateutil_parse
+pandas._libs.tslibs.parsing.DateParseError: Unknown datetime string format, unable to parse: Yes, at position 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\preprocessing.py", line 161, in detect_feature_types
+    raise PreprocessingError(
+utils.exception.PreprocessingError: [AutoDML Error] [PREPROCESSING_ERROR] Failed during Feature Type detection | Details: Unknown datetime string format, unable to parse: Yes, at position 0
+2026-02-26 13:38:46,225 - __main__ - INFO - Starting data validation
+2026-02-26 13:38:46,225 - __main__ - INFO - Validation Completed
+2026-02-26 13:38:46,225 - __main__ - INFO - Starting Unwanted Column Removal
+2026-02-26 13:38:46,245 - __main__ - INFO - Unwanted column removal completed.
+2026-02-26 13:38:46,245 - __main__ - INFO - Starting Automatic Feature Type Detection
+2026-02-26 13:38:46,255 - __main__ - ERROR - Error while Feature Type Detection
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\preprocessing.py", line 167, in detect_feature_types
+    pd.to_datetime(series, errors="raise")
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 1068, in to_datetime
+    cache_array = _maybe_cache(arg, format, cache, convert_listlike)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 249, in _maybe_cache
+    cache_dates = convert_listlike(unique_dates, format)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 437, in _convert_listlike_datetimes
+    result, tz_parsed = objects_to_datetime64(
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\arrays\datetimes.py", line 2415, in objects_to_datetime64
+    result, tz_parsed = tslib.array_to_datetime(
+  File "pandas/_libs/tslib.pyx", line 412, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslib.pyx", line 596, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslib.pyx", line 553, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslibs/conversion.pyx", line 641, in pandas._libs.tslibs.conversion.convert_str_to_tsobject
+  File "pandas/_libs/tslibs/parsing.pyx", line 336, in pandas._libs.tslibs.parsing.parse_datetime_string
+  File "pandas/_libs/tslibs/parsing.pyx", line 666, in pandas._libs.tslibs.parsing.dateutil_parse
+pandas._libs.tslibs.parsing.DateParseError: Unknown datetime string format, unable to parse: Yes, at position 0
+2026-02-26 13:38:46,284 - __main__ - ERROR - Error during feature type detection.
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\preprocessing.py", line 167, in detect_feature_types
+    pd.to_datetime(series, errors="raise")
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 1068, in to_datetime
+    cache_array = _maybe_cache(arg, format, cache, convert_listlike)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 249, in _maybe_cache
+    cache_dates = convert_listlike(unique_dates, format)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 437, in _convert_listlike_datetimes
+    result, tz_parsed = objects_to_datetime64(
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\arrays\datetimes.py", line 2415, in objects_to_datetime64
+    result, tz_parsed = tslib.array_to_datetime(
+  File "pandas/_libs/tslib.pyx", line 412, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslib.pyx", line 596, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslib.pyx", line 553, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslibs/conversion.pyx", line 641, in pandas._libs.tslibs.conversion.convert_str_to_tsobject
+  File "pandas/_libs/tslibs/parsing.pyx", line 336, in pandas._libs.tslibs.parsing.parse_datetime_string
+  File "pandas/_libs/tslibs/parsing.pyx", line 666, in pandas._libs.tslibs.parsing.dateutil_parse
+pandas._libs.tslibs.parsing.DateParseError: Unknown datetime string format, unable to parse: Yes, at position 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\preprocessing.py", line 172, in detect_feature_types
+    raise PreprocessingError(
+utils.exception.PreprocessingError: [AutoDML Error] [PREPROCESSING_ERROR] Failed during Feature Type detection | Details: Unknown datetime string format, unable to parse: Yes, at position 0
+2026-02-26 13:47:44,757 - __main__ - INFO - Starting data validation
+2026-02-26 13:47:44,761 - __main__ - INFO - Validation Completed
+2026-02-26 13:47:44,761 - __main__ - INFO - Starting Unwanted Column Removal
+2026-02-26 13:47:44,761 - __main__ - INFO - Unwanted column removal completed.
+2026-02-26 13:47:44,761 - __main__ - INFO - Starting Automatic Feature Type Detection
+2026-02-26 13:47:44,777 - __main__ - ERROR - Error during feature type detection.
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\preprocessing.py", line 170, in detect_feature_types
+    raise e
+  File "D:\Project\AutoDML\autodml\preprocessing.py", line 166, in detect_feature_types
+    pd.to_datetime(non_null, errors="raise")
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 1068, in to_datetime
+    cache_array = _maybe_cache(arg, format, cache, convert_listlike)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 249, in _maybe_cache
+    cache_dates = convert_listlike(unique_dates, format)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 437, in _convert_listlike_datetimes
+    result, tz_parsed = objects_to_datetime64(
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\arrays\datetimes.py", line 2415, in objects_to_datetime64
+    result, tz_parsed = tslib.array_to_datetime(
+  File "pandas/_libs/tslib.pyx", line 412, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslib.pyx", line 596, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslib.pyx", line 553, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslibs/conversion.pyx", line 641, in pandas._libs.tslibs.conversion.convert_str_to_tsobject
+  File "pandas/_libs/tslibs/parsing.pyx", line 336, in pandas._libs.tslibs.parsing.parse_datetime_string
+  File "pandas/_libs/tslibs/parsing.pyx", line 666, in pandas._libs.tslibs.parsing.dateutil_parse
+pandas._libs.tslibs.parsing.DateParseError: Unknown datetime string format, unable to parse: Yes, at position 0
+2026-02-26 13:47:56,389 - __main__ - INFO - Starting data validation
+2026-02-26 13:47:56,389 - __main__ - INFO - Validation Completed
+2026-02-26 13:47:56,389 - __main__ - INFO - Starting Unwanted Column Removal
+2026-02-26 13:47:56,404 - __main__ - INFO - Unwanted column removal completed.
+2026-02-26 13:47:56,404 - __main__ - INFO - Starting Automatic Feature Type Detection
+2026-02-26 13:47:56,417 - __main__ - ERROR - Error during feature type detection.
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\preprocessing.py", line 170, in detect_feature_types
+    raise e
+  File "D:\Project\AutoDML\autodml\preprocessing.py", line 166, in detect_feature_types
+    pd.to_datetime(non_null, errors="raise")
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 1068, in to_datetime
+    cache_array = _maybe_cache(arg, format, cache, convert_listlike)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 249, in _maybe_cache
+    cache_dates = convert_listlike(unique_dates, format)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 437, in _convert_listlike_datetimes
+    result, tz_parsed = objects_to_datetime64(
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\arrays\datetimes.py", line 2415, in objects_to_datetime64
+    result, tz_parsed = tslib.array_to_datetime(
+  File "pandas/_libs/tslib.pyx", line 412, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslib.pyx", line 596, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslib.pyx", line 553, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslibs/conversion.pyx", line 641, in pandas._libs.tslibs.conversion.convert_str_to_tsobject
+  File "pandas/_libs/tslibs/parsing.pyx", line 336, in pandas._libs.tslibs.parsing.parse_datetime_string
+  File "pandas/_libs/tslibs/parsing.pyx", line 666, in pandas._libs.tslibs.parsing.dateutil_parse
+pandas._libs.tslibs.parsing.DateParseError: Unknown datetime string format, unable to parse: Yes, at position 0
+2026-02-26 13:48:33,210 - __main__ - INFO - Starting data validation
+2026-02-26 13:48:33,210 - __main__ - INFO - Validation Completed
+2026-02-26 13:48:33,210 - __main__ - INFO - Starting Unwanted Column Removal
+2026-02-26 13:48:33,226 - __main__ - INFO - Unwanted column removal completed.
+2026-02-26 13:48:33,226 - __main__ - INFO - Starting Automatic Feature Type Detection
+2026-02-26 13:48:33,240 - __main__ - ERROR - Error during feature type detection.
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\preprocessing.py", line 170, in detect_feature_types
+    raise e
+  File "D:\Project\AutoDML\autodml\preprocessing.py", line 166, in detect_feature_types
+    pd.to_datetime(non_null, errors="raise")
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 1068, in to_datetime
+    cache_array = _maybe_cache(arg, format, cache, convert_listlike)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 249, in _maybe_cache
+    cache_dates = convert_listlike(unique_dates, format)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\tools\datetimes.py", line 437, in _convert_listlike_datetimes
+    result, tz_parsed = objects_to_datetime64(
+  File "d:\Project\AutoDML\.venv\lib\site-packages\pandas\core\arrays\datetimes.py", line 2415, in objects_to_datetime64
+    result, tz_parsed = tslib.array_to_datetime(
+  File "pandas/_libs/tslib.pyx", line 412, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslib.pyx", line 596, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslib.pyx", line 553, in pandas._libs.tslib.array_to_datetime
+  File "pandas/_libs/tslibs/conversion.pyx", line 641, in pandas._libs.tslibs.conversion.convert_str_to_tsobject
+  File "pandas/_libs/tslibs/parsing.pyx", line 336, in pandas._libs.tslibs.parsing.parse_datetime_string
+  File "pandas/_libs/tslibs/parsing.pyx", line 666, in pandas._libs.tslibs.parsing.dateutil_parse
+pandas._libs.tslibs.parsing.DateParseError: Unknown datetime string format, unable to parse: Yes, at position 0
+2026-02-26 13:51:54,586 - __main__ - INFO - Starting data validation
+2026-02-26 13:51:54,586 - __main__ - INFO - Validation Completed
+2026-02-26 13:51:54,586 - __main__ - INFO - Starting Unwanted Column Removal
+2026-02-26 13:51:54,606 - __main__ - INFO - Unwanted column removal completed.
+2026-02-26 13:51:54,606 - __main__ - INFO - Starting Automatic Feature Type Detection
+2026-02-26 13:51:54,626 - __main__ - INFO - Starting Missing Values Handling
+2026-02-26 13:51:54,626 - __main__ - INFO - Generating Missing Values Report
+2026-02-26 13:51:54,628 - __main__ - ERROR - Error during Missing Value Handling
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\preprocessing.py", line 251, in missing_value_handler
+    for i in self.feature_types["categorical"]:
+TypeError: 'NoneType' object is not subscriptable
+2026-02-26 13:53:31,296 - __main__ - INFO - Starting data validation
+2026-02-26 13:53:31,296 - __main__ - INFO - Validation Completed
+2026-02-26 13:53:31,296 - __main__ - INFO - Starting Unwanted Column Removal
+2026-02-26 13:53:31,296 - __main__ - INFO - Unwanted column removal completed.
+2026-02-26 13:53:31,296 - __main__ - INFO - Starting Automatic Feature Type Detection
+2026-02-26 13:53:31,324 - __main__ - INFO - Starting Missing Values Handling
+2026-02-26 13:53:31,324 - __main__ - INFO - Generating Missing Values Report
+2026-02-26 13:53:31,330 - __main__ - INFO - Starting Skewness Handling
+2026-02-26 13:53:31,332 - __main__ - ERROR - Error during Skewness Handling
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\preprocessing.py", line 304, in skewness_handling
+    self.df[i] = transformer.fit_transform(self.df[i])
+  File "d:\Project\AutoDML\.venv\lib\site-packages\sklearn\utils\_set_output.py", line 316, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\sklearn\base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\sklearn\preprocessing\_data.py", line 3337, in fit_transform
+    return self._fit(X, y, force_transform=True)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\sklearn\preprocessing\_data.py", line 3340, in _fit
+    X = self._check_input(X, in_fit=True, check_positive=True)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\sklearn\preprocessing\_data.py", line 3567, in _check_input
+    X = validate_data(
+  File "d:\Project\AutoDML\.venv\lib\site-packages\sklearn\utils\validation.py", line 2954, in validate_data
+    out = check_array(X, input_name="X", **check_params)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\sklearn\utils\validation.py", line 1091, in check_array
+    raise ValueError(msg)
+ValueError: Expected a 2-dimensional container but got <class 'pandas.core.series.Series'> instead. Pass a DataFrame containing a single row (i.e. single sample) or a single column (i.e. single feature) instead.
+2026-02-26 13:55:02,967 - __main__ - INFO - Starting data validation
+2026-02-26 13:55:02,967 - __main__ - INFO - Validation Completed
+2026-02-26 13:55:02,967 - __main__ - INFO - Starting Unwanted Column Removal
+2026-02-26 13:55:02,985 - __main__ - INFO - Unwanted column removal completed.
+2026-02-26 13:55:02,985 - __main__ - INFO - Starting Automatic Feature Type Detection
+2026-02-26 13:55:02,998 - __main__ - INFO - Starting Missing Values Handling
+2026-02-26 13:55:02,998 - __main__ - INFO - Generating Missing Values Report
+2026-02-26 13:55:03,004 - __main__ - INFO - Starting Skewness Handling
+2026-02-26 13:55:03,153 - __main__ - INFO - Skewness Handling Completed
+2026-02-26 13:55:03,153 - __main__ - INFO - Starting Duplicate Values Handling
+2026-02-26 13:55:03,153 - __main__ - INFO - 127 Duplicate Values Found in the Dataset
+2026-02-26 13:55:03,162 - __main__ - INFO - Succesfully removed Duplicated
+2026-02-26 14:05:30,312 - __main__ - INFO - Starting data validation
+2026-02-26 14:05:30,312 - __main__ - INFO - Validation Completed
+2026-02-26 14:05:30,312 - __main__ - INFO - Starting Unwanted Column Removal
+2026-02-26 14:05:30,312 - __main__ - INFO - Unwanted column removal completed.
+2026-02-26 14:05:30,312 - __main__ - INFO - Starting Automatic Feature Type Detection
+2026-02-26 14:05:30,339 - __main__ - INFO - Starting Missing Values Handling
+2026-02-26 14:05:30,339 - __main__ - INFO - Generating Missing Values Report
+2026-02-26 14:05:30,345 - __main__ - INFO - Starting Skewness Handling
+2026-02-26 14:05:30,371 - __main__ - INFO - Skewness Handling Completed
+2026-02-26 14:05:30,371 - __main__ - INFO - Starting Duplicate Values Handling
+2026-02-26 14:05:30,379 - __main__ - INFO - 127 Duplicate Values Found in the Dataset
+2026-02-26 14:05:30,379 - __main__ - INFO - Succesfully removed Duplicated
+2026-02-26 14:06:49,007 - __main__ - INFO - Starting data validation
+2026-02-26 14:06:49,007 - __main__ - INFO - Validation Completed
+2026-02-26 14:06:49,007 - __main__ - INFO - Starting Unwanted Column Removal
+2026-02-26 14:06:49,007 - __main__ - INFO - Unwanted column removal completed.
+2026-02-26 14:06:49,007 - __main__ - INFO - Starting Automatic Feature Type Detection
+2026-02-26 14:06:49,037 - __main__ - INFO - Starting Missing Values Handling
+2026-02-26 14:06:49,038 - __main__ - INFO - Generating Missing Values Report
+2026-02-26 14:06:49,041 - __main__ - INFO - Starting Skewness Handling
+2026-02-26 14:06:49,072 - __main__ - INFO - Skewness Handling Completed
+2026-02-26 14:06:49,072 - __main__ - INFO - Starting Duplicate Values Handling
+2026-02-26 14:06:49,076 - __main__ - INFO - 127 Duplicate Values Found in the Dataset
+2026-02-26 14:06:49,080 - __main__ - INFO - Succesfully removed Duplicated
+2026-02-26 14:06:49,080 - __main__ - INFO - Starting Ouliers Handling
+2026-02-26 14:06:49,084 - __main__ - INFO - Completed Outlier Handling
+2026-02-26 14:06:49,088 - __main__ - INFO - Completed Outlier Handling
