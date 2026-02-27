@@ -6,3 +6,4 @@ seaborn
 scipy
 torch
 optuna
+feature-engine
