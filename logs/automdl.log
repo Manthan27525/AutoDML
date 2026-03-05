@@ -254,3 +254,39 @@ ValueError: Expected a 2-dimensional container but got <class 'pandas.core.serie
 2026-02-26 14:06:49,080 - __main__ - INFO - Starting Ouliers Handling
 2026-02-26 14:06:49,084 - __main__ - INFO - Completed Outlier Handling
 2026-02-26 14:06:49,088 - __main__ - INFO - Completed Outlier Handling
+2026-03-05 13:43:31,519 - __main__ - INFO - Starting model evaluation...
+2026-03-05 13:43:31,645 - __main__ - ERROR - Model evaluation failed
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\evaluation.py", line 46, in evaluate
+    model = self.get_model()
+  File "D:\Project\AutoDML\autodml\evaluation.py", line 34, in get_model
+    model = lt[self.model_name]
+KeyError: 'BC'
+2026-03-05 13:46:12,482 - __main__ - INFO - Starting model evaluation...
+2026-03-05 13:46:12,482 - __main__ - ERROR - Model evaluation failed
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\evaluation.py", line 46, in evaluate
+    model = self.get_model()
+  File "D:\Project\AutoDML\autodml\evaluation.py", line 34, in get_model
+    model = lt[self.task_type][self.model_name]
+KeyError: 'Classification'
+2026-03-05 13:49:52,225 - __main__ - INFO - Starting model evaluation...
+2026-03-05 13:49:52,225 - __main__ - ERROR - Model evaluation failed
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\evaluation.py", line 46, in evaluate
+    model = self.get_model()
+  File "D:\Project\AutoDML\autodml\evaluation.py", line 38, in get_model
+    model = model(**param)
+TypeError: 'BaggingClassifier' object is not callable
+2026-03-05 13:56:18,087 - __main__ - INFO - Starting model evaluation...
+2026-03-05 13:56:18,087 - __main__ - ERROR - Model evaluation failed
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\evaluation.py", line 44, in evaluate
+    model = self.get_model()
+  File "D:\Project\AutoDML\autodml\evaluation.py", line 36, in get_model
+    model = self.congig["Model"]
+AttributeError: 'Evaluator' object has no attribute 'congig'
+2026-03-05 13:57:04,868 - __main__ - INFO - Starting model evaluation...
+2026-03-05 13:57:04,900 - __main__ - INFO - Evaluation Results: {'Accuracy': 1.0, 'Precision': 1.0, 'Recall': 1.0, 'F1': 1.0}
+2026-03-05 13:58:30,278 - __main__ - INFO - Starting model evaluation...
+2026-03-05 13:58:30,322 - __main__ - INFO - Evaluation Results: {'Accuracy': 0.9926153846153846, 'Precision': 0.9927201309328968, 'Recall': 0.9926153846153846, 'F1': 0.9926135367816896}

@@ -499,7 +499,7 @@ class Preprocessor:
 
 if __name__ == "__main__":
     df = pd.read_csv("temp/amazon_sales_dataset.csv")
-    target = "total_revenue"
+    target = "Close"
     prep = Preprocessor(df, target_column=target)
     x_train, x_test, y_train, y_test = prep.process()
     model = LinearRegression()
