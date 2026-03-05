@@ -11,6 +11,7 @@ from sklearn.metrics import (
 )
 
 from autodml.preprocessing import Preprocessor
+from autodml.optimization import ModelOptimizer
 from autodml.modeling import ModelTrainer
 from utils.logger import get_logger
 from utils.exception import AutoDMLError
@@ -22,18 +23,21 @@ logger = get_logger(__name__)
 
 
 class Evaluator:
-    def __init__(self, task_type, model, name, x_test, y_test):
+    def __init__(self, task_type, model, param, x_train, y_train, x_test, y_test):
         self.task_type = task_type
-        self.config = model
-        self.model_name = name
+        self.model_name = model
+        self.param = param
+        self.x_train = x_train
+        self.y_train = y_train
         self.x_test = x_test
         self.y_test = y_test
 
     def get_model(self):
         lt = Models.get_models()
-        model = lt[self.task_type][self.model_name]
+        model_class = lt[self.task_type][self.model_name]
 
-        model = self.config["Model"]
+        model = model_class(**self.param)
+        model.fit(x_train, y_train)
 
         return model
 
@@ -76,15 +80,34 @@ class Evaluator:
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("temp/coke.csv")
-    target = "Close"
+    df = pd.read_csv("temp/mushrooms.csv")
+    target = "class"
     prep = Preprocessor(df=df, target_column=target, scale_features=True)
     x_train, x_test, y_train, y_test = prep.process()
     problem = prep.problem_type
-    trainer = ModelTrainer(x_train=x_train, y_train=y_train, problem_type=problem)
-    model, name = trainer.get_model()
+    trainer = ModelTrainer(
+        x_train=x_train,
+        x_test=x_test,
+        y_test=y_test,
+        y_train=y_train,
+        problem_type=problem,
+    )
+    model = trainer.get_model()
+    opt = ModelOptimizer(
+        model_name=model, task_type=problem, x_train=x_train, y_train=y_train
+    )
+    score, param = opt.optimize()
+
+    print(score)
+
     eva = Evaluator(
-        task_type=problem, model=model, name=name, x_test=x_test, y_test=y_test
+        task_type=problem,
+        model=model,
+        param=param,
+        x_train=x_train,
+        y_train=y_train,
+        x_test=x_test,
+        y_test=y_test,
     )
     results = eva.evaluate()
 

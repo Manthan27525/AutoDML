@@ -290,3 +290,25 @@ AttributeError: 'Evaluator' object has no attribute 'congig'
 2026-03-05 13:57:04,900 - __main__ - INFO - Evaluation Results: {'Accuracy': 1.0, 'Precision': 1.0, 'Recall': 1.0, 'F1': 1.0}
 2026-03-05 13:58:30,278 - __main__ - INFO - Starting model evaluation...
 2026-03-05 13:58:30,322 - __main__ - INFO - Evaluation Results: {'Accuracy': 0.9926153846153846, 'Precision': 0.9927201309328968, 'Recall': 0.9926153846153846, 'F1': 0.9926135367816896}
+2026-03-05 16:10:49,509 - __main__ - INFO - Starting model evaluation...
+2026-03-05 16:10:49,509 - __main__ - ERROR - Model evaluation failed
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\evaluation.py", line 45, in evaluate
+    model = self.get_model()
+  File "D:\Project\AutoDML\autodml\evaluation.py", line 37, in get_model
+    model = model_class(**self.params)
+AttributeError: 'Evaluator' object has no attribute 'params'
+2026-03-05 16:14:16,683 - __main__ - INFO - Starting model evaluation...
+2026-03-05 16:14:16,683 - __main__ - ERROR - Model evaluation failed
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\evaluation.py", line 47, in evaluate
+    predictions = model.predict(self.x_test)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\sklearn\ensemble\_forest.py", line 903, in predict
+    proba = self.predict_proba(X)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\sklearn\ensemble\_forest.py", line 943, in predict_proba
+    check_is_fitted(self)
+  File "d:\Project\AutoDML\.venv\lib\site-packages\sklearn\utils\validation.py", line 1754, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This RandomForestClassifier instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+2026-03-05 16:25:21,914 - __main__ - INFO - Starting model evaluation...
+2026-03-05 16:25:22,967 - __main__ - INFO - Evaluation Results: {'Accuracy': 0.9956923076923077, 'Precision': 0.9957291255752795, 'Recall': 0.9956923076923077, 'F1': 0.9956922391761256}
