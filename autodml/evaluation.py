@@ -14,10 +14,11 @@ from autodml.preprocessing import Preprocessor
 from autodml.optimization import ModelOptimizer
 from autodml.modeling import ModelTrainer
 from utils.logger import get_logger
-from utils.exception import AutoDMLError
+from utils.exception import EvaluationError, AutoDMLError
 import pandas as pd
 
 from config.models import Models
+
 
 logger = get_logger(__name__)
 
@@ -33,18 +34,24 @@ class Evaluator:
         self.y_test = y_test
 
     def get_model(self):
-        lt = Models.get_models()
-        model_class = lt[self.task_type][self.model_name]
+        try:
+            lt = Models.get_models()
+            model_class = lt[self.task_type][self.model_name]
 
-        model = model_class(**self.param)
-        model.fit(x_train, y_train)
+            model = model_class(**self.param)
+            model.fit(self.x_train, self.y_train)
 
-        return model
+            return model
+        except Exception as e:
+            logger.error(str(e))
+            raise AutoDMLError(
+                message="Error Caused While Loading Model for Evaluation",
+                details=str(e),
+            )
 
     def evaluate(self):
+        logger.info("Initiating Model Evaluation.")
         try:
-            logger.info("Starting model evaluation...")
-
             model = self.get_model()
 
             predictions = model.predict(self.x_test)
@@ -75,13 +82,12 @@ class Evaluator:
 
         except Exception as e:
             logger.exception("Model evaluation failed")
-
-            raise AutoDMLError(message="Evaluation step failed", details=str(e))
+            raise EvaluationError(message="Evaluation step failed", details=str(e))
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("temp/mushrooms.csv")
-    target = "class"
+    df = pd.read_csv("temp/olympics.csv")
+    target = "medal"
     prep = Preprocessor(df=df, target_column=target, scale_features=True)
     x_train, x_test, y_train, y_test = prep.process()
     problem = prep.problem_type
@@ -92,6 +98,9 @@ if __name__ == "__main__":
         y_train=y_train,
         problem_type=problem,
     )
+
+    print(prep.feature_types)
+
     model = trainer.get_model()
     opt = ModelOptimizer(
         model_name=model, task_type=problem, x_train=x_train, y_train=y_train

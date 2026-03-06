@@ -1,27 +1,74 @@
-# automdl/pipeline.py
+from autodml.preprocessing import Preprocessor
+from autodml.modeling import ModelTrainer
+from autodml.evaluation import Evaluator
+from autodml.optimization import ModelOptimizer
 
-from automdl.preprocessing import Preprocessor
-from automdl.modeling import ModelTrainer
-from automdl.evaluation import Evaluator
-from automdl.optimization import Optimizer
+from utils.logger import get_logger
+from utils.exception import AutoDMLError
+
+from config.models import Models
+
+logger = get_logger(__name__)
 
 
 class AutoDMLPipeline:
-    def __init__(self, task_type="regression"):
-        self.task_type = task_type
+    def __init__(self, target, df):
+        self.df = df
+        self.target = target
 
-        self.preprocessor = Preprocessor()
-        self.trainer = ModelTrainer(task_type=self.task_type)
-        self.evaluator = Evaluator(task_type=self.task_type)
-        self.optimizer = Optimizer(task_type=self.task_type)
+    def run(self):
+        try:
+            logger.info("Running AUTODML Pipeline.")
+            preprocessor = Preprocessor(df=self.df, target_column=self.target)
+            x_train, x_test, y_train, y_test = preprocessor.process()
+            problem = preprocessor.problem_type
+            trainer = ModelTrainer(
+                x_train=x_train,
+                x_test=x_test,
+                y_test=y_test,
+                y_train=y_train,
+                problem_type=problem,
+            )
+            model = trainer.get_model()
+            optimizer = ModelOptimizer(
+                model_name=model, task_type=problem, x_train=x_train, y_train=y_train
+            )
+            _, param = optimizer.optimize()
+            evaluator = Evaluator(
+                task_type=problem,
+                model=model,
+                param=param,
+                x_train=x_train,
+                y_train=y_train,
+                x_test=x_test,
+                y_test=y_test,
+            )
+            results = evaluator.evaluate()
 
-    def run(self, df, target_column):
-        print("Starting AutoDML Pipeline...")
+            models = Models.get_models()
+            best_model = models[preprocessor.problem_type][model]
+            best_params = optimizer.best_params
 
-        X_train, X_test, y_train, y_test = self.preprocessor.process(df, target_column)
-        best_model = self.optimizer.optimize(X_train, y_train)
+            print(results)
+            logger.info("AUTODML Pipeline Finished.")
+            return best_model, best_params, results
 
-        results = self.evaluator.evaluate(best_model, X_test, y_test)
+        except Exception as e:
+            logger.error(str(e))
+            raise AutoDMLError(
+                message="Error Occurred WHile Running AUTODML Pipeline", details=str(e)
+            )
 
-        print("Pipeline Finished!")
-        return best_model, results
+
+if __name__ == "__main__":
+    import pandas as pd
+
+    df = pd.read_csv("temp/mushrooms.csv")
+    target = "class"
+
+    autodml = AutoDMLPipeline(df=df, target=target)
+    model, parameters, results = autodml.run()
+
+    print(model)
+    print(parameters)
+    print(results)

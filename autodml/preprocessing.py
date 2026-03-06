@@ -14,6 +14,8 @@ from sklearn.decomposition import PCA
 from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.metrics import r2_score
 
+logger = get_logger(__name__)
+
 
 class Preprocessor:
     def __init__(self, df, target_column, scale_features=True):
@@ -31,64 +33,95 @@ class Preprocessor:
         self.y_test = None
 
     def validate(self):
+        logger.info("Starting Data Validation")
         try:
+            logger.debug("Checking for error while loading data.")
             if self.df is None:
+                logger.error("Data Error: No data was provided or file failed to load.")
                 raise ValueError(
                     "Data Error: No data was provided or file failed to load."
                 )
 
+            logger.debug("Validating dataframe data type.")
             if not isinstance(self.df, pd.DataFrame):
+                logger.error(
+                    f"Type Error: Expected pandas DataFrame, got {type(self.df)}."
+                )
                 raise ValueError(
                     f"Type Error: Expected pandas DataFrame, got {type(self.df)}."
                 )
-
+            logger.debug("Checking if dataframe is empty.")
             if self.df.empty:
+                logger.error("Data Error: The provided dataset is empty (0 rows).")
                 raise ValueError("Data Error: The provided dataset is empty (0 rows).")
 
+            logger.debug("Validating Dataset structure.")
             if len(self.df.columns) < 2:
+                logger.error(
+                    f"Structure Error: Dataset only has {len(self.df.columns)} column. "
+                )
                 raise ValueError(
                     f"Structure Error: Dataset only has {len(self.df.columns)} column. "
                     "AutoML requires at least one feature and one target column."
                 )
 
+            logger.debug("Checking for empty data columns.")
             if self.df.isnull().all().all():
+                logger.error(
+                    "Data Error: All columns in the dataset are entirely null/empty."
+                )
                 raise ValueError(
                     "Data Error: All columns in the dataset are entirely null/empty."
                 )
 
+            logger.debug("Validating target column.")
             if self.target not in self.df.columns:
+                logger.error(
+                    f"Target Error: Column '{self.target}' not found in dataset. "
+                )
                 raise ValueError(
                     f"Target Error: Column '{self.target}' not found in dataset. "
                     f"Available columns: {list(self.df.columns)}"
                 )
 
+            logger.debug("Checking for empty dataset.")
             if self.df[self.target].isnull().all():
+                logger.error(
+                    f"Target Error: The target column '{self.target}' is 100% null. "
+                )
                 raise ValueError(
                     f"Target Error: The target column '{self.target}' is 100% null. "
                     "The model has nothing to learn from."
                 )
 
         except Exception as e:
+            logger.error("Preprocessing Error: Failed during Dataset validation")
             raise PreprocessingError(
                 message="Failed during Dataset Validation", details=str(e)
             )
 
-        print("Data Validation Passed! Proceeding to preprocessing...")
+        logger.info("Data Validation Completed.")
         return True
 
     def remove_unwanted_columns(self) -> pd.DataFrame:
+        logger.info("Removing Unwanted Columns.")
         try:
             columns_to_drop = []
 
             for col in self.df.columns:
+                logger.debug("Checking for unnamed columns.")
                 if col.lower().startswith("unnamed"):
                     columns_to_drop.append(col)
+                    logger.info(f"Unnamed columns found : {col} and Removed.")
                     continue
 
+                logger.debug("Checking for constant columns")
                 if self.df[col].nunique(dropna=True) <= 1:
                     columns_to_drop.append(col)
+                    logger.info("Removing Constant Columns.")
                     continue
 
+                logger.debug("Checking for Duplicate Index Column.")
                 if pd.api.types.is_integer_dtype(self.df[col]):
                     if (
                         self.df[col]
@@ -97,13 +130,17 @@ class Preprocessor:
                         .equals(pd.Series(range(len(self.df))))
                     ):
                         columns_to_drop.append(col)
+                        logger.info("Duplicate Index Removed.")
                         continue
 
             if columns_to_drop:
                 self.df = self.df.drop(columns=columns_to_drop)
+
+            logger.info("Unwanted Columns Removed.")
             return self.df
 
         except Exception as e:
+            logger.error("Preprocessing Error : Failed during unwanted column removal")
             raise PreprocessingError(
                 message="Failed during unwanted column removal", details=str(e)
             )
@@ -113,8 +150,12 @@ class Preprocessor:
         cat_threshold: int = 20,
         text_length_threshold: int = 30,
         id_unique_ratio: float = 0.95,
+        sample_size: int = 5000,
     ) -> dict:
+        logger.info("Starting Feature Types Detection.")
         try:
+            df = self.df
+
             feature_types = {
                 "numerical": [],
                 "categorical": [],
@@ -126,61 +167,75 @@ class Preprocessor:
                 "all_null": [],
             }
 
-            n_rows = len(self.df)
+            n_rows = len(df)
 
-            for col in self.df.columns:
-                series = self.df[col]
-                non_null = series.dropna()
-                unique_count = non_null.nunique()
+            for col in df.columns:
+                series = df[col]
 
-                if series.isnull().all():
+                logger.debug("Checking for Null Columns.")
+                if series.isna().all():
                     feature_types["all_null"].append(col)
+                    logger.warning("Null columns found !")
                     continue
 
-                if unique_count <= 1:
+                non_null = series.dropna()
+
+                logger.debug("Checking for Constant Columns.")
+                if non_null.nunique() <= 1:
                     feature_types["constant"].append(col)
+                    logger.warning("Constant Columns Found !")
                     continue
+                sample = non_null
+                if len(non_null) > sample_size:
+                    sample = non_null.sample(sample_size, random_state=42)
 
-                if series.dtype == "bool" or set(non_null.unique()).issubset(
-                    {0, 1, True, False}
-                ):
+                unique_count = sample.nunique()
+
+                if pd.api.types.is_bool_dtype(series):
                     feature_types["boolean"].append(col)
                     continue
+
+                if pd.api.types.is_numeric_dtype(series):
+                    unique_vals = set(sample.unique())
+
+                    if unique_vals.issubset({0, 1}):
+                        feature_types["boolean"].append(col)
+                        continue
 
                 if pd.api.types.is_datetime64_any_dtype(series):
                     feature_types["datetime"].append(col)
                     continue
 
                 if series.dtype == "object":
-                    try:
-                        parsed = pd.to_datetime(
-                            non_null, errors="coerce", infer_datetime_format=True
-                        )
-                        success_ratio = parsed.notna().sum() / len(non_null)
-                        if success_ratio > 0.8:
-                            feature_types["datetime"].append(col)
-                            continue
+                    parsed = pd.to_datetime(sample, errors="coerce")
 
-                    except Exception as e:
-                        raise e
+                    success_ratio = parsed.notna().mean()
+
+                    if success_ratio > 0.8:
+                        feature_types["datetime"].append(col)
+                        continue
 
                 if pd.api.types.is_numeric_dtype(series):
                     if unique_count <= cat_threshold:
                         feature_types["categorical"].append(col)
+
+                    elif unique_count / n_rows > id_unique_ratio:
+                        feature_types["id"].append(col)
+
                     else:
-                        if unique_count / n_rows > id_unique_ratio:
-                            feature_types["id"].append(col)
-                        else:
-                            feature_types["numerical"].append(col)
+                        feature_types["numerical"].append(col)
+
                     continue
 
-                if series.dtype == "object":
-                    avg_length = non_null.astype(str).map(len).mean()
+                if series.dtype == "object" or pd.api.types.is_categorical_dtype(
+                    series
+                ):
+                    avg_len = sample.astype(str).str.len().mean()
 
                     if unique_count / n_rows > id_unique_ratio:
                         feature_types["id"].append(col)
 
-                    elif avg_length > text_length_threshold:
+                    elif avg_len > text_length_threshold:
                         feature_types["text"].append(col)
 
                     else:
@@ -189,13 +244,18 @@ class Preprocessor:
                     continue
 
                 feature_types["categorical"].append(col)
+
             self.feature_types = feature_types
+
+            logger.info("Feature Detection Completed.")
             return feature_types
 
         except Exception as e:
+            logger.error(str(e))
             raise PreprocessingError(str(e))
 
     def Problem_detection(self):
+        logger.info("Detecting Problem Type.")
         try:
             target_series = self.df[self.target].dropna()
 
@@ -219,15 +279,19 @@ class Preprocessor:
                 self.problem_type = r
                 return r
 
+            logger.info("Problem Detection Completed.")
+
             raise ValueError(
                 "Unable to determine problem type: unexpected target data characteristics."
             )
+
         except Exception as e:
+            logger.error(str(e))
             raise PreprocessingError(str(e))
 
     def missing_value_handler(self):
         missing_value_report = {}
-
+        logger.info("Starting Missing Value Handling.")
         try:
             for i in self.df.columns:
                 missing_value_report[i] = self.df[i].isna().sum()
@@ -235,12 +299,13 @@ class Preprocessor:
             numerical_imputer = SimpleImputer(strategy="mean")
             categorical_imputer = SimpleImputer(strategy="most_frequent")
 
+            logger.debug("Imputing Categorical Values.")
             for i in self.feature_types["categorical"]:
                 if missing_value_report[i] > 0:
                     self.df[i] = categorical_imputer.fit_transform(self.df[[i]])
                 else:
                     pass
-
+            logger.debug("Imputing Numerical Values. ")
             for i in self.feature_types["numerical"]:
                 if missing_value_report[i] > 0:
                     self.df[i] = numerical_imputer.fit_transform(self.df[[i]])
@@ -248,11 +313,14 @@ class Preprocessor:
                     pass
 
         except Exception as e:
+            logger.error(str(e))
             raise PreprocessingError(str(e))
 
+        logger.info("Missing Value Handling Completed.")
         return self.df, missing_value_report
 
     def duplicate_handling(self):
+        logger.info("Initiating Duplicate Value Handling.")
         try:
             duplicates = self.df.duplicated().sum()
 
@@ -262,13 +330,16 @@ class Preprocessor:
                 pass
 
         except Exception as e:
+            logger.error(str(e))
             raise PreprocessingError(str(e))
 
+        logger.info("Duplicate Value Handling Completed.")
         return self.df
 
     def skewness_handling(self):
         transformer = PowerTransformer(method="yeo-johnson", standardize=True)
         skewness = {}
+        logger.info("Starting Skew Data Handling.")
         try:
             for i in self.feature_types["numerical"]:
                 skewness[i] = self.df[i].skew()
@@ -278,11 +349,14 @@ class Preprocessor:
                     pass
 
         except Exception as e:
+            logger.error(str(e))
             raise PreprocessingError(str(e))
 
+        logger.info("Skewness Handling Completed.")
         return self.df, skewness
 
     def handle_outliers(self, method="auto", iqr_multiplier=1.5, z_threshold=3):
+        logger.info("Handling Outliers.")
         try:
             df = self.df.copy()
             report = {}
@@ -346,8 +420,10 @@ class Preprocessor:
                     }
 
         except Exception as e:
+            logger.error(str(e))
             raise PreprocessingError(str(e))
 
+        logger.info("Ouliers Handling Completed.")
         self.df = df
         return df, report
 
@@ -357,6 +433,7 @@ class Preprocessor:
         add_cyclical: bool = True,
         add_duration: bool = True,
     ) -> pd.DataFrame:
+        logger.info("Extracting Datetime Features.")
         try:
             df = self.df.copy()
             datetime_cols = self.feature_types["datetime"]
@@ -394,15 +471,19 @@ class Preprocessor:
 
                 if drop_original:
                     df.drop(columns=[col], inplace=True)
+
+            logger.info("Datetime Features Extracted.")
             self.df = df
             return df
         except Exception as e:
+            logger.error(str(e))
             raise PreprocessingError(
                 message="Error Caused WHile Selecting Datetime Features ",
                 details=str(e),
             )
 
     def encoding(self):
+        logger.info("Starting Encoding.")
         try:
             categorical = self.feature_types["categorical"]
             ids = self.feature_types["id"]
@@ -433,14 +514,17 @@ class Preprocessor:
                 self.df[i] = enc.fit_transform(self.df[i])
 
         except Exception as e:
+            logger.info(str(e))
             raise PreprocessingError(message="Error While Encoding", details=str(e))
 
         self.x = self.df.drop(columns=[self.target])
         self.y = self.df[self.target]
 
+        logger.info("Encoding Completed.")
         return self.df
 
     def scaling(self):
+        logger.info("Starting Feature Scaling.")
         try:
             x_train, x_test, y_train, y_test = train_test_split(
                 self.x, self.y, test_size=0.2
@@ -456,9 +540,11 @@ class Preprocessor:
             self.y_train = y_train
             self.y_test = y_test
 
+            logger.info("Feature Scaling Completed.")
             return x_train, x_test, y_train, y_test
 
         except Exception as e:
+            logger.error(str(e))
             raise PreprocessingError(
                 message="Error Caused While Scaling", details=str(e)
             )
@@ -466,21 +552,25 @@ class Preprocessor:
     def dimensionality_reduction(self):
         try:
             if self.df.shape[1] > 250:
+                logger.debug(f"{self.df.shape[1]} features found.")
+                logger.info("Initiating Dimensionality Reduction")
                 pca = PCA(n_components=10)
                 self.x_train = pca.fit_transform(self.x_train)
                 self.x_test = pca.transform(self.x_test)
             else:
                 pass
+
+            logger.info("Dimensionality Reduction Completed.")
             return self.x_train, self.x_test
 
         except Exception as e:
+            logger.error(str(e))
             raise PreprocessingError(
                 message="Error Caused While Dimensionality Reduction", details=str(e)
             )
 
     def process(self):
-        print("Preprocessing Data...")
-
+        logger.info("Starting Preprocessing")
         self.validate()
         self.remove_unwanted_columns()
         self.detect_feature_types()
@@ -494,12 +584,13 @@ class Preprocessor:
         self.scaling()
         self.dimensionality_reduction()
 
+        logger.info("Preprocessing Completed.")
         return self.x_train, self.x_test, self.y_train, self.y_test
 
 
 if __name__ == "__main__":
     df = pd.read_csv("temp/amazon_sales_dataset.csv")
-    target = "Close"
+    target = "total_revenue"
     prep = Preprocessor(df, target_column=target)
     x_train, x_test, y_train, y_test = prep.process()
     model = LinearRegression()

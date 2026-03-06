@@ -8,8 +8,13 @@ from sklearn.model_selection import cross_val_score
 from config.models import Models
 from config.parameters import Parameters
 
+from utils.logger import get_logger
+from utils.exception import OptimizationError
+
 param_grid = Parameters.get_parameters()
 models = Models.get_models()
+
+logger = get_logger(__name__)
 
 
 class ModelOptimizer:
@@ -23,37 +28,46 @@ class ModelOptimizer:
         self.best_params = None
 
     def optimize(self):
-        model_class = models[self.task_type][self.model_name]
+        logger.info("Starting Model Optimization.")
+        try:
+            model_class = models[self.task_type][self.model_name]
 
-        def objective(trial):
-            params = param_grid[self.task_type][self.model_name](trial)
+            def objective(trial):
+                params = param_grid[self.task_type][self.model_name](trial)
 
-            model = model_class(**params)
+                model = model_class(**params)
 
-            if self.task_type == "Regression":
-                scores = cross_val_score(
-                    model, self.x_train, self.y_train, cv=5, scoring="r2", n_jobs=-1
-                )
-            else:
-                scores = cross_val_score(
-                    model,
-                    self.x_train,
-                    self.y_train,
-                    cv=5,
-                    scoring="accuracy",
-                    n_jobs=-1,
-                )
+                if self.task_type == "Regression":
+                    scores = cross_val_score(
+                        model, self.x_train, self.y_train, cv=5, scoring="r2", n_jobs=-1
+                    )
+                else:
+                    scores = cross_val_score(
+                        model,
+                        self.x_train,
+                        self.y_train,
+                        cv=5,
+                        scoring="accuracy",
+                        n_jobs=-1,
+                    )
 
-            return scores.mean()
+                return scores.mean()
 
-        study = optuna.create_study(direction="maximize")
+            study = optuna.create_study(direction="maximize")
 
-        study.optimize(objective, n_trials=self.n_trials)
+            study.optimize(objective, n_trials=self.n_trials)
 
-        self.best_score = study.best_value
-        self.best_params = study.best_params
+            self.best_score = study.best_value
+            self.best_params = study.best_params
 
-        return study.best_value, study.best_params
+            logger.info("Model Optimization Completed.")
+            return study.best_value, study.best_params
+
+        except Exception as e:
+            logger.error(str(e))
+            raise OptimizationError(
+                message="Error Caused While Model Optimization", details=str(e)
+            )
 
 
 if __name__ == "__main__":

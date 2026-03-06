@@ -33,15 +33,6 @@ class AutoDMLError(Exception):
         return self._format_message()
 
 
-class DataValidationError(AutoDMLError):
-    """Raised when dataset validation fails"""
-
-    def __init__(self, message: str, details: Optional[str] = None):
-        super().__init__(
-            message=message, error_code="DATA_VALIDATION_ERROR", details=details
-        )
-
-
 class PreprocessingError(AutoDMLError):
     """Raised during preprocessing failure"""
 
@@ -57,4 +48,22 @@ class ModelTrainingError(AutoDMLError):
     def __init__(self, message: str, details: Optional[str] = None):
         super().__init__(
             message=message, error_code="MODEL_TRAINING_ERROR", details=details
+        )
+
+
+class OptimizationError(AutoDMLError):
+    """Raised when model Optimization fails"""
+
+    def __init__(self, message: str, details: Optional[str] = None):
+        super().__init__(
+            message=message, error_code="MODEL_OPTIMIZATION_ERROR", details=details
+        )
+
+
+class EvaluationError(AutoDMLError):
+    """Raised when model evaluation fails"""
+
+    def __init__(self, message: str, details: Optional[str] = None):
+        super().__init__(
+            message=message, error_code="MODEL_EVALUATION_ERROR", details=details
         )

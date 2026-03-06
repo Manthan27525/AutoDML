@@ -17,7 +17,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from utils.logger import get_logger
-from utils.exception import PreprocessingError
+from utils.exception import ModelTrainingError
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import PowerTransformer
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
@@ -36,6 +36,8 @@ import pandas as pd
 
 models = Models.get_models()
 
+logger = get_logger(__name__)
+
 
 class ModelTrainer:
     def __init__(self, problem_type, x_train, x_test, y_train, y_test):
@@ -49,31 +51,41 @@ class ModelTrainer:
         self.problem = problem_type
 
     def train(self):
-        print("Starting Training")
+        logger.info("Initiating Model Training.")
         model_score = {}
 
-        if self.problem == "Regression":
-            for name, model_class in self.models[self.problem].items():
-                model = model_class()
-                model.fit(self.x_train, self.y_train)
-                pred = model.predict(self.x_test)
-                model_score[name] = r2_score(self.y_test, pred)
+        try:
+            if self.problem == "Regression":
+                logger.debug("Training Regression Model.")
+                for name, model_class in self.models[self.problem].items():
+                    model = model_class()
+                    model.fit(self.x_train, self.y_train)
+                    pred = model.predict(self.x_test)
+                    model_score[name] = r2_score(self.y_test, pred)
 
-        elif self.problem == "Classification":
-            for name, model_class in self.models[self.problem].items():
-                model = model_class()
-                model.fit(self.x_train, self.y_train)
-                pred = model.predict(self.x_test)
-                model_score[name] = f1_score(self.y_test, pred, average="weighted")
-        else:
-            raise ValueError("Invalid Problem Type")
+            elif self.problem == "Classification":
+                logger.debug("Training Classification Model.")
+                for name, model_class in self.models[self.problem].items():
+                    model = model_class()
+                    model.fit(self.x_train, self.y_train)
+                    pred = model.predict(self.x_test)
+                    model_score[name] = f1_score(self.y_test, pred, average="weighted")
+            else:
+                logger.error("Invalid Problem Type")
+                raise ValueError("Invalid Problem Type")
 
-        self.model_score = model_score
+            self.model_score = model_score
 
-        print("Training Completed")
+        except Exception as e:
+            logger.erro(str(e))
+            raise ModelTrainingError(
+                message="Error Caused While Model Training", details=str(e)
+            )
+
+        logger.info("Model Training Completed.")
 
     def best_model_selection(self):
-        print("Selecting Best Model")
+        logger.info("Selecting Best Model.")
 
         best_score = -np.inf
         best_model = None
@@ -85,7 +97,7 @@ class ModelTrainer:
 
         self.best_model = best_model
 
-        print("Best Model Selected")
+        logger.info("Best Model Selected")
 
     def get_model(self):
         self.train()
