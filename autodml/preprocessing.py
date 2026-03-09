@@ -269,6 +269,11 @@ class Preprocessor:
                     f"Target column '{self.target}' has only one unique value cannot be determine problem type."
                 )
 
+            if target_series.dtype == "object":
+                c = "Classification"
+                self.problem_type = c
+                return c
+
             if target_series.nunique() < 20 and target_series.dtype != "float":
                 c = "Classification"
                 self.problem_type = c
@@ -302,13 +307,15 @@ class Preprocessor:
             logger.debug("Imputing Categorical Values.")
             for i in self.feature_types["categorical"]:
                 if missing_value_report[i] > 0:
-                    self.df[i] = categorical_imputer.fit_transform(self.df[[i]])
+                    self.df[i] = categorical_imputer.fit_transform(
+                        self.df[[i]]
+                    ).flatten()
                 else:
                     pass
             logger.debug("Imputing Numerical Values. ")
             for i in self.feature_types["numerical"]:
                 if missing_value_report[i] > 0:
-                    self.df[i] = numerical_imputer.fit_transform(self.df[[i]])
+                    self.df[i] = numerical_imputer.fit_transform(self.df[[i]]).flatten()
                 else:
                     pass
 
@@ -497,14 +504,18 @@ class Preprocessor:
                 ):
                     continue
 
+                self.df[i] = self.df[i].astype(str)
+
                 n_unique = self.df[i].nunique()
 
                 if n_unique == 2:
                     enc = LabelEncoder()
                     self.df[i] = enc.fit_transform(self.df[i])
+
                 if n_unique > 2 and n_unique <= 10:
                     enc = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
                     self.df[i] = enc.fit_transform(self.df[[i]])
+
                 if n_unique > 10:
                     enc = CountFrequencyEncoder(encoding_method="frequency")
                     self.df[i] = enc.fit_transform(self.df[[i]])

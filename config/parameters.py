@@ -8,7 +8,7 @@ param_grid = {
         },
         "L1": lambda trial: {
             "alpha": trial.suggest_float("alpha", 1e-6, 10.0, log=True),
-            "max_iter": trial.suggest_int("max_iter", 1000, 10000),
+            "max_iter": trial.suggest_int("max_iter", 1000, 5000, 10000),
             "selection": trial.suggest_categorical("selection", ["cyclic", "random"]),
         },
         "L2": lambda trial: {
@@ -20,14 +20,16 @@ param_grid = {
         "EN": lambda trial: {
             "alpha": trial.suggest_float("alpha", 1e-6, 10.0, log=True),
             "l1_ratio": trial.suggest_float("l1_ratio", 0.0, 1.0),
-            "max_iter": trial.suggest_int("max_iter", 1000, 10000),
+            "max_iter": trial.suggest_int("max_iter", 1000, 5000, 10000),
             "selection": trial.suggest_categorical("selection", ["cyclic", "random"]),
         },
         "RF": lambda trial: {
-            "n_estimators": trial.suggest_int("n_estimators", 100, 1000),
-            "max_depth": trial.suggest_int("max_depth", 3, 50),
-            "min_samples_split": trial.suggest_int("min_samples_split", 2, 20),
-            "min_samples_leaf": trial.suggest_int("min_samples_leaf", 1, 20),
+            "n_estimators": trial.suggest_int("n_estimators", 50, 100, 500, 1000),
+            "max_depth": trial.suggest_int("max_depth", 3, 15, 30, 45, 50),
+            "min_samples_split": trial.suggest_int(
+                "min_samples_split", 2, 5, 10, 15, 20
+            ),
+            "min_samples_leaf": trial.suggest_int("min_samples_leaf", 1, 5, 10, 15, 20),
             "max_features": trial.suggest_categorical(
                 "max_features", ["sqrt", "log2", None]
             ),

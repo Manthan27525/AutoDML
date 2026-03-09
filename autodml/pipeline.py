@@ -63,8 +63,8 @@ class AutoDMLPipeline:
 if __name__ == "__main__":
     import pandas as pd
 
-    df = pd.read_csv("temp/mushrooms.csv")
-    target = "class"
+    df = pd.read_csv("temp/placement_dataset_final.csv")
+    target = "placement"
 
     autodml = AutoDMLPipeline(df=df, target=target)
     model, parameters, results = autodml.run()
