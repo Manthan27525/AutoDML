@@ -4,6 +4,6 @@ scikit-learn
 matplotlib
 seaborn
 scipy
-torch
 optuna
 feature-engine
+openpyxl

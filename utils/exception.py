@@ -67,3 +67,12 @@ class EvaluationError(AutoDMLError):
         super().__init__(
             message=message, error_code="MODEL_EVALUATION_ERROR", details=details
         )
+
+
+class DataAnalysisError(AutoDMLError):
+    """Raised when Data Analysis fails"""
+
+    def __init__(self, message: str, details: Optional[str] = None):
+        super().__init__(
+            message=message, error_code="DATA_ANALYSIS_ERROR", details=details
+        )
