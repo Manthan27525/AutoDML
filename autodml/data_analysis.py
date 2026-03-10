@@ -211,8 +211,8 @@ class DataAnalyzer:
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("temp/olympics.csv")
-    target = "medal"
+    df = pd.read_csv("temp/HR_Analytics.csv")
+    target = "SalarySlab"
 
     analyzer = DataAnalyzer(df=df, target=target)
     report = analyzer.generate_report()

@@ -77,7 +77,7 @@ class ModelTrainer:
             self.model_score = model_score
 
         except Exception as e:
-            logger.erro(str(e))
+            logger.error(str(e))
             raise ModelTrainingError(
                 message="Error Caused While Model Training", details=str(e)
             )

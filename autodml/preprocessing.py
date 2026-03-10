@@ -9,7 +9,9 @@ from sklearn.preprocessing import PowerTransformer
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from feature_engine.encoding import CountFrequencyEncoder
 from sklearn.preprocessing import StandardScaler
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import PCA
+from utils.utiltiy import Functions
 
 from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.metrics import r2_score
@@ -253,6 +255,41 @@ class Preprocessor:
         except Exception as e:
             logger.error(str(e))
             raise PreprocessingError(str(e))
+
+    def handling_textual_data(self):
+        logger.info("Handling Textual Data")
+        try:
+            df = self.df
+            text_cols = self.feature_types["text"]
+
+            for col in text_cols:
+                if col not in df.columns:
+                    continue
+
+                vectorizer = TfidfVectorizer(max_features=100, stop_words="english")
+
+                text_matrix = vectorizer.fit_transform(df[col].astype(str))
+                df = df.reset_index(drop=True)
+                text_df = pd.DataFrame(
+                    text_matrix.toarray(),
+                    columns=[f"{col}_tfidf_{i}" for i in range(text_matrix.shape[1])],
+                )
+
+                df = df.drop(columns=[col])
+
+                df = pd.concat([df, text_df], axis=1)
+
+            self.df = df
+
+            logger.info("Text Feature Handling Completed")
+
+            return df
+
+        except Exception as e:
+            logger.error(str(e))
+            raise PreprocessingError(
+                message="Error While Handling Textual Data", details=str(e)
+            )
 
     def Problem_detection(self):
         logger.info("Detecting Problem Type.")
@@ -588,6 +625,7 @@ class Preprocessor:
         self.Problem_detection()
         self.missing_value_handler()
         self.duplicate_handling()
+        self.handling_textual_data()
         self.skewness_handling()
         self.handle_outliers()
         self.extract_datetime_features()
@@ -600,12 +638,7 @@ class Preprocessor:
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("temp/amazon_sales_dataset.csv")
-    target = "total_revenue"
+    df = Functions.safe_read_csv("temp/spam.csv")
+    target = "Category"
     prep = Preprocessor(df, target_column=target)
     x_train, x_test, y_train, y_test = prep.process()
-    model = LinearRegression()
-    model.fit(x_train, y_train)
-    pred = model.predict(x_test)
-    print(prep.problem_type)
-    print(r2_score(pred, y_test))
