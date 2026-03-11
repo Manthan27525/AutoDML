@@ -1,5 +1,3 @@
-# automdl/utils/exceptions.py
-
 from typing import Optional
 
 
@@ -75,4 +73,13 @@ class DataAnalysisError(AutoDMLError):
     def __init__(self, message: str, details: Optional[str] = None):
         super().__init__(
             message=message, error_code="DATA_ANALYSIS_ERROR", details=details
+        )
+
+
+class DataVisualizationError(AutoDMLError):
+    """Raised when Data Visualization fails"""
+
+    def __init__(self, message: str, details: Optional[str] = None):
+        super().__init__(
+            message=message, error_code="DATA_VISUALIZATIONs_ERROR", details=details
         )
