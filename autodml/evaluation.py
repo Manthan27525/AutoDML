@@ -1,4 +1,6 @@
 import numpy as np
+import os
+import json
 
 from sklearn.metrics import (
     mean_absolute_error,
@@ -9,11 +11,9 @@ from sklearn.metrics import (
     recall_score,
     f1_score,
     roc_auc_score,
-    classification_report,
     confusion_matrix,
     mean_absolute_percentage_error,
     explained_variance_score,
-    mean_squared_log_error,
 )
 
 from autodml.preprocessing import Preprocessor
@@ -22,10 +22,11 @@ from autodml.modeling import ModelTrainer
 from utils.logger import get_logger
 from utils.exception import EvaluationError, AutoDMLError
 import pandas as pd
+from utils.utiltiy import Functions
+from autodml.registry import ModelRegistry
 
-from config.models import Models
 
-
+models = ModelRegistry()
 logger = get_logger(__name__)
 
 
@@ -38,11 +39,13 @@ class Evaluator:
         self.y_train = y_train
         self.x_test = x_test
         self.y_test = y_test
+        self.result = {}
 
     def get_model(self):
         try:
-            lt = Models.get_models()
-            model_class = lt[self.task_type][self.model_name]
+            model_class = models.get_model(
+                task_type=self.task_type, model_name=self.model_name
+            )
 
             model = model_class(**self.param)
             model.fit(self.x_train, self.y_train)
@@ -54,6 +57,11 @@ class Evaluator:
                 message="Error Caused While Loading Model for Evaluation",
                 details=str(e),
             )
+
+    def save_report(self):
+        os.makedirs("tests/evaluation", exist_ok=True)
+        with open("tests/evaluation/evaluation.json", "w") as f:
+            json.dump(self.result, f, indent=4, default=Functions.convert_numpy)
 
     def evaluate(self):
         logger.info("Initiating Model Evaluation.")
@@ -70,7 +78,6 @@ class Evaluator:
                     "R2": r2_score(self.y_test, predictions),
                     "MAPE": mean_absolute_percentage_error(self.y_test, predictions),
                     "EVS": explained_variance_score(self.y_test, predictions),
-                    "RMSLE": np.sqrt(mean_squared_log_error(self.y_test, predictions)),
                 }
 
             else:
@@ -88,6 +95,9 @@ class Evaluator:
                 }
 
             logger.info(f"Evaluation Results: {results}")
+            self.result = results
+
+            self.save_report()
 
             return results
 

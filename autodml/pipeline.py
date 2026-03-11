@@ -2,12 +2,12 @@ from autodml.preprocessing import Preprocessor
 from autodml.modeling import ModelTrainer
 from autodml.evaluation import Evaluator
 from autodml.optimization import ModelOptimizer
-
+from autodml.data_analysis import DataAnalyzer
 from utils.logger import get_logger
 from utils.exception import AutoDMLError
+from autodml.registry import ModelRegistry
 
-from config.models import Models
-
+Models = ModelRegistry()
 logger = get_logger(__name__)
 
 
@@ -19,6 +19,8 @@ class AutoDMLPipeline:
     def run(self):
         try:
             logger.info("Running AUTODML Pipeline.")
+            analyzer = DataAnalyzer(df=self.df, target=self.target)
+            analysis = analyzer.generate_report()
             preprocessor = Preprocessor(df=self.df, target_column=self.target)
             x_train, x_test, y_train, y_test = preprocessor.process()
             problem = preprocessor.problem_type
@@ -45,13 +47,13 @@ class AutoDMLPipeline:
             )
             results = evaluator.evaluate()
 
-            models = Models.get_models()
-            best_model = models[preprocessor.problem_type][model]
+            models = Models.get_models(task_type=problem)
+            best_model = models[model]
             best_params = optimizer.best_params
 
             print(results)
             logger.info("AUTODML Pipeline Finished.")
-            return best_model, best_params, results
+            return best_model, best_params, results, analysis
 
         except Exception as e:
             logger.error(str(e))
@@ -67,8 +69,9 @@ if __name__ == "__main__":
     target = "Category"
 
     autodml = AutoDMLPipeline(df=df, target=target)
-    model, parameters, results = autodml.run()
+    model, parameters, results, analysis = autodml.run()
 
     print(model)
     print(parameters)
     print(results)
+    print(analysis)

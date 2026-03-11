@@ -1,16 +1,23 @@
+import numpy as np
 import pandas as pd
 
 
 class Functions:
     @staticmethod
-    def safe_read_csv(path):
-        try:
-            df = pd.read_csv(path)
+    def convert_numpy(obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
 
-        except UnicodeDecodeError:
-            df = pd.read_csv(path, encoding="latin-1")
+        if isinstance(obj, np.floating):
+            return float(obj)
 
-        except pd.errors.ParserError:
-            df = pd.read_csv(path, encoding="latin-1", on_bad_lines="skip")
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
 
-        return df
+        if isinstance(obj, pd.DataFrame):
+            return obj.to_dict()
+
+        if isinstance(obj, pd.Series):
+            return obj.to_dict()
+
+        raise TypeError(f"Type {type(obj)} not serializable")

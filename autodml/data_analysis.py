@@ -1,9 +1,9 @@
 import pandas as pd
-import numpy as np
-
+import os
+import json
 from utils.logger import get_logger
 from utils.exception import DataAnalysisError
-
+from utils.utiltiy import Functions
 from autodml.preprocessing import Preprocessor
 
 
@@ -198,6 +198,11 @@ class DataAnalyzer:
                 message="Correlation detection failed", details=str(e)
             )
 
+    def save_report(self):
+        os.makedirs("tests/analysis", exist_ok=True)
+        with open("tests/analysis/analysis.json", "w") as f:
+            json.dump(self.report, f, indent=4, default=Functions.convert_numpy)
+
     def generate_report(self):
         logger.info("Generating data analysis report")
         self.analyze_dataset()
@@ -206,6 +211,7 @@ class DataAnalyzer:
         self.analyze_numeric_features()
         self.categorical_feature_analysis()
         self.detect_correlations()
+        self.save_report()
         logger.info("Data Analysis Report Generated")
         return self.report
 

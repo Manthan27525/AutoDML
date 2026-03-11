@@ -3,17 +3,17 @@ import numpy as np
 from utils.logger import get_logger
 from utils.exception import ModelTrainingError
 from sklearn.metrics import r2_score, f1_score
-from config.models import Models
+from autodml.registry import ModelRegistry
 from autodml.preprocessing import Preprocessor
 
-models = Models.get_models()
+models = ModelRegistry()
 
 logger = get_logger(__name__)
 
 
 class ModelTrainer:
     def __init__(self, problem_type, x_train, x_test, y_train, y_test):
-        self.models = models
+        self.models = models.get_models(problem_type)
         self.model_score = None
         self.best_model = None
         self.x_train = x_train
@@ -29,7 +29,7 @@ class ModelTrainer:
         try:
             if self.problem == "Regression":
                 logger.debug("Training Regression Model.")
-                for name, model_class in self.models[self.problem].items():
+                for name, model_class in self.models.items():
                     model = model_class()
                     model.fit(self.x_train, self.y_train)
                     pred = model.predict(self.x_test)
@@ -37,7 +37,7 @@ class ModelTrainer:
 
             elif self.problem == "Classification":
                 logger.debug("Training Classification Model.")
-                for name, model_class in self.models[self.problem].items():
+                for name, model_class in self.models.items():
                     model = model_class()
                     model.fit(self.x_train, self.y_train)
                     pred = model.predict(self.x_test)

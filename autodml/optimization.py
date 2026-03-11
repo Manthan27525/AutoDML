@@ -1,18 +1,17 @@
 import optuna
-import numpy as np
 import pandas as pd
 
 from autodml.preprocessing import Preprocessor
 from autodml.modeling import ModelTrainer
 from sklearn.model_selection import cross_val_score
-from config.models import Models
-from config.parameters import Parameters
+from autodml.registry import ModelRegistry
+from autodml.registry import Parameters
 
 from utils.logger import get_logger
 from utils.exception import OptimizationError
 
-param_grid = Parameters.get_parameters()
-models = Models.get_models()
+params = Parameters()
+models = ModelRegistry()
 
 logger = get_logger(__name__)
 
@@ -30,12 +29,16 @@ class ModelOptimizer:
     def optimize(self):
         logger.info("Starting Model Optimization.")
         try:
-            model_class = models[self.task_type][self.model_name]
+            model_class = models.get_model(
+                model_name=self.model_name, task_type=self.task_type
+            )
 
             def objective(trial):
-                params = param_grid[self.task_type][self.model_name](trial)
-
-                model = model_class(**params)
+                param_fn = params.get_search_space(
+                    task_type=self.task_type, model_name=self.model_name
+                )
+                param = param_fn(trial)
+                model = model_class(**param)
 
                 if self.task_type == "Regression":
                     scores = cross_val_score(
