@@ -1,38 +1,10 @@
-from sklearn.linear_model import (
-    LinearRegression,
-    LogisticRegression,
-    Lasso,
-    Ridge,
-    ElasticNet,
-)
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-from sklearn.ensemble import BaggingClassifier, BaggingRegressor
-from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
 from utils.logger import get_logger
 from utils.exception import ModelTrainingError
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import PowerTransformer
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-from feature_engine.encoding import CountFrequencyEncoder
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
-
-from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.metrics import r2_score, f1_score
-
 from config.models import Models
-
 from autodml.preprocessing import Preprocessor
-import numpy as np
-import pandas as pd
 
 models = Models.get_models()
 

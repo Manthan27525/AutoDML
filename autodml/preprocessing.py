@@ -8,15 +8,35 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import PowerTransformer
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from feature_engine.encoding import CountFrequencyEncoder
-from sklearn.preprocessing import StandardScaler
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import PCA
-from utils.utiltiy import Functions
-
-from sklearn.linear_model import LinearRegression, LogisticRegression
-from sklearn.metrics import r2_score
+import re
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
 
 logger = get_logger(__name__)
+
+
+stop_words = set(stopwords.words("english"))
+lemmatizer = WordNetLemmatizer()
+
+
+def preprocess_text(text):
+    if pd.isna(text):
+        return ""
+
+    text = text.lower()
+
+    text = re.sub(r"[^a-zA-Z\s]", "", text)
+
+    tokens = word_tokenize(text)
+
+    tokens = [word for word in tokens if word not in stop_words]
+
+    tokens = [lemmatizer.lemmatize(word) for word in tokens]
+
+    return " ".join(tokens)
 
 
 class Preprocessor:
@@ -266,7 +286,9 @@ class Preprocessor:
                 if col not in df.columns:
                     continue
 
-                vectorizer = TfidfVectorizer(max_features=100, stop_words="english")
+                df[col] = df[col].astype(str).apply(preprocess_text)
+
+                vectorizer = TfidfVectorizer(max_features=100)
 
                 text_matrix = vectorizer.fit_transform(df[col].astype(str))
                 df = df.reset_index(drop=True)
@@ -578,7 +600,7 @@ class Preprocessor:
                 self.x, self.y, test_size=0.2
             )
             scaler = StandardScaler()
-            if self.scale_features == True:
+            if self.scale_features:
                 x_train = scaler.fit_transform(x_train)
                 x_test = scaler.transform(x_test)
             else:
@@ -638,7 +660,7 @@ class Preprocessor:
 
 
 if __name__ == "__main__":
-    df = Functions.safe_read_csv("temp/spam.csv")
-    target = "Category"
+    df = pd.read_excel("temp/branch.xlsx")
+    target = "Branch"
     prep = Preprocessor(df, target_column=target)
     x_train, x_test, y_train, y_test = prep.process()

@@ -9988,3 +9988,779 @@ LogisticRegression does not accept missing values encoded as NaN natively. For s
 2026-03-10 14:48:42,882 - autodml.evaluation - INFO - Initiating Model Evaluation.
 2026-03-10 14:48:43,046 - autodml.evaluation - INFO - Evaluation Results: {'Accuracy': 0.8494623655913979, 'Precision': 0.8261419463286285, 'Recall': 0.8494623655913979, 'F1': 0.8154173365142675}
 2026-03-10 14:48:44,557 - __main__ - INFO - AUTODML Pipeline Finished.
+2026-03-11 10:37:24,080 - __main__ - INFO - Running AUTODML Pipeline.
+2026-03-11 10:37:24,080 - autodml.preprocessing - INFO - Starting Preprocessing
+2026-03-11 10:37:24,080 - autodml.preprocessing - INFO - Starting Data Validation
+2026-03-11 10:37:24,080 - autodml.preprocessing - DEBUG - Checking for error while loading data.
+2026-03-11 10:37:24,080 - autodml.preprocessing - DEBUG - Validating dataframe data type.
+2026-03-11 10:37:24,095 - autodml.preprocessing - DEBUG - Checking if dataframe is empty.
+2026-03-11 10:37:24,095 - autodml.preprocessing - DEBUG - Validating Dataset structure.
+2026-03-11 10:37:24,095 - autodml.preprocessing - DEBUG - Checking for empty data columns.
+2026-03-11 10:37:24,095 - autodml.preprocessing - DEBUG - Validating target column.
+2026-03-11 10:37:24,147 - autodml.preprocessing - DEBUG - Checking for empty dataset.
+2026-03-11 10:37:24,154 - autodml.preprocessing - INFO - Data Validation Completed.
+2026-03-11 10:37:24,154 - autodml.preprocessing - INFO - Removing Unwanted Columns.
+2026-03-11 10:37:24,154 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:37:24,154 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:37:24,170 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:37:24,202 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:37:24,202 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:37:24,202 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:37:24,202 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:37:24,202 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:37:24,214 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:37:24,214 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:37:24,216 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:37:24,220 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:37:24,221 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:37:24,221 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:37:24,233 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:37:24,235 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:37:24,235 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:37:24,237 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:37:24,237 - autodml.preprocessing - INFO - Unwanted Columns Removed.
+2026-03-11 10:37:24,237 - autodml.preprocessing - INFO - Starting Feature Types Detection.
+2026-03-11 10:37:24,237 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:37:24,238 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:37:24,254 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:37:24,254 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:37:24,258 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:37:24,261 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:37:24,805 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:37:24,807 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:37:24,819 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:37:24,823 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:37:26,264 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:37:26,264 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:37:26,283 - autodml.preprocessing - INFO - Feature Detection Completed.
+2026-03-11 10:37:26,284 - autodml.preprocessing - INFO - Detecting Problem Type.
+2026-03-11 10:37:26,284 - autodml.preprocessing - INFO - Starting Missing Value Handling.
+2026-03-11 10:37:26,292 - autodml.preprocessing - DEBUG - Imputing Categorical Values.
+2026-03-11 10:37:26,320 - autodml.preprocessing - DEBUG - Imputing Numerical Values. 
+2026-03-11 10:37:26,320 - autodml.preprocessing - INFO - Missing Value Handling Completed.
+2026-03-11 10:37:26,320 - autodml.preprocessing - INFO - Initiating Duplicate Value Handling.
+2026-03-11 10:37:26,337 - autodml.preprocessing - INFO - Duplicate Value Handling Completed.
+2026-03-11 10:37:26,337 - autodml.preprocessing - INFO - Handling Textual Data
+2026-03-11 10:37:27,004 - autodml.preprocessing - INFO - Text Feature Handling Completed
+2026-03-11 10:37:27,006 - autodml.preprocessing - INFO - Starting Skew Data Handling.
+2026-03-11 10:37:27,067 - autodml.preprocessing - INFO - Skewness Handling Completed.
+2026-03-11 10:37:27,067 - autodml.preprocessing - INFO - Handling Outliers.
+2026-03-11 10:37:27,096 - autodml.preprocessing - INFO - Ouliers Handling Completed.
+2026-03-11 10:37:27,099 - autodml.preprocessing - INFO - Extracting Datetime Features.
+2026-03-11 10:37:27,201 - autodml.preprocessing - INFO - Datetime Features Extracted.
+2026-03-11 10:37:27,204 - autodml.preprocessing - INFO - Starting Encoding.
+2026-03-11 10:37:27,306 - autodml.preprocessing - INFO - Encoding Completed.
+2026-03-11 10:37:27,315 - autodml.preprocessing - INFO - Starting Feature Scaling.
+2026-03-11 10:37:27,387 - autodml.preprocessing - INFO - Feature Scaling Completed.
+2026-03-11 10:37:27,388 - autodml.preprocessing - INFO - Dimensionality Reduction Completed.
+2026-03-11 10:37:27,389 - autodml.preprocessing - INFO - Preprocessing Completed.
+2026-03-11 10:37:27,389 - autodml.modeling - INFO - Initiating Model Training.
+2026-03-11 10:37:27,389 - autodml.modeling - DEBUG - Training Classification Model.
+2026-03-11 10:38:21,429 - __main__ - INFO - Running AUTODML Pipeline.
+2026-03-11 10:38:21,429 - autodml.preprocessing - INFO - Starting Preprocessing
+2026-03-11 10:38:21,429 - autodml.preprocessing - INFO - Starting Data Validation
+2026-03-11 10:38:21,429 - autodml.preprocessing - DEBUG - Checking for error while loading data.
+2026-03-11 10:38:21,429 - autodml.preprocessing - DEBUG - Validating dataframe data type.
+2026-03-11 10:38:21,429 - autodml.preprocessing - DEBUG - Checking if dataframe is empty.
+2026-03-11 10:38:21,429 - autodml.preprocessing - DEBUG - Validating Dataset structure.
+2026-03-11 10:38:21,429 - autodml.preprocessing - DEBUG - Checking for empty data columns.
+2026-03-11 10:38:21,429 - autodml.preprocessing - DEBUG - Validating target column.
+2026-03-11 10:38:21,429 - autodml.preprocessing - DEBUG - Checking for empty dataset.
+2026-03-11 10:38:21,429 - autodml.preprocessing - INFO - Data Validation Completed.
+2026-03-11 10:38:21,429 - autodml.preprocessing - INFO - Removing Unwanted Columns.
+2026-03-11 10:38:21,444 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:38:21,444 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:38:21,445 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:38:21,446 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:38:21,446 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:38:21,447 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:38:21,448 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:38:21,448 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:38:21,449 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:38:21,450 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:38:21,451 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:38:21,451 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:38:21,453 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:38:21,454 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:38:21,455 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:38:21,457 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:38:21,457 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:38:21,509 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:38:21,509 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:38:21,509 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:38:21,509 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:38:21,509 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:38:21,509 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:38:21,509 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:38:21,509 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:38:21,509 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:38:21,509 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:38:21,509 - autodml.preprocessing - INFO - Unwanted Columns Removed.
+2026-03-11 10:38:21,509 - autodml.preprocessing - INFO - Starting Feature Types Detection.
+2026-03-11 10:38:21,509 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:38:21,519 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:38:21,540 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:38:21,541 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:38:21,549 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:38:21,550 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:38:21,552 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:38:21,553 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:38:21,555 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:38:21,555 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:38:21,558 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:38:21,558 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:38:21,561 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:38:21,562 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:38:21,565 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:38:21,566 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:38:21,568 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:38:21,569 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:38:21,576 - autodml.preprocessing - INFO - Feature Detection Completed.
+2026-03-11 10:38:21,577 - autodml.preprocessing - INFO - Detecting Problem Type.
+2026-03-11 10:38:21,578 - autodml.preprocessing - INFO - Starting Missing Value Handling.
+2026-03-11 10:38:21,582 - autodml.preprocessing - DEBUG - Imputing Categorical Values.
+2026-03-11 10:38:21,582 - autodml.preprocessing - DEBUG - Imputing Numerical Values. 
+2026-03-11 10:38:21,583 - autodml.preprocessing - INFO - Missing Value Handling Completed.
+2026-03-11 10:38:21,583 - autodml.preprocessing - INFO - Initiating Duplicate Value Handling.
+2026-03-11 10:38:21,584 - autodml.preprocessing - INFO - Duplicate Value Handling Completed.
+2026-03-11 10:38:21,584 - autodml.preprocessing - INFO - Handling Textual Data
+2026-03-11 10:38:21,584 - autodml.preprocessing - INFO - Text Feature Handling Completed
+2026-03-11 10:38:21,584 - autodml.preprocessing - INFO - Starting Skew Data Handling.
+2026-03-11 10:38:21,628 - autodml.preprocessing - INFO - Skewness Handling Completed.
+2026-03-11 10:38:21,628 - autodml.preprocessing - INFO - Handling Outliers.
+2026-03-11 10:38:21,640 - autodml.preprocessing - INFO - Ouliers Handling Completed.
+2026-03-11 10:38:21,640 - autodml.preprocessing - INFO - Extracting Datetime Features.
+2026-03-11 10:38:21,640 - autodml.preprocessing - INFO - Datetime Features Extracted.
+2026-03-11 10:38:21,650 - autodml.preprocessing - INFO - Starting Encoding.
+2026-03-11 10:38:21,663 - autodml.preprocessing - INFO - Encoding Completed.
+2026-03-11 10:38:21,663 - autodml.preprocessing - INFO - Starting Feature Scaling.
+2026-03-11 10:38:21,682 - autodml.preprocessing - INFO - Feature Scaling Completed.
+2026-03-11 10:38:21,682 - autodml.preprocessing - INFO - Dimensionality Reduction Completed.
+2026-03-11 10:38:21,682 - autodml.preprocessing - INFO - Preprocessing Completed.
+2026-03-11 10:38:21,683 - autodml.modeling - INFO - Initiating Model Training.
+2026-03-11 10:38:21,683 - autodml.modeling - DEBUG - Training Classification Model.
+2026-03-11 10:38:26,024 - autodml.modeling - INFO - Model Training Completed.
+2026-03-11 10:38:26,024 - autodml.modeling - INFO - Selecting Best Model.
+2026-03-11 10:38:26,024 - autodml.modeling - INFO - Best Model Selected
+2026-03-11 10:38:26,024 - autodml.optimization - INFO - Starting Model Optimization.
+2026-03-11 10:39:53,858 - autodml.optimization - INFO - Model Optimization Completed.
+2026-03-11 10:39:53,858 - autodml.evaluation - INFO - Initiating Model Evaluation.
+2026-03-11 10:39:56,648 - autodml.evaluation - INFO - Evaluation Results: {'Accuracy': 0.7936363636363636, 'Precision': 0.632451564828614, 'Recall': 0.7936363636363636, 'F1': 0.7039349398700641}
+2026-03-11 10:39:56,665 - __main__ - INFO - AUTODML Pipeline Finished.
+2026-03-11 10:40:51,198 - __main__ - INFO - Running AUTODML Pipeline.
+2026-03-11 10:40:51,198 - autodml.preprocessing - INFO - Starting Preprocessing
+2026-03-11 10:40:51,198 - autodml.preprocessing - INFO - Starting Data Validation
+2026-03-11 10:40:51,198 - autodml.preprocessing - DEBUG - Checking for error while loading data.
+2026-03-11 10:40:51,198 - autodml.preprocessing - DEBUG - Validating dataframe data type.
+2026-03-11 10:40:51,198 - autodml.preprocessing - DEBUG - Checking if dataframe is empty.
+2026-03-11 10:40:51,198 - autodml.preprocessing - DEBUG - Validating Dataset structure.
+2026-03-11 10:40:51,198 - autodml.preprocessing - DEBUG - Checking for empty data columns.
+2026-03-11 10:40:51,198 - autodml.preprocessing - DEBUG - Validating target column.
+2026-03-11 10:40:51,198 - autodml.preprocessing - DEBUG - Checking for empty dataset.
+2026-03-11 10:40:51,198 - autodml.preprocessing - INFO - Data Validation Completed.
+2026-03-11 10:40:51,208 - autodml.preprocessing - INFO - Removing Unwanted Columns.
+2026-03-11 10:40:51,208 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:40:51,209 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:40:51,210 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:40:51,210 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:40:51,211 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:40:51,212 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:40:51,212 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:40:51,212 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:40:51,212 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:40:51,212 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:40:51,212 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:40:51,212 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:40:51,212 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:40:51,212 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:40:51,212 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:40:51,220 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:40:51,220 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:40:51,220 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:40:51,221 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:40:51,221 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:40:51,222 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:40:51,222 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:40:51,222 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:40:51,223 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:40:51,225 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 10:40:51,225 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 10:40:51,225 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 10:40:51,225 - autodml.preprocessing - INFO - Unwanted Columns Removed.
+2026-03-11 10:40:51,225 - autodml.preprocessing - INFO - Starting Feature Types Detection.
+2026-03-11 10:40:51,225 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:40:51,230 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:40:51,242 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:40:51,242 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:40:51,256 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:40:51,257 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:40:51,260 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:40:51,261 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:40:51,262 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:40:51,263 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:40:51,264 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:40:51,266 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:40:51,267 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:40:51,268 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:40:51,269 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:40:51,269 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:40:51,272 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 10:40:51,273 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 10:40:51,281 - autodml.preprocessing - INFO - Feature Detection Completed.
+2026-03-11 10:40:51,281 - autodml.preprocessing - INFO - Detecting Problem Type.
+2026-03-11 10:40:51,281 - autodml.preprocessing - INFO - Starting Missing Value Handling.
+2026-03-11 10:40:51,285 - autodml.preprocessing - DEBUG - Imputing Categorical Values.
+2026-03-11 10:40:51,285 - autodml.preprocessing - DEBUG - Imputing Numerical Values. 
+2026-03-11 10:40:51,285 - autodml.preprocessing - INFO - Missing Value Handling Completed.
+2026-03-11 10:40:51,286 - autodml.preprocessing - INFO - Initiating Duplicate Value Handling.
+2026-03-11 10:40:51,289 - autodml.preprocessing - INFO - Duplicate Value Handling Completed.
+2026-03-11 10:40:51,289 - autodml.preprocessing - INFO - Handling Textual Data
+2026-03-11 10:40:51,290 - autodml.preprocessing - INFO - Text Feature Handling Completed
+2026-03-11 10:40:51,290 - autodml.preprocessing - INFO - Starting Skew Data Handling.
+2026-03-11 10:40:51,331 - autodml.preprocessing - INFO - Skewness Handling Completed.
+2026-03-11 10:40:51,331 - autodml.preprocessing - INFO - Handling Outliers.
+2026-03-11 10:40:51,342 - autodml.preprocessing - INFO - Ouliers Handling Completed.
+2026-03-11 10:40:51,342 - autodml.preprocessing - INFO - Extracting Datetime Features.
+2026-03-11 10:40:51,342 - autodml.preprocessing - INFO - Datetime Features Extracted.
+2026-03-11 10:40:51,342 - autodml.preprocessing - INFO - Starting Encoding.
+2026-03-11 10:40:51,364 - autodml.preprocessing - INFO - Encoding Completed.
+2026-03-11 10:40:51,373 - autodml.preprocessing - INFO - Starting Feature Scaling.
+2026-03-11 10:40:51,381 - autodml.preprocessing - INFO - Feature Scaling Completed.
+2026-03-11 10:40:51,381 - autodml.preprocessing - INFO - Dimensionality Reduction Completed.
+2026-03-11 10:40:51,381 - autodml.preprocessing - INFO - Preprocessing Completed.
+2026-03-11 10:40:51,381 - autodml.modeling - INFO - Initiating Model Training.
+2026-03-11 10:40:51,381 - autodml.modeling - DEBUG - Training Classification Model.
+2026-03-11 10:40:55,907 - autodml.modeling - INFO - Model Training Completed.
+2026-03-11 10:40:55,913 - autodml.modeling - INFO - Selecting Best Model.
+2026-03-11 10:40:55,913 - autodml.modeling - INFO - Best Model Selected
+2026-03-11 10:40:55,915 - autodml.optimization - INFO - Starting Model Optimization.
+2026-03-11 10:42:37,063 - autodml.optimization - INFO - Model Optimization Completed.
+2026-03-11 10:42:37,065 - autodml.evaluation - INFO - Initiating Model Evaluation.
+2026-03-11 10:42:41,758 - autodml.evaluation - INFO - Evaluation Results: {'Accuracy': 0.7981818181818182, 'Precision': 0.6370942148760331, 'Recall': 0.7981818181818182, 'F1': 0.7085982167478628}
+2026-03-11 10:42:41,758 - __main__ - INFO - AUTODML Pipeline Finished.
+2026-03-11 11:57:50,299 - __main__ - INFO - Running AUTODML Pipeline.
+2026-03-11 11:57:50,313 - autodml.preprocessing - INFO - Starting Preprocessing
+2026-03-11 11:57:50,313 - autodml.preprocessing - INFO - Starting Data Validation
+2026-03-11 11:57:50,313 - autodml.preprocessing - DEBUG - Checking for error while loading data.
+2026-03-11 11:57:50,313 - autodml.preprocessing - DEBUG - Validating dataframe data type.
+2026-03-11 11:57:50,313 - autodml.preprocessing - DEBUG - Checking if dataframe is empty.
+2026-03-11 11:57:50,313 - autodml.preprocessing - DEBUG - Validating Dataset structure.
+2026-03-11 11:57:50,313 - autodml.preprocessing - DEBUG - Checking for empty data columns.
+2026-03-11 11:57:50,340 - autodml.preprocessing - DEBUG - Validating target column.
+2026-03-11 11:57:50,400 - autodml.preprocessing - DEBUG - Checking for empty dataset.
+2026-03-11 11:57:50,400 - autodml.preprocessing - INFO - Data Validation Completed.
+2026-03-11 11:57:50,400 - autodml.preprocessing - INFO - Removing Unwanted Columns.
+2026-03-11 11:57:50,400 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 11:57:50,400 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 11:57:50,416 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 11:57:50,416 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 11:57:50,416 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 11:57:50,421 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 11:57:50,421 - autodml.preprocessing - INFO - Unwanted Columns Removed.
+2026-03-11 11:57:50,421 - autodml.preprocessing - INFO - Starting Feature Types Detection.
+2026-03-11 11:57:50,421 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 11:57:50,424 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 11:57:50,780 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 11:57:50,782 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 11:57:51,521 - autodml.preprocessing - INFO - Feature Detection Completed.
+2026-03-11 11:57:51,521 - autodml.preprocessing - INFO - Detecting Problem Type.
+2026-03-11 11:57:51,521 - autodml.preprocessing - INFO - Starting Missing Value Handling.
+2026-03-11 11:57:51,521 - autodml.preprocessing - DEBUG - Imputing Categorical Values.
+2026-03-11 11:57:51,521 - autodml.preprocessing - DEBUG - Imputing Numerical Values. 
+2026-03-11 11:57:51,521 - autodml.preprocessing - INFO - Missing Value Handling Completed.
+2026-03-11 11:57:51,521 - autodml.preprocessing - INFO - Initiating Duplicate Value Handling.
+2026-03-11 11:57:51,543 - autodml.preprocessing - INFO - Duplicate Value Handling Completed.
+2026-03-11 11:57:51,543 - autodml.preprocessing - INFO - Handling Textual Data
+2026-03-11 11:57:57,280 - autodml.preprocessing - INFO - Text Feature Handling Completed
+2026-03-11 11:57:57,280 - autodml.preprocessing - INFO - Starting Skew Data Handling.
+2026-03-11 11:57:57,280 - autodml.preprocessing - INFO - Skewness Handling Completed.
+2026-03-11 11:57:57,280 - autodml.preprocessing - INFO - Handling Outliers.
+2026-03-11 11:57:57,295 - autodml.preprocessing - INFO - Ouliers Handling Completed.
+2026-03-11 11:57:57,295 - autodml.preprocessing - INFO - Extracting Datetime Features.
+2026-03-11 11:57:57,295 - autodml.preprocessing - INFO - Datetime Features Extracted.
+2026-03-11 11:57:57,299 - autodml.preprocessing - INFO - Starting Encoding.
+2026-03-11 11:57:57,306 - autodml.preprocessing - INFO - Encoding Completed.
+2026-03-11 11:57:57,307 - autodml.preprocessing - INFO - Starting Feature Scaling.
+2026-03-11 11:57:57,345 - autodml.preprocessing - INFO - Feature Scaling Completed.
+2026-03-11 11:57:57,345 - autodml.preprocessing - INFO - Dimensionality Reduction Completed.
+2026-03-11 11:57:57,346 - autodml.preprocessing - INFO - Preprocessing Completed.
+2026-03-11 11:57:57,346 - autodml.modeling - INFO - Initiating Model Training.
+2026-03-11 11:57:57,346 - autodml.modeling - DEBUG - Training Classification Model.
+2026-03-11 11:58:09,768 - autodml.modeling - INFO - Model Training Completed.
+2026-03-11 11:58:09,768 - autodml.modeling - INFO - Selecting Best Model.
+2026-03-11 11:58:09,768 - autodml.modeling - INFO - Best Model Selected
+2026-03-11 11:58:09,768 - autodml.optimization - INFO - Starting Model Optimization.
+2026-03-11 12:06:24,756 - autodml.optimization - INFO - Model Optimization Completed.
+2026-03-11 12:06:24,756 - autodml.evaluation - INFO - Initiating Model Evaluation.
+2026-03-11 12:06:36,046 - autodml.evaluation - INFO - Evaluation Results: {'Accuracy': 0.9641472868217055, 'Precision': 0.9631691058936561, 'Recall': 0.9641472868217055, 'F1': 0.9631975807058315}
+2026-03-11 12:06:36,046 - __main__ - INFO - AUTODML Pipeline Finished.
+2026-03-11 12:06:54,541 - __main__ - INFO - Running AUTODML Pipeline.
+2026-03-11 12:06:54,541 - autodml.preprocessing - INFO - Starting Preprocessing
+2026-03-11 12:06:54,541 - autodml.preprocessing - INFO - Starting Data Validation
+2026-03-11 12:06:54,541 - autodml.preprocessing - DEBUG - Checking for error while loading data.
+2026-03-11 12:06:54,541 - autodml.preprocessing - DEBUG - Validating dataframe data type.
+2026-03-11 12:06:54,541 - autodml.preprocessing - DEBUG - Checking if dataframe is empty.
+2026-03-11 12:06:54,541 - autodml.preprocessing - DEBUG - Validating Dataset structure.
+2026-03-11 12:06:54,541 - autodml.preprocessing - DEBUG - Checking for empty data columns.
+2026-03-11 12:06:54,541 - autodml.preprocessing - DEBUG - Validating target column.
+2026-03-11 12:06:54,541 - autodml.preprocessing - DEBUG - Checking for empty dataset.
+2026-03-11 12:06:54,541 - autodml.preprocessing - INFO - Data Validation Completed.
+2026-03-11 12:06:54,557 - autodml.preprocessing - INFO - Removing Unwanted Columns.
+2026-03-11 12:06:54,557 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:06:54,557 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:06:54,559 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:06:54,560 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:06:54,560 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:06:54,560 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:06:54,560 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:06:54,562 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:06:54,614 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:06:54,614 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:06:54,614 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:06:54,614 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:06:54,631 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:06:54,631 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:06:54,644 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:06:54,645 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:06:54,646 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:06:54,650 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:06:54,650 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:06:54,651 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:06:54,651 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:06:54,652 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:06:54,652 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:06:54,653 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:06:54,654 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:06:54,654 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:06:54,655 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:06:54,655 - autodml.preprocessing - INFO - Unwanted Columns Removed.
+2026-03-11 12:06:54,655 - autodml.preprocessing - INFO - Starting Feature Types Detection.
+2026-03-11 12:06:54,656 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:06:54,656 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:06:54,668 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:06:54,668 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:06:54,709 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:06:54,713 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:06:54,716 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:06:54,718 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:06:54,722 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:06:54,722 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:06:54,728 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:06:54,730 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:06:54,748 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:06:54,748 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:06:54,748 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:06:54,748 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:06:54,748 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:06:54,748 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:06:54,777 - autodml.preprocessing - INFO - Feature Detection Completed.
+2026-03-11 12:06:54,777 - autodml.preprocessing - INFO - Detecting Problem Type.
+2026-03-11 12:06:54,779 - autodml.preprocessing - INFO - Starting Missing Value Handling.
+2026-03-11 12:06:54,782 - autodml.preprocessing - DEBUG - Imputing Categorical Values.
+2026-03-11 12:06:54,783 - autodml.preprocessing - DEBUG - Imputing Numerical Values. 
+2026-03-11 12:06:54,783 - autodml.preprocessing - INFO - Missing Value Handling Completed.
+2026-03-11 12:06:54,784 - autodml.preprocessing - INFO - Initiating Duplicate Value Handling.
+2026-03-11 12:06:54,784 - autodml.preprocessing - INFO - Duplicate Value Handling Completed.
+2026-03-11 12:06:54,784 - autodml.preprocessing - INFO - Handling Textual Data
+2026-03-11 12:06:54,784 - autodml.preprocessing - INFO - Text Feature Handling Completed
+2026-03-11 12:06:54,784 - autodml.preprocessing - INFO - Starting Skew Data Handling.
+2026-03-11 12:06:54,829 - autodml.preprocessing - INFO - Skewness Handling Completed.
+2026-03-11 12:06:54,829 - autodml.preprocessing - INFO - Handling Outliers.
+2026-03-11 12:06:54,849 - autodml.preprocessing - INFO - Ouliers Handling Completed.
+2026-03-11 12:06:54,850 - autodml.preprocessing - INFO - Extracting Datetime Features.
+2026-03-11 12:06:54,851 - autodml.preprocessing - INFO - Datetime Features Extracted.
+2026-03-11 12:06:54,851 - autodml.preprocessing - INFO - Starting Encoding.
+2026-03-11 12:06:54,884 - autodml.preprocessing - INFO - Encoding Completed.
+2026-03-11 12:06:54,884 - autodml.preprocessing - INFO - Starting Feature Scaling.
+2026-03-11 12:06:54,884 - autodml.preprocessing - INFO - Feature Scaling Completed.
+2026-03-11 12:06:54,893 - autodml.preprocessing - INFO - Dimensionality Reduction Completed.
+2026-03-11 12:06:54,893 - autodml.preprocessing - INFO - Preprocessing Completed.
+2026-03-11 12:06:54,893 - autodml.modeling - INFO - Initiating Model Training.
+2026-03-11 12:06:54,894 - autodml.modeling - DEBUG - Training Classification Model.
+2026-03-11 12:06:56,086 - autodml.modeling - INFO - Model Training Completed.
+2026-03-11 12:06:56,088 - autodml.modeling - INFO - Selecting Best Model.
+2026-03-11 12:06:56,088 - autodml.modeling - INFO - Best Model Selected
+2026-03-11 12:06:56,088 - autodml.optimization - INFO - Starting Model Optimization.
+2026-03-11 12:07:04,631 - autodml.optimization - INFO - Model Optimization Completed.
+2026-03-11 12:07:04,632 - autodml.evaluation - INFO - Initiating Model Evaluation.
+2026-03-11 12:07:04,986 - autodml.evaluation - INFO - Evaluation Results: {'Accuracy': 1.0, 'Precision': 1.0, 'Recall': 1.0, 'F1': 1.0}
+2026-03-11 12:07:04,986 - __main__ - INFO - AUTODML Pipeline Finished.
+2026-03-11 12:15:25,381 - __main__ - INFO - Running AUTODML Pipeline.
+2026-03-11 12:15:25,381 - autodml.preprocessing - INFO - Starting Preprocessing
+2026-03-11 12:15:25,381 - autodml.preprocessing - INFO - Starting Data Validation
+2026-03-11 12:15:25,381 - autodml.preprocessing - DEBUG - Checking for error while loading data.
+2026-03-11 12:15:25,381 - autodml.preprocessing - DEBUG - Validating dataframe data type.
+2026-03-11 12:15:25,381 - autodml.preprocessing - DEBUG - Checking if dataframe is empty.
+2026-03-11 12:15:25,381 - autodml.preprocessing - DEBUG - Validating Dataset structure.
+2026-03-11 12:15:25,381 - autodml.preprocessing - DEBUG - Checking for empty data columns.
+2026-03-11 12:15:25,381 - autodml.preprocessing - DEBUG - Validating target column.
+2026-03-11 12:15:25,381 - autodml.preprocessing - DEBUG - Checking for empty dataset.
+2026-03-11 12:15:25,381 - autodml.preprocessing - INFO - Data Validation Completed.
+2026-03-11 12:15:25,381 - autodml.preprocessing - INFO - Removing Unwanted Columns.
+2026-03-11 12:15:25,381 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:15:25,392 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:15:25,393 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:15:25,394 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:15:25,394 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:15:25,395 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:15:25,396 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:15:25,396 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:15:25,397 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:15:25,398 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:15:25,398 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:15:25,399 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:15:25,400 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:15:25,400 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:15:25,400 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:15:25,404 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:15:25,404 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:15:25,405 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:15:25,406 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:15:25,406 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:15:25,407 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:15:25,407 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:15:25,407 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:15:25,408 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:15:25,409 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:15:25,410 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:15:25,410 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:15:25,411 - autodml.preprocessing - INFO - Unwanted Columns Removed.
+2026-03-11 12:15:25,411 - autodml.preprocessing - INFO - Starting Feature Types Detection.
+2026-03-11 12:15:25,411 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:15:25,415 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:15:25,428 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:15:25,428 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:15:25,441 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:15:25,442 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:15:25,444 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:15:25,445 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:15:25,446 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:15:25,447 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:15:25,450 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:15:25,450 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:15:25,452 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:15:25,452 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:15:25,456 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:15:25,456 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:15:25,458 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:15:25,459 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:15:25,467 - autodml.preprocessing - INFO - Feature Detection Completed.
+2026-03-11 12:15:25,468 - autodml.preprocessing - INFO - Detecting Problem Type.
+2026-03-11 12:15:25,468 - autodml.preprocessing - INFO - Starting Missing Value Handling.
+2026-03-11 12:15:25,472 - autodml.preprocessing - DEBUG - Imputing Categorical Values.
+2026-03-11 12:15:25,473 - autodml.preprocessing - DEBUG - Imputing Numerical Values. 
+2026-03-11 12:15:25,473 - autodml.preprocessing - INFO - Missing Value Handling Completed.
+2026-03-11 12:15:25,473 - autodml.preprocessing - INFO - Initiating Duplicate Value Handling.
+2026-03-11 12:15:25,476 - autodml.preprocessing - INFO - Duplicate Value Handling Completed.
+2026-03-11 12:15:25,476 - autodml.preprocessing - INFO - Handling Textual Data
+2026-03-11 12:15:25,477 - autodml.preprocessing - INFO - Text Feature Handling Completed
+2026-03-11 12:15:25,477 - autodml.preprocessing - INFO - Starting Skew Data Handling.
+2026-03-11 12:15:25,524 - autodml.preprocessing - INFO - Skewness Handling Completed.
+2026-03-11 12:15:25,524 - autodml.preprocessing - INFO - Handling Outliers.
+2026-03-11 12:15:25,541 - autodml.preprocessing - INFO - Ouliers Handling Completed.
+2026-03-11 12:15:25,541 - autodml.preprocessing - INFO - Extracting Datetime Features.
+2026-03-11 12:15:25,542 - autodml.preprocessing - INFO - Datetime Features Extracted.
+2026-03-11 12:15:25,543 - autodml.preprocessing - INFO - Starting Encoding.
+2026-03-11 12:15:25,564 - autodml.preprocessing - INFO - Encoding Completed.
+2026-03-11 12:15:25,564 - autodml.preprocessing - INFO - Starting Feature Scaling.
+2026-03-11 12:15:25,573 - autodml.preprocessing - INFO - Feature Scaling Completed.
+2026-03-11 12:15:25,574 - autodml.preprocessing - INFO - Dimensionality Reduction Completed.
+2026-03-11 12:15:25,574 - autodml.preprocessing - INFO - Preprocessing Completed.
+2026-03-11 12:15:25,574 - autodml.modeling - INFO - Initiating Model Training.
+2026-03-11 12:15:25,575 - autodml.modeling - DEBUG - Training Classification Model.
+2026-03-11 12:15:26,707 - autodml.modeling - INFO - Model Training Completed.
+2026-03-11 12:15:26,707 - autodml.modeling - INFO - Selecting Best Model.
+2026-03-11 12:15:26,707 - autodml.modeling - INFO - Best Model Selected
+2026-03-11 12:15:26,707 - autodml.optimization - INFO - Starting Model Optimization.
+2026-03-11 12:16:52,163 - autodml.optimization - INFO - Model Optimization Completed.
+2026-03-11 12:16:52,163 - autodml.evaluation - INFO - Initiating Model Evaluation.
+2026-03-11 12:16:55,201 - autodml.evaluation - INFO - Evaluation Results: {'Accuracy': 1.0, 'Precision': 1.0, 'Recall': 1.0, 'F1': 1.0}
+2026-03-11 12:16:55,201 - __main__ - INFO - AUTODML Pipeline Finished.
+2026-03-11 12:17:22,091 - __main__ - INFO - Running AUTODML Pipeline.
+2026-03-11 12:17:22,091 - autodml.preprocessing - INFO - Starting Preprocessing
+2026-03-11 12:17:22,091 - autodml.preprocessing - INFO - Starting Data Validation
+2026-03-11 12:17:22,091 - autodml.preprocessing - DEBUG - Checking for error while loading data.
+2026-03-11 12:17:22,091 - autodml.preprocessing - DEBUG - Validating dataframe data type.
+2026-03-11 12:17:22,091 - autodml.preprocessing - DEBUG - Checking if dataframe is empty.
+2026-03-11 12:17:22,091 - autodml.preprocessing - DEBUG - Validating Dataset structure.
+2026-03-11 12:17:22,091 - autodml.preprocessing - DEBUG - Checking for empty data columns.
+2026-03-11 12:17:22,091 - autodml.preprocessing - DEBUG - Validating target column.
+2026-03-11 12:17:22,091 - autodml.preprocessing - DEBUG - Checking for empty dataset.
+2026-03-11 12:17:22,091 - autodml.preprocessing - INFO - Data Validation Completed.
+2026-03-11 12:17:22,091 - autodml.preprocessing - INFO - Removing Unwanted Columns.
+2026-03-11 12:17:22,091 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:17:22,091 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:17:22,098 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:17:22,098 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:17:22,099 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:17:22,102 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:17:22,104 - autodml.preprocessing - INFO - Unwanted Columns Removed.
+2026-03-11 12:17:22,104 - autodml.preprocessing - INFO - Starting Feature Types Detection.
+2026-03-11 12:17:22,104 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:17:22,106 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:17:22,116 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:17:22,118 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:17:22,848 - autodml.preprocessing - INFO - Feature Detection Completed.
+2026-03-11 12:17:22,848 - autodml.preprocessing - INFO - Detecting Problem Type.
+2026-03-11 12:17:22,848 - autodml.preprocessing - INFO - Starting Missing Value Handling.
+2026-03-11 12:17:22,848 - autodml.preprocessing - DEBUG - Imputing Categorical Values.
+2026-03-11 12:17:22,848 - autodml.preprocessing - DEBUG - Imputing Numerical Values. 
+2026-03-11 12:17:22,848 - autodml.preprocessing - INFO - Missing Value Handling Completed.
+2026-03-11 12:17:22,848 - autodml.preprocessing - INFO - Initiating Duplicate Value Handling.
+2026-03-11 12:17:22,863 - autodml.preprocessing - INFO - Duplicate Value Handling Completed.
+2026-03-11 12:17:22,863 - autodml.preprocessing - INFO - Handling Textual Data
+2026-03-11 12:17:28,333 - autodml.preprocessing - INFO - Text Feature Handling Completed
+2026-03-11 12:17:28,334 - autodml.preprocessing - INFO - Starting Skew Data Handling.
+2026-03-11 12:17:28,334 - autodml.preprocessing - INFO - Skewness Handling Completed.
+2026-03-11 12:17:28,334 - autodml.preprocessing - INFO - Handling Outliers.
+2026-03-11 12:17:28,336 - autodml.preprocessing - INFO - Ouliers Handling Completed.
+2026-03-11 12:17:28,336 - autodml.preprocessing - INFO - Extracting Datetime Features.
+2026-03-11 12:17:28,338 - autodml.preprocessing - INFO - Datetime Features Extracted.
+2026-03-11 12:17:28,339 - autodml.preprocessing - INFO - Starting Encoding.
+2026-03-11 12:17:28,345 - autodml.preprocessing - INFO - Encoding Completed.
+2026-03-11 12:17:28,345 - autodml.preprocessing - INFO - Starting Feature Scaling.
+2026-03-11 12:17:28,366 - autodml.preprocessing - INFO - Feature Scaling Completed.
+2026-03-11 12:17:28,367 - autodml.preprocessing - INFO - Dimensionality Reduction Completed.
+2026-03-11 12:17:28,367 - autodml.preprocessing - INFO - Preprocessing Completed.
+2026-03-11 12:17:28,367 - autodml.modeling - INFO - Initiating Model Training.
+2026-03-11 12:17:28,368 - autodml.modeling - DEBUG - Training Classification Model.
+2026-03-11 12:17:35,848 - autodml.modeling - INFO - Model Training Completed.
+2026-03-11 12:17:35,849 - autodml.modeling - INFO - Selecting Best Model.
+2026-03-11 12:17:35,849 - autodml.modeling - INFO - Best Model Selected
+2026-03-11 12:17:35,850 - autodml.optimization - INFO - Starting Model Optimization.
+2026-03-11 12:18:18,585 - autodml.optimization - INFO - Model Optimization Completed.
+2026-03-11 12:18:18,585 - autodml.evaluation - INFO - Initiating Model Evaluation.
+2026-03-11 12:18:19,133 - autodml.evaluation - INFO - Evaluation Results: {'Accuracy': 0.9651162790697675, 'Precision': 0.9639109997203279, 'Recall': 0.9651162790697675, 'F1': 0.9637306647758174}
+2026-03-11 12:18:19,133 - __main__ - INFO - AUTODML Pipeline Finished.
+2026-03-11 12:23:52,082 - __main__ - INFO - Running AUTODML Pipeline.
+2026-03-11 12:23:52,082 - autodml.preprocessing - INFO - Starting Preprocessing
+2026-03-11 12:23:52,082 - autodml.preprocessing - INFO - Starting Data Validation
+2026-03-11 12:23:52,082 - autodml.preprocessing - DEBUG - Checking for error while loading data.
+2026-03-11 12:23:52,082 - autodml.preprocessing - DEBUG - Validating dataframe data type.
+2026-03-11 12:23:52,082 - autodml.preprocessing - DEBUG - Checking if dataframe is empty.
+2026-03-11 12:23:52,082 - autodml.preprocessing - DEBUG - Validating Dataset structure.
+2026-03-11 12:23:52,082 - autodml.preprocessing - DEBUG - Checking for empty data columns.
+2026-03-11 12:23:52,082 - autodml.preprocessing - DEBUG - Validating target column.
+2026-03-11 12:23:52,082 - autodml.preprocessing - DEBUG - Checking for empty dataset.
+2026-03-11 12:23:52,082 - autodml.preprocessing - INFO - Data Validation Completed.
+2026-03-11 12:23:52,082 - autodml.preprocessing - INFO - Removing Unwanted Columns.
+2026-03-11 12:23:52,098 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:23:52,098 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:23:52,100 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:23:52,100 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:23:52,100 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:23:52,103 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:23:52,104 - autodml.preprocessing - INFO - Unwanted Columns Removed.
+2026-03-11 12:23:52,104 - autodml.preprocessing - INFO - Starting Feature Types Detection.
+2026-03-11 12:23:52,104 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:23:52,106 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:23:52,115 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:23:52,117 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:23:52,847 - autodml.preprocessing - INFO - Feature Detection Completed.
+2026-03-11 12:23:52,847 - autodml.preprocessing - INFO - Detecting Problem Type.
+2026-03-11 12:23:52,847 - autodml.preprocessing - INFO - Starting Missing Value Handling.
+2026-03-11 12:23:52,847 - autodml.preprocessing - DEBUG - Imputing Categorical Values.
+2026-03-11 12:23:52,847 - autodml.preprocessing - DEBUG - Imputing Numerical Values. 
+2026-03-11 12:23:52,863 - autodml.preprocessing - INFO - Missing Value Handling Completed.
+2026-03-11 12:23:52,863 - autodml.preprocessing - INFO - Initiating Duplicate Value Handling.
+2026-03-11 12:23:52,863 - autodml.preprocessing - INFO - Duplicate Value Handling Completed.
+2026-03-11 12:23:52,863 - autodml.preprocessing - INFO - Handling Textual Data
+2026-03-11 12:23:58,388 - autodml.preprocessing - INFO - Text Feature Handling Completed
+2026-03-11 12:23:58,388 - autodml.preprocessing - INFO - Starting Skew Data Handling.
+2026-03-11 12:23:58,388 - autodml.preprocessing - INFO - Skewness Handling Completed.
+2026-03-11 12:23:58,388 - autodml.preprocessing - INFO - Handling Outliers.
+2026-03-11 12:23:58,388 - autodml.preprocessing - INFO - Ouliers Handling Completed.
+2026-03-11 12:23:58,388 - autodml.preprocessing - INFO - Extracting Datetime Features.
+2026-03-11 12:23:58,394 - autodml.preprocessing - INFO - Datetime Features Extracted.
+2026-03-11 12:23:58,394 - autodml.preprocessing - INFO - Starting Encoding.
+2026-03-11 12:23:58,399 - autodml.preprocessing - INFO - Encoding Completed.
+2026-03-11 12:23:58,399 - autodml.preprocessing - INFO - Starting Feature Scaling.
+2026-03-11 12:23:58,420 - autodml.preprocessing - INFO - Feature Scaling Completed.
+2026-03-11 12:23:58,421 - autodml.preprocessing - INFO - Dimensionality Reduction Completed.
+2026-03-11 12:23:58,421 - autodml.preprocessing - INFO - Preprocessing Completed.
+2026-03-11 12:23:58,421 - autodml.modeling - INFO - Initiating Model Training.
+2026-03-11 12:23:58,422 - autodml.modeling - DEBUG - Training Classification Model.
+2026-03-11 12:24:05,162 - autodml.modeling - INFO - Model Training Completed.
+2026-03-11 12:24:05,162 - autodml.modeling - INFO - Selecting Best Model.
+2026-03-11 12:24:05,162 - autodml.modeling - INFO - Best Model Selected
+2026-03-11 12:24:05,162 - autodml.optimization - INFO - Starting Model Optimization.
+2026-03-11 12:24:35,360 - autodml.optimization - INFO - Model Optimization Completed.
+2026-03-11 12:24:35,360 - autodml.evaluation - INFO - Initiating Model Evaluation.
+2026-03-11 12:24:35,910 - autodml.evaluation - ERROR - Model evaluation failed
+Traceback (most recent call last):
+  File "D:\Project\AutoDML\autodml\evaluation.py", line 83, in evaluate
+    "Classification report": classification_report(
+  File "d:\Project\AutoDML\.venv\lib\site-packages\sklearn\utils\_param_validation.py", line 196, in wrapper
+    params = func_sig.bind(*args, **kwargs)
+  File "C:\Program Files\Python310\lib\inspect.py", line 3177, in bind
+    return self._bind(args, kwargs)
+  File "C:\Program Files\Python310\lib\inspect.py", line 3166, in _bind
+    raise TypeError(
+TypeError: got an unexpected keyword argument 'average'
+2026-03-11 12:24:36,005 - __main__ - ERROR - [AutoDML Error] [MODEL_EVALUATION_ERROR] Evaluation step failed | Details: got an unexpected keyword argument 'average'
+2026-03-11 12:25:17,499 - __main__ - INFO - Running AUTODML Pipeline.
+2026-03-11 12:25:17,499 - autodml.preprocessing - INFO - Starting Preprocessing
+2026-03-11 12:25:17,499 - autodml.preprocessing - INFO - Starting Data Validation
+2026-03-11 12:25:17,499 - autodml.preprocessing - DEBUG - Checking for error while loading data.
+2026-03-11 12:25:17,515 - autodml.preprocessing - DEBUG - Validating dataframe data type.
+2026-03-11 12:25:17,515 - autodml.preprocessing - DEBUG - Checking if dataframe is empty.
+2026-03-11 12:25:17,515 - autodml.preprocessing - DEBUG - Validating Dataset structure.
+2026-03-11 12:25:17,515 - autodml.preprocessing - DEBUG - Checking for empty data columns.
+2026-03-11 12:25:17,515 - autodml.preprocessing - DEBUG - Validating target column.
+2026-03-11 12:25:17,515 - autodml.preprocessing - DEBUG - Checking for empty dataset.
+2026-03-11 12:25:17,520 - autodml.preprocessing - INFO - Data Validation Completed.
+2026-03-11 12:25:17,520 - autodml.preprocessing - INFO - Removing Unwanted Columns.
+2026-03-11 12:25:17,520 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:25:17,522 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:25:17,522 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:25:17,523 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:25:17,524 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:25:17,526 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:25:17,526 - autodml.preprocessing - INFO - Unwanted Columns Removed.
+2026-03-11 12:25:17,526 - autodml.preprocessing - INFO - Starting Feature Types Detection.
+2026-03-11 12:25:17,526 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:25:17,530 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:25:17,540 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:25:17,542 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:25:18,263 - autodml.preprocessing - INFO - Feature Detection Completed.
+2026-03-11 12:25:18,263 - autodml.preprocessing - INFO - Detecting Problem Type.
+2026-03-11 12:25:18,263 - autodml.preprocessing - INFO - Starting Missing Value Handling.
+2026-03-11 12:25:18,279 - autodml.preprocessing - DEBUG - Imputing Categorical Values.
+2026-03-11 12:25:18,279 - autodml.preprocessing - DEBUG - Imputing Numerical Values. 
+2026-03-11 12:25:18,279 - autodml.preprocessing - INFO - Missing Value Handling Completed.
+2026-03-11 12:25:18,279 - autodml.preprocessing - INFO - Initiating Duplicate Value Handling.
+2026-03-11 12:25:18,288 - autodml.preprocessing - INFO - Duplicate Value Handling Completed.
+2026-03-11 12:25:18,288 - autodml.preprocessing - INFO - Handling Textual Data
+2026-03-11 12:25:23,792 - autodml.preprocessing - INFO - Text Feature Handling Completed
+2026-03-11 12:25:23,792 - autodml.preprocessing - INFO - Starting Skew Data Handling.
+2026-03-11 12:25:23,792 - autodml.preprocessing - INFO - Skewness Handling Completed.
+2026-03-11 12:25:23,792 - autodml.preprocessing - INFO - Handling Outliers.
+2026-03-11 12:25:23,792 - autodml.preprocessing - INFO - Ouliers Handling Completed.
+2026-03-11 12:25:23,792 - autodml.preprocessing - INFO - Extracting Datetime Features.
+2026-03-11 12:25:23,792 - autodml.preprocessing - INFO - Datetime Features Extracted.
+2026-03-11 12:25:23,792 - autodml.preprocessing - INFO - Starting Encoding.
+2026-03-11 12:25:23,811 - autodml.preprocessing - INFO - Encoding Completed.
+2026-03-11 12:25:23,811 - autodml.preprocessing - INFO - Starting Feature Scaling.
+2026-03-11 12:25:23,831 - autodml.preprocessing - INFO - Feature Scaling Completed.
+2026-03-11 12:25:23,832 - autodml.preprocessing - INFO - Dimensionality Reduction Completed.
+2026-03-11 12:25:23,832 - autodml.preprocessing - INFO - Preprocessing Completed.
+2026-03-11 12:25:23,833 - autodml.modeling - INFO - Initiating Model Training.
+2026-03-11 12:25:23,833 - autodml.modeling - DEBUG - Training Classification Model.
+2026-03-11 12:25:30,610 - autodml.modeling - INFO - Model Training Completed.
+2026-03-11 12:25:30,610 - autodml.modeling - INFO - Selecting Best Model.
+2026-03-11 12:25:30,610 - autodml.modeling - INFO - Best Model Selected
+2026-03-11 12:25:30,610 - autodml.optimization - INFO - Starting Model Optimization.
+2026-03-11 12:28:09,976 - __main__ - INFO - Running AUTODML Pipeline.
+2026-03-11 12:28:09,976 - autodml.preprocessing - INFO - Starting Preprocessing
+2026-03-11 12:28:09,976 - autodml.preprocessing - INFO - Starting Data Validation
+2026-03-11 12:28:09,976 - autodml.preprocessing - DEBUG - Checking for error while loading data.
+2026-03-11 12:28:09,976 - autodml.preprocessing - DEBUG - Validating dataframe data type.
+2026-03-11 12:28:09,976 - autodml.preprocessing - DEBUG - Checking if dataframe is empty.
+2026-03-11 12:28:09,976 - autodml.preprocessing - DEBUG - Validating Dataset structure.
+2026-03-11 12:28:09,976 - autodml.preprocessing - DEBUG - Checking for empty data columns.
+2026-03-11 12:28:09,976 - autodml.preprocessing - DEBUG - Validating target column.
+2026-03-11 12:28:09,976 - autodml.preprocessing - DEBUG - Checking for empty dataset.
+2026-03-11 12:28:09,976 - autodml.preprocessing - INFO - Data Validation Completed.
+2026-03-11 12:28:09,976 - autodml.preprocessing - INFO - Removing Unwanted Columns.
+2026-03-11 12:28:09,976 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:28:09,986 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:28:09,987 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:28:09,988 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:28:09,988 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:28:09,992 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:28:09,992 - autodml.preprocessing - INFO - Unwanted Columns Removed.
+2026-03-11 12:28:09,992 - autodml.preprocessing - INFO - Starting Feature Types Detection.
+2026-03-11 12:28:09,992 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:28:09,994 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:28:10,003 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:28:10,006 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:28:10,730 - autodml.preprocessing - INFO - Feature Detection Completed.
+2026-03-11 12:28:10,730 - autodml.preprocessing - INFO - Detecting Problem Type.
+2026-03-11 12:28:10,730 - autodml.preprocessing - INFO - Starting Missing Value Handling.
+2026-03-11 12:28:10,730 - autodml.preprocessing - DEBUG - Imputing Categorical Values.
+2026-03-11 12:28:10,730 - autodml.preprocessing - DEBUG - Imputing Numerical Values. 
+2026-03-11 12:28:10,730 - autodml.preprocessing - INFO - Missing Value Handling Completed.
+2026-03-11 12:28:10,730 - autodml.preprocessing - INFO - Initiating Duplicate Value Handling.
+2026-03-11 12:28:10,750 - autodml.preprocessing - INFO - Duplicate Value Handling Completed.
+2026-03-11 12:28:10,750 - autodml.preprocessing - INFO - Handling Textual Data
+2026-03-11 12:28:16,178 - autodml.preprocessing - INFO - Text Feature Handling Completed
+2026-03-11 12:28:16,179 - autodml.preprocessing - INFO - Starting Skew Data Handling.
+2026-03-11 12:28:16,180 - autodml.preprocessing - INFO - Skewness Handling Completed.
+2026-03-11 12:28:16,180 - autodml.preprocessing - INFO - Handling Outliers.
+2026-03-11 12:28:16,182 - autodml.preprocessing - INFO - Ouliers Handling Completed.
+2026-03-11 12:28:16,182 - autodml.preprocessing - INFO - Extracting Datetime Features.
+2026-03-11 12:28:16,184 - autodml.preprocessing - INFO - Datetime Features Extracted.
+2026-03-11 12:28:16,185 - autodml.preprocessing - INFO - Starting Encoding.
+2026-03-11 12:28:16,190 - autodml.preprocessing - INFO - Encoding Completed.
+2026-03-11 12:28:16,190 - autodml.preprocessing - INFO - Starting Feature Scaling.
+2026-03-11 12:28:16,211 - autodml.preprocessing - INFO - Feature Scaling Completed.
+2026-03-11 12:28:16,211 - autodml.preprocessing - INFO - Dimensionality Reduction Completed.
+2026-03-11 12:28:16,211 - autodml.preprocessing - INFO - Preprocessing Completed.
+2026-03-11 12:28:16,211 - autodml.modeling - INFO - Initiating Model Training.
+2026-03-11 12:28:16,213 - autodml.modeling - DEBUG - Training Classification Model.
+2026-03-11 12:28:23,701 - autodml.modeling - INFO - Model Training Completed.
+2026-03-11 12:28:23,701 - autodml.modeling - INFO - Selecting Best Model.
+2026-03-11 12:28:23,701 - autodml.modeling - INFO - Best Model Selected
+2026-03-11 12:28:23,701 - autodml.optimization - INFO - Starting Model Optimization.
+2026-03-11 12:34:03,495 - autodml.optimization - INFO - Model Optimization Completed.
+2026-03-11 12:34:03,497 - autodml.evaluation - INFO - Initiating Model Evaluation.
+2026-03-11 12:34:08,189 - autodml.evaluation - INFO - Evaluation Results: {'Accuracy': 0.9660852713178295, 'Precision': 0.9652417560728497, 'Recall': 0.9660852713178295, 'F1': 0.9653214047811465, 'ROC-AUC': 0.9022926180410231, 'Classification report': '              precision    recall  f1-score   support\n\n           0       0.97      0.99      0.98       901\n           1       0.91      0.82      0.86       131\n\n    accuracy                           0.97      1032\n   macro avg       0.94      0.90      0.92      1032\nweighted avg       0.97      0.97      0.97      1032\n', 'Confusion Matrix': array([[890,  11],
+       [ 24, 107]])}
+2026-03-11 12:34:08,193 - __main__ - INFO - AUTODML Pipeline Finished.
+2026-03-11 12:40:07,754 - __main__ - INFO - Running AUTODML Pipeline.
+2026-03-11 12:40:07,754 - autodml.preprocessing - INFO - Starting Preprocessing
+2026-03-11 12:40:07,754 - autodml.preprocessing - INFO - Starting Data Validation
+2026-03-11 12:40:07,754 - autodml.preprocessing - DEBUG - Checking for error while loading data.
+2026-03-11 12:40:07,754 - autodml.preprocessing - DEBUG - Validating dataframe data type.
+2026-03-11 12:40:07,754 - autodml.preprocessing - DEBUG - Checking if dataframe is empty.
+2026-03-11 12:40:07,754 - autodml.preprocessing - DEBUG - Validating Dataset structure.
+2026-03-11 12:40:07,754 - autodml.preprocessing - DEBUG - Checking for empty data columns.
+2026-03-11 12:40:07,754 - autodml.preprocessing - DEBUG - Validating target column.
+2026-03-11 12:40:07,754 - autodml.preprocessing - DEBUG - Checking for empty dataset.
+2026-03-11 12:40:07,754 - autodml.preprocessing - INFO - Data Validation Completed.
+2026-03-11 12:40:07,754 - autodml.preprocessing - INFO - Removing Unwanted Columns.
+2026-03-11 12:40:07,754 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:40:07,766 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:40:07,767 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:40:07,767 - autodml.preprocessing - DEBUG - Checking for unnamed columns.
+2026-03-11 12:40:07,768 - autodml.preprocessing - DEBUG - Checking for constant columns
+2026-03-11 12:40:07,771 - autodml.preprocessing - DEBUG - Checking for Duplicate Index Column.
+2026-03-11 12:40:07,772 - autodml.preprocessing - INFO - Unwanted Columns Removed.
+2026-03-11 12:40:07,773 - autodml.preprocessing - INFO - Starting Feature Types Detection.
+2026-03-11 12:40:07,773 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:40:07,775 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:40:07,841 - autodml.preprocessing - DEBUG - Checking for Null Columns.
+2026-03-11 12:40:07,841 - autodml.preprocessing - DEBUG - Checking for Constant Columns.
+2026-03-11 12:40:08,640 - autodml.preprocessing - INFO - Feature Detection Completed.
+2026-03-11 12:40:08,640 - autodml.preprocessing - INFO - Detecting Problem Type.
+2026-03-11 12:40:08,640 - autodml.preprocessing - INFO - Starting Missing Value Handling.
+2026-03-11 12:40:08,640 - autodml.preprocessing - DEBUG - Imputing Categorical Values.
+2026-03-11 12:40:08,640 - autodml.preprocessing - DEBUG - Imputing Numerical Values. 
+2026-03-11 12:40:08,640 - autodml.preprocessing - INFO - Missing Value Handling Completed.
+2026-03-11 12:40:08,640 - autodml.preprocessing - INFO - Initiating Duplicate Value Handling.
+2026-03-11 12:40:08,661 - autodml.preprocessing - INFO - Duplicate Value Handling Completed.
+2026-03-11 12:40:08,662 - autodml.preprocessing - INFO - Handling Textual Data
+2026-03-11 12:40:14,313 - autodml.preprocessing - INFO - Text Feature Handling Completed
+2026-03-11 12:40:14,313 - autodml.preprocessing - INFO - Starting Skew Data Handling.
+2026-03-11 12:40:14,313 - autodml.preprocessing - INFO - Skewness Handling Completed.
+2026-03-11 12:40:14,313 - autodml.preprocessing - INFO - Handling Outliers.
+2026-03-11 12:40:14,313 - autodml.preprocessing - INFO - Ouliers Handling Completed.
+2026-03-11 12:40:14,313 - autodml.preprocessing - INFO - Extracting Datetime Features.
+2026-03-11 12:40:14,313 - autodml.preprocessing - INFO - Datetime Features Extracted.
+2026-03-11 12:40:14,313 - autodml.preprocessing - INFO - Starting Encoding.
+2026-03-11 12:40:14,330 - autodml.preprocessing - INFO - Encoding Completed.
+2026-03-11 12:40:14,330 - autodml.preprocessing - INFO - Starting Feature Scaling.
+2026-03-11 12:40:14,351 - autodml.preprocessing - INFO - Feature Scaling Completed.
+2026-03-11 12:40:14,351 - autodml.preprocessing - INFO - Dimensionality Reduction Completed.
+2026-03-11 12:40:14,351 - autodml.preprocessing - INFO - Preprocessing Completed.
+2026-03-11 12:40:14,351 - autodml.modeling - INFO - Initiating Model Training.
+2026-03-11 12:40:14,353 - autodml.modeling - DEBUG - Training Classification Model.
+2026-03-11 12:40:22,469 - autodml.modeling - INFO - Model Training Completed.
+2026-03-11 12:40:22,469 - autodml.modeling - INFO - Selecting Best Model.
+2026-03-11 12:40:22,469 - autodml.modeling - INFO - Best Model Selected
+2026-03-11 12:40:22,469 - autodml.optimization - INFO - Starting Model Optimization.
+2026-03-11 12:48:04,611 - autodml.optimization - INFO - Model Optimization Completed.
+2026-03-11 12:48:04,611 - autodml.evaluation - INFO - Initiating Model Evaluation.
+2026-03-11 12:48:11,213 - autodml.evaluation - INFO - Evaluation Results: {'Accuracy': 0.9622093023255814, 'Precision': 0.9611424690130146, 'Recall': 0.9622093023255814, 'F1': 0.9613333327026715, 'ROC-AUC': 0.8912472345132743, 'Confusion Matrix': array([[891,  13],
+       [ 26, 102]])}
+2026-03-11 12:48:11,229 - __main__ - INFO - AUTODML Pipeline Finished.

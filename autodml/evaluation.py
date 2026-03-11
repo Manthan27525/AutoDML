@@ -8,6 +8,12 @@ from sklearn.metrics import (
     precision_score,
     recall_score,
     f1_score,
+    roc_auc_score,
+    classification_report,
+    confusion_matrix,
+    mean_absolute_percentage_error,
+    explained_variance_score,
+    mean_squared_log_error,
 )
 
 from autodml.preprocessing import Preprocessor
@@ -62,6 +68,9 @@ class Evaluator:
                     "MSE": mean_squared_error(self.y_test, predictions),
                     "RMSE": np.sqrt(mean_squared_error(self.y_test, predictions)),
                     "R2": r2_score(self.y_test, predictions),
+                    "MAPE": mean_absolute_percentage_error(self.y_test, predictions),
+                    "EVS": explained_variance_score(self.y_test, predictions),
+                    "RMSLE": np.sqrt(mean_squared_log_error(self.y_test, predictions)),
                 }
 
             else:
@@ -74,6 +83,8 @@ class Evaluator:
                         self.y_test, predictions, average="weighted"
                     ),
                     "F1": f1_score(self.y_test, predictions, average="weighted"),
+                    "ROC-AUC": roc_auc_score(self.y_test, predictions),
+                    "Confusion Matrix": confusion_matrix(self.y_test, predictions),
                 }
 
             logger.info(f"Evaluation Results: {results}")

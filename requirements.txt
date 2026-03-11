@@ -7,3 +7,4 @@ scipy
 optuna
 feature-engine
 openpyxl
+nltk
