@@ -1,6 +1,7 @@
 import optuna
 import pandas as pd
-
+import os
+import pickle
 from autodml.preprocessing import Preprocessor
 from autodml.modeling import ModelTrainer
 from sklearn.model_selection import cross_val_score
@@ -17,14 +18,21 @@ logger = get_logger(__name__)
 
 
 class ModelOptimizer:
-    def __init__(self, model_name, task_type, x_train, y_train, n_trials=30):
+    def __init__(self, model_name, task_type, x_train, y_train, n_trials=3):
         self.task_type = task_type
         self.x_train = x_train
         self.y_train = y_train
         self.n_trials = n_trials
         self.model_name = model_name
+        self.best_model = None
         self.best_score = None
         self.best_params = None
+
+    def save_model(self):
+        os.makedirs("data/model", exist_ok=True)
+        with open("data/model/model.pkl", "wb") as f:
+            pickle.dump(self.best_model, f)
+        logger.info("Model Saved Succesfuly")
 
     def optimize(self):
         logger.info("Starting Model Optimization.")
@@ -63,6 +71,16 @@ class ModelOptimizer:
             self.best_score = study.best_value
             self.best_params = study.best_params
 
+            model_class = models.get_model(
+                model_name=self.model_name, task_type=self.task_type
+            )
+
+            model = model_class(**self.best_params)
+            model.fit(self.x_train, self.y_train)
+
+            self.best_model = model
+
+            self.save_model()
             logger.info("Model Optimization Completed.")
             return study.best_value, study.best_params
 

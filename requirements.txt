@@ -8,3 +8,4 @@ optuna
 feature-engine
 openpyxl
 nltk
+pydantic
