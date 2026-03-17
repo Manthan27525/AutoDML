@@ -18,7 +18,7 @@ logger = get_logger(__name__)
 
 
 class ModelOptimizer:
-    def __init__(self, model_name, task_type, x_train, y_train, n_trials=30):
+    def __init__(self, model_name, task_type, x_train, y_train, n_trials=3):
         self.task_type = task_type
         self.x_train = x_train
         self.y_train = y_train

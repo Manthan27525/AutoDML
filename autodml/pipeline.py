@@ -6,6 +6,8 @@ from autodml.data_analysis import DataAnalyzer
 from utils.logger import get_logger
 from utils.exception import AutoDMLError
 from autodml.registry import ModelRegistry
+import numpy as np
+import pickle
 
 Models = ModelRegistry()
 logger = get_logger(__name__)
@@ -15,15 +17,19 @@ class AutoDMLPipeline:
     def __init__(self, target, df):
         self.df = df
         self.target = target
+        self.preprocessor = None
+        self.best_model_obj = None
 
     def run(self):
         try:
             logger.info("Running AUTODML Pipeline.")
             analyzer = DataAnalyzer(df=self.df, target=self.target)
             analysis = analyzer.generate_report()
-            preprocessor = Preprocessor(df=self.df, target_column=self.target)
-            x_train, x_test, y_train, y_test = preprocessor.process()
-            problem = preprocessor.problem_type
+
+            self.preprocessor = Preprocessor(df=self.df, target_column=self.target)
+            x_train, x_test, y_train, y_test = self.preprocessor.process()
+
+            problem = self.preprocessor.problem_type
             trainer = ModelTrainer(
                 x_train=x_train,
                 x_test=x_test,
@@ -31,14 +37,19 @@ class AutoDMLPipeline:
                 y_train=y_train,
                 problem_type=problem,
             )
-            model = trainer.get_model()
+
+            model_name = trainer.get_model()
             optimizer = ModelOptimizer(
-                model_name=model, task_type=problem, x_train=x_train, y_train=y_train
+                model_name=model_name,
+                task_type=problem,
+                x_train=x_train,
+                y_train=y_train,
             )
             _, param = optimizer.optimize()
+
             evaluator = Evaluator(
                 task_type=problem,
-                model=model,
+                model=model_name,
                 param=param,
                 x_train=x_train,
                 y_train=y_train,
@@ -47,31 +58,73 @@ class AutoDMLPipeline:
             )
             results = evaluator.evaluate()
 
-            models = Models.get_models(task_type=problem)
-            best_model = models[model]
-            best_params = optimizer.best_params
+            with open("data/model/model.pkl", "rb") as f:
+                self.best_model_obj = pickle.load(f)
 
-            print(results)
             logger.info("AUTODML Pipeline Finished.")
-            return best_model, best_params, results, analysis
+            return model_name, param, results, analysis
 
         except Exception as e:
             logger.error(str(e))
             raise AutoDMLError(
-                message="Error Occurred WHile Running AUTODML Pipeline", details=str(e)
+                message="Error Occurred While Running AUTODML Pipeline", details=str(e)
             )
+
+    def predict(self, input_data):
+        logger.info("Initiating Prediction.")
+        try:
+            if self.best_model_obj is None or self.preprocessor is None:
+                raise AutoDMLError(
+                    message="Prediction Error",
+                    details="Pipeline must be 'run' before calling predict.",
+                )
+
+            if isinstance(input_data, dict):
+                input_df = pd.DataFrame([input_data])
+            else:
+                input_df = input_data.copy()
+
+            processed_input = self.preprocessor.prediction_preprocessor(input_df)
+
+            # DEBUG PRINTS
+            print("--- DEBUG: PROCESSED INPUT STATS ---")
+            print(f"Shape: {processed_input.shape}")
+            print(f"Mean Value: {processed_input.mean()}")
+            print(f"Non-zero elements: {np.count_nonzero(processed_input)}")
+
+            predictions = self.best_model_obj.predict(processed_input)
+
+            if self.preprocessor.problem_type == "Classification":
+                target_encoder = self.preprocessor.encoders.get("_TARGET_")
+                if target_encoder:
+                    predictions = target_encoder.inverse_transform(predictions)
+
+            return predictions
+
+        except Exception as e:
+            logger.error(f"Prediction Failed: {str(e)}")
+            raise AutoDMLError(message="Prediction Failed", details=str(e))
 
 
 if __name__ == "__main__":
     import pandas as pd
 
-    df = pd.read_csv("temp/Student_Performance.csv")
-    target = "Performance Index"
+    df = pd.read_csv("temp/customer_subscription_churn_usage_patterns.csv")
+    target = "churn"
 
     autodml = AutoDMLPipeline(df=df, target=target)
     model, parameters, results, analysis = autodml.run()
 
-    print(model)
-    print(parameters)
-    print(results)
-    print(analysis)
+    inp = {
+        "user_id": 1,
+        "signup_date": "2023-04-15",
+        "plan_type": "Premium",
+        "monthly_fee": 699,
+        "avg_weekly_usage_hours": 1.1,
+        "support_tickets": 4,
+        "payment_failures": 1,
+        "tenure_months": 8,
+        "last_login_days_ago": 14,
+    }
+
+    print(autodml.predict(inp))

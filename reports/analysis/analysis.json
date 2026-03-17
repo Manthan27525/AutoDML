@@ -1,125 +1,183 @@
 {
     "dataset_overview": {
-        "rows": 10000,
-        "columns": 6,
-        "memory_usage_MB": 0.9489784240722656,
-        "duplicate_rows": 127
+        "rows": 2800,
+        "columns": 10,
+        "memory_usage_MB": 0.6576728820800781,
+        "duplicate_rows": 0
     },
     "column_analysis": [
         {
-            "column": "Hours Studied",
+            "column": "user_id",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 2800
+        },
+        {
+            "column": "signup_date",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 710
+        },
+        {
+            "column": "plan_type",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 3
+        },
+        {
+            "column": "monthly_fee",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 3
+        },
+        {
+            "column": "avg_weekly_usage_hours",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 246
+        },
+        {
+            "column": "support_tickets",
             "dtype": "int64",
             "missing_values": 0,
             "missing_percent": 0.0,
             "unique_values": 9
         },
         {
-            "column": "Previous Scores",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 60
-        },
-        {
-            "column": "Extracurricular Activities",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 2
-        },
-        {
-            "column": "Sleep Hours",
+            "column": "payment_failures",
             "dtype": "int64",
             "missing_values": 0,
             "missing_percent": 0.0,
             "unique_values": 6
         },
         {
-            "column": "Sample Question Papers Practiced",
+            "column": "tenure_months",
             "dtype": "int64",
             "missing_values": 0,
             "missing_percent": 0.0,
-            "unique_values": 10
+            "unique_values": 36
         },
         {
-            "column": "Performance Index",
-            "dtype": "float64",
+            "column": "last_login_days_ago",
+            "dtype": "int64",
             "missing_values": 0,
             "missing_percent": 0.0,
-            "unique_values": 91
+            "unique_values": 61
+        },
+        {
+            "column": "churn",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 2
         }
     ],
     "target_analysis": {
-        "task_type": "Regression",
-        "unique_values": 91,
+        "task_type": "Classification",
+        "unique_values": 2,
         "missing_values": 0
     },
     "numeric_analysis": {
-        "Previous Scores": {
-            "count": 10000.0,
-            "mean": 69.4457,
-            "std": 17.343152251047105,
-            "min": 40.0,
-            "25%": 54.0,
-            "50%": 69.0,
-            "75%": 85.0,
-            "max": 99.0,
-            "skewness": 0.004501683134743138
+        "avg_weekly_usage_hours": {
+            "count": 2800.0,
+            "mean": 12.891428571428571,
+            "std": 7.109690619811599,
+            "min": 0.5,
+            "25%": 6.7,
+            "50%": 12.8,
+            "75%": 19.2,
+            "max": 25.0,
+            "skewness": -0.03836165107290854
         },
-        "Performance Index": {
-            "count": 10000.0,
-            "mean": 55.2248,
-            "std": 19.212557799463344,
-            "min": 10.0,
-            "25%": 40.0,
-            "50%": 55.0,
-            "75%": 71.0,
-            "max": 100.0,
-            "skewness": -0.0017400273072201125
+        "tenure_months": {
+            "count": 2800.0,
+            "mean": 18.61285714285714,
+            "std": 10.37448737341338,
+            "min": 1.0,
+            "25%": 10.0,
+            "50%": 18.0,
+            "75%": 27.0,
+            "max": 36.0,
+            "skewness": 0.012846714672520219
+        },
+        "last_login_days_ago": {
+            "count": 2800.0,
+            "mean": 30.005,
+            "std": 17.852757399536422,
+            "min": 0.0,
+            "25%": 14.0,
+            "50%": 30.0,
+            "75%": 46.0,
+            "max": 60.0,
+            "skewness": 0.034911099018207985
         }
     },
     "outlier_analysis": {
-        "Previous Scores": {
-            "Q1": 54.0,
-            "Q3": 85.0,
-            "IQR": 31.0,
-            "lower_bound": 7.5,
-            "upper_bound": 131.5,
+        "avg_weekly_usage_hours": {
+            "Q1": 6.7,
+            "Q3": 19.2,
+            "IQR": 12.5,
+            "lower_bound": -12.05,
+            "upper_bound": 37.95,
             "outlier_count": 0,
             "outlier_percent": 0.0
         },
-        "Performance Index": {
-            "Q1": 40.0,
-            "Q3": 71.0,
-            "IQR": 31.0,
-            "lower_bound": -6.5,
-            "upper_bound": 117.5,
+        "tenure_months": {
+            "Q1": 10.0,
+            "Q3": 27.0,
+            "IQR": 17.0,
+            "lower_bound": -15.5,
+            "upper_bound": 52.5,
+            "outlier_count": 0,
+            "outlier_percent": 0.0
+        },
+        "last_login_days_ago": {
+            "Q1": 14.0,
+            "Q3": 46.0,
+            "IQR": 32.0,
+            "lower_bound": -34.0,
+            "upper_bound": 94.0,
             "outlier_count": 0,
             "outlier_percent": 0.0
         }
     },
     "categorical_analysis": {
-        "Hours Studied": {
+        "plan_type": {
+            "Categories Count": 3
+        },
+        "monthly_fee": {
+            "Categories Count": 3
+        },
+        "support_tickets": {
             "Categories Count": 9
         },
-        "Extracurricular Activities": {
-            "Categories Count": 2
-        },
-        "Sleep Hours": {
+        "payment_failures": {
             "Categories Count": 6
         },
-        "Sample Question Papers Practiced": {
-            "Categories Count": 10
+        "churn": {
+            "Categories Count": 2
         }
     },
     "correlations": {
-        "Previous Scores": {
-            "Previous Scores": 1.0,
-            "Performance Index": 0.9151891412264554
+        "avg_weekly_usage_hours": {
+            "avg_weekly_usage_hours": 1.0,
+            "tenure_months": -0.010306443041214546,
+            "last_login_days_ago": -0.002433865133973032
         },
-        "Performance Index": {
-            "Previous Scores": 0.9151891412264554,
-            "Performance Index": 1.0
+        "tenure_months": {
+            "avg_weekly_usage_hours": -0.010306443041214546,
+            "tenure_months": 1.0,
+            "last_login_days_ago": 0.017535134477037743
+        },
+        "last_login_days_ago": {
+            "avg_weekly_usage_hours": -0.002433865133973032,
+            "tenure_months": 0.017535134477037743,
+            "last_login_days_ago": 1.0
         }
     }
 }
