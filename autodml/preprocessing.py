@@ -41,7 +41,6 @@ def preprocess_text(text):
 
 class Preprocessor:
     def __init__(self, df, target_column, scale_features=True):
-        self.scaler = StandardScaler()
         self.df = df
         self.target = target_column
         self.scale_features = scale_features
@@ -53,11 +52,14 @@ class Preprocessor:
         self.x_test = None
         self.y_train = None
         self.y_test = None
-        self.scaler_fit = None
         self.encoders = {}
         self.vectorizers = {}
+        self.scaler = None
+        self.input_features = None
+        self.cat_imputer = None
+        self.num_imputer = None
+        self.skew_transformer = None
         self.pca = None
-        self.final_feature_names = None
 
     def validate(self):
         logger.info("Starting Data Validation")
@@ -281,15 +283,12 @@ class Preprocessor:
             logger.error(str(e))
             raise PreprocessingError(str(e))
 
-    def get_input_features(self):
-        self.final_feature_names = self.df.drop(columns=self.target).columns.tolist()
-
     def handling_textual_data(self):
         logger.info("Handling Textual Data")
         try:
             df = self.df
             text_cols = self.feature_types["text"]
-            self.vectorizers = {}
+            vectorizers = {}
 
             for col in text_cols:
                 if col not in df.columns:
@@ -299,21 +298,21 @@ class Preprocessor:
 
                 vectorizer = TfidfVectorizer(max_features=100)
 
-                text_matrix = vectorizer.fit_transform(df[col])
-
-                self.vectorizers[col] = vectorizer
-
+                text_matrix = vectorizer.fit_transform(df[col].astype(str))
+                df = df.reset_index(drop=True)
                 text_df = pd.DataFrame(
                     text_matrix.toarray(),
                     columns=[f"{col}_tfidf_{i}" for i in range(text_matrix.shape[1])],
                 )
 
                 df = df.drop(columns=[col])
-                df = pd.concat([df.reset_index(drop=True), text_df], axis=1)
+                vectorizers[col] = vectorizer
+                df = pd.concat([df, text_df], axis=1)
 
             self.df = df
-
+            self.vectorizers = vectorizers
             logger.info("Text Feature Handling Completed")
+
             return df
 
         except Exception as e:
@@ -369,23 +368,22 @@ class Preprocessor:
             for i in self.df.columns:
                 missing_value_report[i] = self.df[i].isna().sum()
 
-            numerical_imputer = SimpleImputer(strategy="mean")
-            categorical_imputer = SimpleImputer(strategy="most_frequent")
+            num_cols = self.feature_types["numerical"]
+            if num_cols:
+                self.num_imputer = SimpleImputer(strategy="mean")
+                self.df[num_cols] = self.num_imputer.fit_transform(self.df[num_cols])
 
-            logger.debug("Imputing Categorical Values.")
-            for i in self.feature_types["categorical"]:
-                if missing_value_report[i] > 0:
-                    self.df[i] = categorical_imputer.fit_transform(
-                        self.df[[i]]
-                    ).flatten()
-                else:
-                    pass
-            logger.debug("Imputing Numerical Values. ")
-            for i in self.feature_types["numerical"]:
-                if missing_value_report[i] > 0:
-                    self.df[i] = numerical_imputer.fit_transform(self.df[[i]]).flatten()
-                else:
-                    pass
+            cat_cols = self.feature_types["categorical"]
+            if cat_cols:
+                self.cat_imputer = SimpleImputer(strategy="most_frequent")
+                self.df[cat_cols] = self.cat_imputer.fit_transform(self.df[cat_cols])
+            else:
+                pass
+
+            id_cols = self.feature_types["id"]
+            if id_cols:
+                id_imputer = SimpleImputer(strategy="most_frequent")
+                self.df[id_cols] = id_imputer.fit_transform(self.df[id_cols])
 
         except Exception as e:
             logger.error(str(e))
@@ -420,6 +418,7 @@ class Preprocessor:
                 skewness[i] = self.df[i].skew()
                 if self.df[i].skew() > 0.5 or self.df[i].skew() > -0.5:
                     self.df[i] = transformer.fit_transform(self.df[[i]])
+                    self.skew_transformer = transformer
                 else:
                     pass
 
@@ -563,48 +562,46 @@ class Preprocessor:
             categorical = self.feature_types["categorical"]
             ids = self.feature_types["id"]
 
-            for i in categorical:
-                if i not in self.df.columns:
+            if self.problem_type == "Classification":
+                t_enc = LabelEncoder()
+                self.df[self.target] = t_enc.fit_transform(
+                    self.df[self.target].astype(str)
+                )
+                self.encoders["_TARGET_"] = t_enc
+
+            for col in categorical + ids:
+                if col == self.target or col not in self.df.columns:
                     continue
 
-                if not (
-                    self.df[i].dtype == "object" or str(self.df[i].dtype) == "category"
-                ):
-                    continue
+                n_unique = self.df[col].nunique()
 
-                self.df[i] = self.df[i].astype(str)
-
-                n_unique = self.df[i].nunique()
-
-                if n_unique == 2:
+                if n_unique <= 2:
                     enc = LabelEncoder()
-                    self.df[i] = enc.fit_transform(self.df[i])
-                    self.encoders[i] = enc
+                    self.df[col] = enc.fit_transform(self.df[col].astype(str))
+                    self.encoders[col] = enc
 
-                if n_unique > 2 and n_unique <= 10:
+                elif 2 < n_unique <= 10:
                     enc = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
-                    self.df[i] = enc.fit_transform(self.df[[i]])
-                    self.encoders[i] = enc
+                    self.df[col] = LabelEncoder().fit_transform(
+                        self.df[col].astype(str)
+                    )
+                    self.encoders[col] = LabelEncoder().fit(self.df[col].astype(str))
 
-                if n_unique > 10:
+                else:
                     enc = CountFrequencyEncoder(encoding_method="frequency")
-                    self.df[i] = enc.fit_transform(self.df[[i]])
-                    self.encoders[i] = enc
+                    self.df[[col]] = enc.fit_transform(self.df[[col]])
+                    self.encoders[col] = enc
 
-            for i in ids:
-                enc = LabelEncoder()
-                self.df[i] = enc.fit_transform(self.df[i])
-                self.encoders[i] = enc
+            self.input_features = [c for c in self.df.columns if c != self.target]
+            self.x = self.df[self.input_features]
+            self.y = self.df[self.target]
+
+            logger.info("Encoding Completed.")
+            return self.df
 
         except Exception as e:
-            logger.info(str(e))
-            raise PreprocessingError(message="Error While Encoding", details=str(e))
-
-        self.x = self.df.drop(columns=[self.target])
-        self.y = self.df[self.target]
-
-        logger.info("Encoding Completed.")
-        return self.df
+            logger.error(f"Encoding Error: {str(e)}")
+            raise PreprocessingError(str(e))
 
     def scaling(self):
         logger.info("Starting Feature Scaling.")
@@ -616,9 +613,9 @@ class Preprocessor:
             if self.scale_features:
                 x_train = scaler.fit_transform(x_train)
                 x_test = scaler.transform(x_test)
+                self.scaler = scaler
             else:
                 pass
-            self.scaler_fit = scaler
             self.x_train = x_train
             self.x_test = x_test
             self.y_train = y_train
@@ -635,7 +632,7 @@ class Preprocessor:
 
     def dimensionality_reduction(self):
         try:
-            if self.df.shape[1] > 50:
+            if self.df.shape[1] > 250:
                 logger.debug(f"{self.df.shape[1]} features found.")
                 logger.info("Initiating Dimensionality Reduction")
                 pca = PCA(n_components=10)
@@ -654,45 +651,6 @@ class Preprocessor:
                 message="Error Caused While Dimensionality Reduction", details=str(e)
             )
 
-    def prediction_preprocessor(self, data: pd.DataFrame):
-        text_cols = self.feature_types["text"]
-        for col in text_cols:
-            if col not in df.columns:
-                continue
-
-            data[col] = data[col].astype(str).apply(preprocess_text)
-
-            vectorizer = self.vectorizers[col]
-
-            text_matrix = vectorizer.transform(data[col])
-
-            text_df = pd.DataFrame(
-                text_matrix.toarray(),
-                columns=[f"{col}_tfidf_{i}" for i in range(text_matrix.shape[1])],
-            )
-
-            data = data.drop(columns=[col])
-            data = pd.concat([data.reset_index(drop=True), text_df], axis=1)
-
-        categorical = self.feature_types["categorical"]
-        ids = self.feature_types["id"]
-
-        for i in categorical:
-            encoder = self.encoders[i]
-            data[i] = encoder.transform[data[i]]
-        for i in ids:
-            encoder = self.encoders[i]
-            data[i] = encoder.transform[data[i]]
-
-        data = self.scaler_fit.transform(data)
-
-        if self.pca is None:
-            pass
-        else:
-            data = self.pca.transform(data)
-
-        return data.values
-
     def process(self):
         logger.info("Starting Preprocessing")
         self.validate()
@@ -701,7 +659,6 @@ class Preprocessor:
         self.Problem_detection()
         self.missing_value_handler()
         self.duplicate_handling()
-        self.get_input_features()
         self.handling_textual_data()
         self.skewness_handling()
         self.handle_outliers()
@@ -715,8 +672,7 @@ class Preprocessor:
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("temp/mushrooms.csv")
-    target = "class"
+    df = pd.read_excel("temp/branch.xlsx")
+    target = "Branch"
     prep = Preprocessor(df, target_column=target)
     x_train, x_test, y_train, y_test = prep.process()
-    print(prep.final_feature_names)

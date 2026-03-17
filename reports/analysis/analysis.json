@@ -1,35 +1,125 @@
 {
     "dataset_overview": {
-        "rows": 5572,
-        "columns": 2,
-        "memory_usage_MB": 1.0652704238891602,
-        "duplicate_rows": 415
+        "rows": 10000,
+        "columns": 6,
+        "memory_usage_MB": 0.9489784240722656,
+        "duplicate_rows": 127
     },
     "column_analysis": [
         {
-            "column": "Category",
+            "column": "Hours Studied",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 9
+        },
+        {
+            "column": "Previous Scores",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 60
+        },
+        {
+            "column": "Extracurricular Activities",
             "dtype": "object",
             "missing_values": 0,
             "missing_percent": 0.0,
             "unique_values": 2
         },
         {
-            "column": "Message",
-            "dtype": "object",
+            "column": "Sleep Hours",
+            "dtype": "int64",
             "missing_values": 0,
             "missing_percent": 0.0,
-            "unique_values": 5157
+            "unique_values": 6
+        },
+        {
+            "column": "Sample Question Papers Practiced",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 10
+        },
+        {
+            "column": "Performance Index",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 91
         }
     ],
     "target_analysis": {
-        "task_type": "Classification",
-        "unique_values": 2,
+        "task_type": "Regression",
+        "unique_values": 91,
         "missing_values": 0
     },
-    "categorical_analysis": {
-        "Category": {
-            "Categories Count": 2
+    "numeric_analysis": {
+        "Previous Scores": {
+            "count": 10000.0,
+            "mean": 69.4457,
+            "std": 17.343152251047105,
+            "min": 40.0,
+            "25%": 54.0,
+            "50%": 69.0,
+            "75%": 85.0,
+            "max": 99.0,
+            "skewness": 0.004501683134743138
+        },
+        "Performance Index": {
+            "count": 10000.0,
+            "mean": 55.2248,
+            "std": 19.212557799463344,
+            "min": 10.0,
+            "25%": 40.0,
+            "50%": 55.0,
+            "75%": 71.0,
+            "max": 100.0,
+            "skewness": -0.0017400273072201125
         }
     },
-    "correlations": {}
+    "outlier_analysis": {
+        "Previous Scores": {
+            "Q1": 54.0,
+            "Q3": 85.0,
+            "IQR": 31.0,
+            "lower_bound": 7.5,
+            "upper_bound": 131.5,
+            "outlier_count": 0,
+            "outlier_percent": 0.0
+        },
+        "Performance Index": {
+            "Q1": 40.0,
+            "Q3": 71.0,
+            "IQR": 31.0,
+            "lower_bound": -6.5,
+            "upper_bound": 117.5,
+            "outlier_count": 0,
+            "outlier_percent": 0.0
+        }
+    },
+    "categorical_analysis": {
+        "Hours Studied": {
+            "Categories Count": 9
+        },
+        "Extracurricular Activities": {
+            "Categories Count": 2
+        },
+        "Sleep Hours": {
+            "Categories Count": 6
+        },
+        "Sample Question Papers Practiced": {
+            "Categories Count": 10
+        }
+    },
+    "correlations": {
+        "Previous Scores": {
+            "Previous Scores": 1.0,
+            "Performance Index": 0.9151891412264554
+        },
+        "Performance Index": {
+            "Previous Scores": 0.9151891412264554,
+            "Performance Index": 1.0
+        }
+    }
 }

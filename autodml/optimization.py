@@ -18,7 +18,7 @@ logger = get_logger(__name__)
 
 
 class ModelOptimizer:
-    def __init__(self, model_name, task_type, x_train, y_train, n_trials=3):
+    def __init__(self, model_name, task_type, x_train, y_train, n_trials=30):
         self.task_type = task_type
         self.x_train = x_train
         self.y_train = y_train
@@ -74,13 +74,12 @@ class ModelOptimizer:
             model_class = models.get_model(
                 model_name=self.model_name, task_type=self.task_type
             )
-
-            model = model_class(**self.best_params)
-            model.fit(self.x_train, self.y_train)
-
-            self.best_model = model
+            best_model = model_class(**self.best_params)
+            best_model.fit(self.x_train, self.y_train)
+            self.best_model = best_model
 
             self.save_model()
+
             logger.info("Model Optimization Completed.")
             return study.best_value, study.best_params
 
