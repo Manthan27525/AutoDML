@@ -6,7 +6,7 @@ from autodml.data_analysis import DataAnalyzer
 from utils.logger import get_logger
 from utils.exception import AutoDMLError
 from autodml.registry import ModelRegistry
-import numpy as np
+import dill
 import pickle
 
 Models = ModelRegistry()
@@ -19,6 +19,9 @@ class AutoDMLPipeline:
         self.target = target
         self.preprocessor = None
         self.best_model_obj = None
+        self.input_features = None
+        self.results = None
+        self.analysis = None
 
     def run(self):
         try:
@@ -30,6 +33,7 @@ class AutoDMLPipeline:
             x_train, x_test, y_train, y_test = self.preprocessor.process()
 
             problem = self.preprocessor.problem_type
+            self.input_features = self.preprocessor.input_features
             trainer = ModelTrainer(
                 x_train=x_train,
                 x_test=x_test,
@@ -62,6 +66,8 @@ class AutoDMLPipeline:
                 self.best_model_obj = pickle.load(f)
 
             logger.info("AUTODML Pipeline Finished.")
+            self.results = results
+            self.analysis = analysis
             return model_name, param, results, analysis
 
         except Exception as e:
@@ -86,12 +92,6 @@ class AutoDMLPipeline:
 
             processed_input = self.preprocessor.prediction_preprocessor(input_df)
 
-            # DEBUG PRINTS
-            print("--- DEBUG: PROCESSED INPUT STATS ---")
-            print(f"Shape: {processed_input.shape}")
-            print(f"Mean Value: {processed_input.mean()}")
-            print(f"Non-zero elements: {np.count_nonzero(processed_input)}")
-
             predictions = self.best_model_obj.predict(processed_input)
 
             if self.preprocessor.problem_type == "Classification":
@@ -105,26 +105,17 @@ class AutoDMLPipeline:
             logger.error(f"Prediction Failed: {str(e)}")
             raise AutoDMLError(message="Prediction Failed", details=str(e))
 
+    def save(self, path="model/autodml.pkl"):
+        with open(path, "wb") as f:
+            dill.dump(self, f)
+
 
 if __name__ == "__main__":
     import pandas as pd
 
-    df = pd.read_csv("temp/customer_subscription_churn_usage_patterns.csv")
-    target = "churn"
+    df = pd.read_csv("temp/spam.csv")
+    target = "Category"
 
     autodml = AutoDMLPipeline(df=df, target=target)
-    model, parameters, results, analysis = autodml.run()
-
-    inp = {
-        "user_id": 1,
-        "signup_date": "2023-04-15",
-        "plan_type": "Premium",
-        "monthly_fee": 699,
-        "avg_weekly_usage_hours": 1.1,
-        "support_tickets": 4,
-        "payment_failures": 1,
-        "tenure_months": 8,
-        "last_login_days_ago": 14,
-    }
-
-    print(autodml.predict(inp))
+    _, _, _, _ = autodml.run()
+    autodml.save()

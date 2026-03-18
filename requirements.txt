@@ -9,3 +9,4 @@ feature-engine
 openpyxl
 nltk
 pydantic
+dill

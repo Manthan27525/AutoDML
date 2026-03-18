@@ -1,80 +1,24 @@
 {
     "dataset_overview": {
-        "rows": 2800,
-        "columns": 10,
-        "memory_usage_MB": 0.6576728820800781,
-        "duplicate_rows": 0
+        "rows": 5572,
+        "columns": 2,
+        "memory_usage_MB": 1.0652704238891602,
+        "duplicate_rows": 415
     },
     "column_analysis": [
         {
-            "column": "user_id",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 2800
-        },
-        {
-            "column": "signup_date",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 710
-        },
-        {
-            "column": "plan_type",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 3
-        },
-        {
-            "column": "monthly_fee",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 3
-        },
-        {
-            "column": "avg_weekly_usage_hours",
-            "dtype": "float64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 246
-        },
-        {
-            "column": "support_tickets",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 9
-        },
-        {
-            "column": "payment_failures",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 6
-        },
-        {
-            "column": "tenure_months",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 36
-        },
-        {
-            "column": "last_login_days_ago",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 61
-        },
-        {
-            "column": "churn",
+            "column": "Category",
             "dtype": "object",
             "missing_values": 0,
             "missing_percent": 0.0,
             "unique_values": 2
+        },
+        {
+            "column": "Message",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 5157
         }
     ],
     "target_analysis": {
@@ -82,102 +26,10 @@
         "unique_values": 2,
         "missing_values": 0
     },
-    "numeric_analysis": {
-        "avg_weekly_usage_hours": {
-            "count": 2800.0,
-            "mean": 12.891428571428571,
-            "std": 7.109690619811599,
-            "min": 0.5,
-            "25%": 6.7,
-            "50%": 12.8,
-            "75%": 19.2,
-            "max": 25.0,
-            "skewness": -0.03836165107290854
-        },
-        "tenure_months": {
-            "count": 2800.0,
-            "mean": 18.61285714285714,
-            "std": 10.37448737341338,
-            "min": 1.0,
-            "25%": 10.0,
-            "50%": 18.0,
-            "75%": 27.0,
-            "max": 36.0,
-            "skewness": 0.012846714672520219
-        },
-        "last_login_days_ago": {
-            "count": 2800.0,
-            "mean": 30.005,
-            "std": 17.852757399536422,
-            "min": 0.0,
-            "25%": 14.0,
-            "50%": 30.0,
-            "75%": 46.0,
-            "max": 60.0,
-            "skewness": 0.034911099018207985
-        }
-    },
-    "outlier_analysis": {
-        "avg_weekly_usage_hours": {
-            "Q1": 6.7,
-            "Q3": 19.2,
-            "IQR": 12.5,
-            "lower_bound": -12.05,
-            "upper_bound": 37.95,
-            "outlier_count": 0,
-            "outlier_percent": 0.0
-        },
-        "tenure_months": {
-            "Q1": 10.0,
-            "Q3": 27.0,
-            "IQR": 17.0,
-            "lower_bound": -15.5,
-            "upper_bound": 52.5,
-            "outlier_count": 0,
-            "outlier_percent": 0.0
-        },
-        "last_login_days_ago": {
-            "Q1": 14.0,
-            "Q3": 46.0,
-            "IQR": 32.0,
-            "lower_bound": -34.0,
-            "upper_bound": 94.0,
-            "outlier_count": 0,
-            "outlier_percent": 0.0
-        }
-    },
     "categorical_analysis": {
-        "plan_type": {
-            "Categories Count": 3
-        },
-        "monthly_fee": {
-            "Categories Count": 3
-        },
-        "support_tickets": {
-            "Categories Count": 9
-        },
-        "payment_failures": {
-            "Categories Count": 6
-        },
-        "churn": {
+        "Category": {
             "Categories Count": 2
         }
     },
-    "correlations": {
-        "avg_weekly_usage_hours": {
-            "avg_weekly_usage_hours": 1.0,
-            "tenure_months": -0.010306443041214546,
-            "last_login_days_ago": -0.002433865133973032
-        },
-        "tenure_months": {
-            "avg_weekly_usage_hours": -0.010306443041214546,
-            "tenure_months": 1.0,
-            "last_login_days_ago": 0.017535134477037743
-        },
-        "last_login_days_ago": {
-            "avg_weekly_usage_hours": -0.002433865133973032,
-            "tenure_months": 0.017535134477037743,
-            "last_login_days_ago": 1.0
-        }
-    }
+    "correlations": {}
 }

@@ -6,7 +6,7 @@ from utils.logger import get_logger
 from utils.exception import PreprocessingError
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import PowerTransformer
-from sklearn.preprocessing import LabelEncoder, OrdinalEncoder
+from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder
 from feature_engine.encoding import CountFrequencyEncoder
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import PCA
@@ -58,7 +58,7 @@ class Preprocessor:
         self.input_features = None
         self.cat_imputer = None
         self.num_imputer = None
-        self.skew_transformer = None
+        self.skew_transformer = {}
         self.pca = None
 
     def validate(self):
@@ -414,24 +414,29 @@ class Preprocessor:
         return self.df
 
     def skewness_handling(self):
-        transformer = PowerTransformer(method="yeo-johnson", standardize=True)
-        skewness = {}
         logger.info("Starting Skew Data Handling.")
         try:
-            for i in self.feature_types["numerical"]:
-                skewness[i] = self.df[i].skew()
-                if self.df[i].skew() > 0.5 or self.df[i].skew() > -0.5:
-                    self.df[i] = transformer.fit_transform(self.df[[i]])
-                    self.skew_transformer = transformer
-                else:
-                    pass
+            self.skew_transformer = {}
+
+            for col in self.feature_types["numerical"]:
+                if col == self.target or col not in self.df.columns:
+                    continue
+
+                skew_val = self.df[col].skew()
+
+                if abs(skew_val) > 0.5:
+                    transformer = PowerTransformer(method="yeo-johnson")
+
+                    self.df[col] = transformer.fit_transform(self.df[[col]])
+
+                    self.skew_transformer[col] = transformer
+
+            logger.info("Skewness Handling Completed.")
+            return self.df
 
         except Exception as e:
             logger.error(str(e))
             raise PreprocessingError(str(e))
-
-        logger.info("Skewness Handling Completed.")
-        return self.df, skewness
 
     def handle_outliers(self, method="auto", iqr_multiplier=1.5, z_threshold=3):
         logger.info("Handling Outliers.")
@@ -562,41 +567,78 @@ class Preprocessor:
 
     def encoding(self):
         logger.info("Starting Encoding.")
+
         try:
-            categorical = self.feature_types.get("categorical", [])
-            ids = self.feature_types.get("id", [])
+            categorical = self.feature_types["categorical"]
+            ids = self.feature_types["id"]
 
-            for col in categorical + ids:
-                if col == self.target or col not in self.df.columns:
-                    continue
+            self.encoders = {}
+            new_df = self.df.copy()
 
-                self.df[col] = self.df[col].astype(str).str.strip()
+            if self.problem_type == "Classification":
+                from sklearn.preprocessing import LabelEncoder
 
-                n_unique = self.df[col].nunique()
-
-                if n_unique <= 10:
-                    enc = OrdinalEncoder(
-                        handle_unknown="use_encoded_value", unknown_value=-1
-                    )
-
-                    self.df[[col]] = enc.fit_transform(self.df[[col]])
-                    self.encoders[col] = enc
-                    logger.info(f"Encoded {col} using OrdinalEncoder")
-                else:
-                    enc = CountFrequencyEncoder(encoding_method="frequency")
-                    self.df[[col]] = enc.fit_transform(self.df[[col]])
-                    self.encoders[col] = enc
-                    logger.info(f"Encoded {col} using FrequencyEncoder")
-
-            if self.problem_type == "Classification" and self.target in self.df.columns:
                 t_enc = LabelEncoder()
-                self.df[self.target] = t_enc.fit_transform(
-                    self.df[self.target].astype(str).str.strip()
+                new_df[self.target] = t_enc.fit_transform(
+                    new_df[self.target].astype(str)
                 )
                 self.encoders["_TARGET_"] = t_enc
-                logger.info("Encoded Target using LabelEncoder")
 
+            for col in categorical + ids:
+                if col == self.target or col not in new_df.columns:
+                    continue
+
+                try:
+                    n_unique = new_df[col].nunique()
+
+                    if n_unique <= 2:
+                        enc = OrdinalEncoder(
+                            handle_unknown="use_encoded_value", unknown_value=-1
+                        )
+
+                        new_df[col] = enc.fit_transform(
+                            new_df[[col]].astype(str)
+                        ).ravel()
+
+                        self.encoders[col] = enc
+
+                    elif 2 < n_unique <= 10:
+                        enc = OneHotEncoder(
+                            sparse_output=False, handle_unknown="ignore"
+                        )
+
+                        encoded = enc.fit_transform(new_df[[col]].astype(str))
+
+                        new_cols = [f"{col}_{cat}" for cat in enc.categories_[0]]
+
+                        encoded_df = pd.DataFrame(
+                            encoded, columns=new_cols, index=new_df.index
+                        )
+
+                        new_df = new_df.drop(columns=[col])
+                        new_df = pd.concat([new_df, encoded_df], axis=1)
+
+                        self.encoders[col] = enc
+
+                    else:
+                        new_df[col] = new_df[col].astype(str)
+
+                        enc = CountFrequencyEncoder(encoding_method="frequency")
+
+                        new_df[[col]] = enc.fit_transform(new_df[[col]])
+                        self.encoders[col] = enc
+
+                except Exception as col_error:
+                    logger.warning(f"Encoding failed for column {col}: {col_error}")
+                    continue
+
+            self.df = new_df
             self.input_features = [c for c in self.df.columns if c != self.target]
+
+            self.x = self.df[self.input_features]
+            self.y = self.df[self.target]
+
+            logger.info("Encoding Completed.")
             return self.df
 
         except Exception as e:
@@ -671,25 +713,17 @@ class Preprocessor:
         return self.x_train, self.x_test, self.y_train, self.y_test
 
     def prediction_preprocessor(self, input_df: pd.DataFrame) -> np.ndarray:
-        """
-        Processes raw input data for inference.
-        Ensures columns match training features exactly to prevent Scaler errors.
-        """
         logger.info("Processing input data for prediction.")
+
         try:
             df = input_df.copy()
 
-            # 1. Handling Textual Data (TF-IDF)
             if hasattr(self, "vectorizers") and self.vectorizers:
                 for col, vectorizer in self.vectorizers.items():
                     if col in df.columns:
-                        # Process text using the global function
                         df[col] = df[col].astype(str).apply(preprocess_text)
 
-                        # Use the fitted vectorizer
                         text_matrix = vectorizer.transform(df[col])
-
-                        # Generate names: Message_tfidf_0, Message_tfidf_1, etc.
                         text_df = pd.DataFrame(
                             text_matrix.toarray(),
                             columns=[
@@ -701,22 +735,20 @@ class Preprocessor:
                         df = df.drop(columns=[col])
                         df = pd.concat([df, text_df], axis=1)
 
-            # 2. Extract Datetime Features
             datetime_cols = self.feature_types.get("datetime", [])
             for col in datetime_cols:
                 if col in df.columns:
                     df[col] = pd.to_datetime(df[col], errors="coerce")
-                    # Note: We must replicate the EXACT logic from extract_datetime_features
+
                     df[f"{col}_year"] = df[col].dt.year
                     df[f"{col}_month"] = df[col].dt.month
                     df[f"{col}_day"] = df[col].dt.day
                     df[f"{col}_dayofweek"] = df[col].dt.dayofweek
                     df[f"{col}_quarter"] = df[col].dt.quarter
                     df[f"{col}_weekofyear"] = (
-                        df[col].dt.isocalendar().week.astype("float")
+                        df[col].dt.isocalendar().week.astype(float)
                     )
 
-                    # Cyclical encoding
                     df[f"{col}_month_sin"] = np.sin(2 * np.pi * df[f"{col}_month"] / 12)
                     df[f"{col}_month_cos"] = np.cos(2 * np.pi * df[f"{col}_month"] / 12)
                     df[f"{col}_dow_sin"] = np.sin(
@@ -725,9 +757,9 @@ class Preprocessor:
                     df[f"{col}_dow_cos"] = np.cos(
                         2 * np.pi * df[f"{col}_dayofweek"] / 7
                     )
+
                     df.drop(columns=[col], inplace=True)
 
-            # 3. Missing Value Imputation
             if self.num_imputer and self.feature_types.get("numerical"):
                 num_cols = [
                     c for c in self.feature_types["numerical"] if c in df.columns
@@ -742,55 +774,62 @@ class Preprocessor:
                 if cat_cols:
                     df[cat_cols] = self.cat_imputer.transform(df[cat_cols])
 
-            # 4. Encoding
             for col, enc in self.encoders.items():
-                if col == "_TARGET_" or col not in df.columns:
+                if col == "_TARGET_":
                     continue
 
-                # Apply the encoder (Label, OneHot, or Frequency)
-                if isinstance(enc, (LabelEncoder, CountFrequencyEncoder)):
-                    # Ensure input is 2D for FrequencyEncoder
-                    data = (
-                        df[[col]] if isinstance(enc, CountFrequencyEncoder) else df[col]
-                    )
-                    df[col] = enc.transform(data)
+                if isinstance(enc, OrdinalEncoder):
+                    if col in df.columns:
+                        df[col] = enc.transform(df[[col]].astype(str)).ravel()
 
-            # --- CRITICAL FIX: FEATURE ALIGNMENT ---
-            # This ensures the scaler sees the exact same columns as fit time.
+                elif isinstance(enc, OneHotEncoder):
+                    if col in df.columns:
+                        encoded = enc.transform(df[[col]].astype(str))
 
-            # 1. Add missing columns with 0 (e.g., if a categorical value is missing)
+                        new_cols = [f"{col}_{cat}" for cat in enc.categories_[0]]
+
+                        encoded_df = pd.DataFrame(
+                            encoded,
+                            columns=new_cols,
+                            index=df.index,
+                        )
+
+                        df = df.drop(columns=[col])
+                        df = pd.concat([df, encoded_df], axis=1)
+
+                elif isinstance(enc, CountFrequencyEncoder):
+                    if col in df.columns:
+                        df[[col]] = enc.transform(df[[col]].astype(str))
+
             missing_cols = list(set(self.input_features) - set(df.columns))
-
             if missing_cols:
-                # Create a DataFrame of zeros for all missing columns at once
-                # Now columns receives a list, and Pandas is happy.
-                missing_df = pd.DataFrame(0, index=df.index, columns=missing_cols)
+                df_missing = pd.DataFrame(0, index=df.index, columns=missing_cols)
+                df = pd.concat([df, df_missing], axis=1)
 
-                # Concatenate once to avoid fragmentation
-                df = pd.concat([df, missing_df], axis=1)
+            extra_cols = list(set(df.columns) - set(self.input_features))
+            if extra_cols:
+                df = df.drop(columns=extra_cols)
 
-            # 2. Reorder and De-fragment
             df = df[self.input_features].copy()
 
-            # 5. Scaling
-            data_final = df.values
+            if hasattr(self, "skew_transformers"):
+                for col, transformer in self.skew_transformers.items():
+                    if col in df.columns:
+                        df[col] = transformer.transform(df[[col]])
             if self.scaler:
-                data_final = self.scaler.transform(df)
+                df = pd.DataFrame(
+                    self.scaler.transform(df),
+                    columns=self.input_features,
+                    index=df.index,
+                )
 
-            # 6. PCA
             if self.pca:
-                data_final = self.pca.transform(data_final)
+                df = self.pca.transform(df)
 
-            return data_final
+            return df.values
 
         except Exception as e:
             logger.error(f"Inference Preprocessing Failed: {str(e)}")
-            raise PreprocessingError(
-                message="Inference Preprocessing Failed", details=str(e)
-            )
-
-        except Exception as e:
-            logger.error(f"Inference Preprocessing Failed: {e}")
             raise PreprocessingError(
                 message="Inference Preprocessing Failed", details=str(e)
             )
