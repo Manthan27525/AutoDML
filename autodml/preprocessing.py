@@ -394,6 +394,9 @@ class Preprocessor:
                 id_imputer = SimpleImputer(strategy="most_frequent")
                 self.df[id_cols] = id_imputer.fit_transform(self.df[id_cols])
 
+            self.cat_imputer_features = cat_cols
+            self.num_imputer_features = num_cols
+
         except Exception as e:
             logger.error(str(e))
             raise PreprocessingError(str(e))
@@ -638,9 +641,9 @@ class Preprocessor:
                     logger.warning(f"Encoding failed for column {col}: {col_error}")
                     continue
 
-            self.input = [c for c in self.df.columns if c != self.target]
             self.df = new_df
-            self.x = self.df[self.input]
+            self.input = [c for c in self.df.columns if c != self.target]
+            self.x = self.df.reindex(columns=self.input, fill_value=0)
             self.y = self.df[self.target]
 
             logger.info("Encoding Completed.")
@@ -723,6 +726,10 @@ class Preprocessor:
             pickle.dump(preprocess_text, f)
         with open("data/inputs/inputs.json", "w") as f:
             json.dump(self.input_features, f)
+        with open("data/preprocessors/catcol.pkl", "wb") as f:
+            pickle.dump(self.cat_imputer_features, f)
+        with open("data/preprocessors/numcol.pkl", "wb") as f:
+            pickle.dump(self.num_imputer_features, f)
 
     def process(self):
         logger.info("Starting Preprocessing")
