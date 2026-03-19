@@ -199,8 +199,8 @@ class DataAnalyzer:
             )
 
     def save_report(self):
-        os.makedirs("reports/analysis", exist_ok=True)
-        with open("reports/analysis/analysis.json", "w") as f:
+        os.makedirs("data/reports/", exist_ok=True)
+        with open("data/reports/analysis.json", "w") as f:
             json.dump(self.report, f, indent=4, default=Functions.convert_numpy)
 
     def generate_report(self):

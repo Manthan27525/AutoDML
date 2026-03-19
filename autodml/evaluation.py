@@ -59,8 +59,8 @@ class Evaluator:
             )
 
     def save_report(self):
-        os.makedirs("reports/evaluation", exist_ok=True)
-        with open("reports/evaluation/evaluation.json", "w") as f:
+        os.makedirs("data/reports", exist_ok=True)
+        with open("data/reports/evaluation.json", "w") as f:
             json.dump(self.result, f, indent=4, default=Functions.convert_numpy)
 
     def evaluate(self):

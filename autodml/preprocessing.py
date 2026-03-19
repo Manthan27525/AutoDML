@@ -14,6 +14,9 @@ import re
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
+import pickle
+import os
+import json
 
 logger = get_logger(__name__)
 
@@ -58,8 +61,10 @@ class Preprocessor:
         self.input_features = None
         self.cat_imputer = None
         self.num_imputer = None
-        self.skew_transformer = {}
+        self.skew_transformers = {}
         self.pca = None
+        self.input = None
+        self.input_features = None
 
     def validate(self):
         logger.info("Starting Data Validation")
@@ -411,12 +416,13 @@ class Preprocessor:
             raise PreprocessingError(str(e))
 
         logger.info("Duplicate Value Handling Completed.")
+        self.input_features = [c for c in self.df.columns if c != self.target]
         return self.df
 
     def skewness_handling(self):
         logger.info("Starting Skew Data Handling.")
         try:
-            self.skew_transformer = {}
+            self.skew_transformers = {}
 
             for col in self.feature_types["numerical"]:
                 if col == self.target or col not in self.df.columns:
@@ -429,7 +435,7 @@ class Preprocessor:
 
                     self.df[col] = transformer.fit_transform(self.df[[col]])
 
-                    self.skew_transformer[col] = transformer
+                    self.skew_transformers[col] = transformer
 
             logger.info("Skewness Handling Completed.")
             return self.df
@@ -632,10 +638,9 @@ class Preprocessor:
                     logger.warning(f"Encoding failed for column {col}: {col_error}")
                     continue
 
+            self.input = [c for c in self.df.columns if c != self.target]
             self.df = new_df
-            self.input_features = [c for c in self.df.columns if c != self.target]
-
-            self.x = self.df[self.input_features]
+            self.x = self.df[self.input]
             self.y = self.df[self.target]
 
             logger.info("Encoding Completed.")
@@ -693,6 +698,32 @@ class Preprocessor:
                 message="Error Caused While Dimensionality Reduction", details=str(e)
             )
 
+    def save_preprocessors(self):
+        os.makedirs("data/preprocessors", exist_ok=True)
+        os.makedirs("data/inputs", exist_ok=True)
+        with open("data/preprocessors/encoders.pkl", "wb") as f:
+            pickle.dump(self.encoders, f)
+        with open("data/preprocessors/vectorizers.pkl", "wb") as f:
+            pickle.dump(self.vectorizers, f)
+        with open("data/preprocessors/skewtransformers.pkl", "wb") as f:
+            pickle.dump(self.skew_transformers, f)
+        with open("data/preprocessors/scaler.pkl", "wb") as f:
+            pickle.dump(self.scaler, f)
+        with open("data/preprocessors/pca.pkl", "wb") as f:
+            pickle.dump(self.pca, f)
+        with open("data/preprocessors/featuretypes.pkl", "wb") as f:
+            pickle.dump(self.feature_types, f)
+        with open("data/preprocessors/numimputer.pkl", "wb") as f:
+            pickle.dump(self.num_imputer, f)
+        with open("data/preprocessors/catimputer.pkl", "wb") as f:
+            pickle.dump(self.cat_imputer, f)
+        with open("data/preprocessors/input.pkl", "wb") as f:
+            pickle.dump(self.input, f)
+        with open("data/preprocessors/textprocessor.pkl", "wb") as f:
+            pickle.dump(preprocess_text, f)
+        with open("data/inputs/inputs.json", "w") as f:
+            json.dump(self.input_features, f)
+
     def process(self):
         logger.info("Starting Preprocessing")
         self.validate()
@@ -708,131 +739,10 @@ class Preprocessor:
         self.encoding()
         self.scaling()
         self.dimensionality_reduction()
+        self.save_preprocessors()
 
         logger.info("Preprocessing Completed.")
         return self.x_train, self.x_test, self.y_train, self.y_test
-
-    def prediction_preprocessor(self, input_df: pd.DataFrame) -> np.ndarray:
-        logger.info("Processing input data for prediction.")
-
-        try:
-            df = input_df.copy()
-
-            if hasattr(self, "vectorizers") and self.vectorizers:
-                for col, vectorizer in self.vectorizers.items():
-                    if col in df.columns:
-                        df[col] = df[col].astype(str).apply(preprocess_text)
-
-                        text_matrix = vectorizer.transform(df[col])
-                        text_df = pd.DataFrame(
-                            text_matrix.toarray(),
-                            columns=[
-                                f"{col}_tfidf_{i}" for i in range(text_matrix.shape[1])
-                            ],
-                            index=df.index,
-                        )
-
-                        df = df.drop(columns=[col])
-                        df = pd.concat([df, text_df], axis=1)
-
-            datetime_cols = self.feature_types.get("datetime", [])
-            for col in datetime_cols:
-                if col in df.columns:
-                    df[col] = pd.to_datetime(df[col], errors="coerce")
-
-                    df[f"{col}_year"] = df[col].dt.year
-                    df[f"{col}_month"] = df[col].dt.month
-                    df[f"{col}_day"] = df[col].dt.day
-                    df[f"{col}_dayofweek"] = df[col].dt.dayofweek
-                    df[f"{col}_quarter"] = df[col].dt.quarter
-                    df[f"{col}_weekofyear"] = (
-                        df[col].dt.isocalendar().week.astype(float)
-                    )
-
-                    df[f"{col}_month_sin"] = np.sin(2 * np.pi * df[f"{col}_month"] / 12)
-                    df[f"{col}_month_cos"] = np.cos(2 * np.pi * df[f"{col}_month"] / 12)
-                    df[f"{col}_dow_sin"] = np.sin(
-                        2 * np.pi * df[f"{col}_dayofweek"] / 7
-                    )
-                    df[f"{col}_dow_cos"] = np.cos(
-                        2 * np.pi * df[f"{col}_dayofweek"] / 7
-                    )
-
-                    df.drop(columns=[col], inplace=True)
-
-            if self.num_imputer and self.feature_types.get("numerical"):
-                num_cols = [
-                    c for c in self.feature_types["numerical"] if c in df.columns
-                ]
-                if num_cols:
-                    df[num_cols] = self.num_imputer.transform(df[num_cols])
-
-            if self.cat_imputer and self.feature_types.get("categorical"):
-                cat_cols = [
-                    c for c in self.feature_types["categorical"] if c in df.columns
-                ]
-                if cat_cols:
-                    df[cat_cols] = self.cat_imputer.transform(df[cat_cols])
-
-            for col, enc in self.encoders.items():
-                if col == "_TARGET_":
-                    continue
-
-                if isinstance(enc, OrdinalEncoder):
-                    if col in df.columns:
-                        df[col] = enc.transform(df[[col]].astype(str)).ravel()
-
-                elif isinstance(enc, OneHotEncoder):
-                    if col in df.columns:
-                        encoded = enc.transform(df[[col]].astype(str))
-
-                        new_cols = [f"{col}_{cat}" for cat in enc.categories_[0]]
-
-                        encoded_df = pd.DataFrame(
-                            encoded,
-                            columns=new_cols,
-                            index=df.index,
-                        )
-
-                        df = df.drop(columns=[col])
-                        df = pd.concat([df, encoded_df], axis=1)
-
-                elif isinstance(enc, CountFrequencyEncoder):
-                    if col in df.columns:
-                        df[[col]] = enc.transform(df[[col]].astype(str))
-
-            missing_cols = list(set(self.input_features) - set(df.columns))
-            if missing_cols:
-                df_missing = pd.DataFrame(0, index=df.index, columns=missing_cols)
-                df = pd.concat([df, df_missing], axis=1)
-
-            extra_cols = list(set(df.columns) - set(self.input_features))
-            if extra_cols:
-                df = df.drop(columns=extra_cols)
-
-            df = df[self.input_features].copy()
-
-            if hasattr(self, "skew_transformers"):
-                for col, transformer in self.skew_transformers.items():
-                    if col in df.columns:
-                        df[col] = transformer.transform(df[[col]])
-            if self.scaler:
-                df = pd.DataFrame(
-                    self.scaler.transform(df),
-                    columns=self.input_features,
-                    index=df.index,
-                )
-
-            if self.pca:
-                df = self.pca.transform(df)
-
-            return df.values
-
-        except Exception as e:
-            logger.error(f"Inference Preprocessing Failed: {str(e)}")
-            raise PreprocessingError(
-                message="Inference Preprocessing Failed", details=str(e)
-            )
 
 
 if __name__ == "__main__":

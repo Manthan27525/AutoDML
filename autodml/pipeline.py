@@ -6,7 +6,6 @@ from autodml.data_analysis import DataAnalyzer
 from utils.logger import get_logger
 from utils.exception import AutoDMLError
 from autodml.registry import ModelRegistry
-import dill
 import pickle
 
 Models = ModelRegistry()
@@ -105,10 +104,6 @@ class AutoDMLPipeline:
             logger.error(f"Prediction Failed: {str(e)}")
             raise AutoDMLError(message="Prediction Failed", details=str(e))
 
-    def save(self, path="model/autodml.pkl"):
-        with open(path, "wb") as f:
-            dill.dump(self, f)
-
 
 if __name__ == "__main__":
     import pandas as pd
@@ -117,5 +112,5 @@ if __name__ == "__main__":
     target = "Category"
 
     autodml = AutoDMLPipeline(df=df, target=target)
-    _, _, _, _ = autodml.run()
-    autodml.save()
+    model_name, param, results, analysis = autodml.run()
+    print(results)
