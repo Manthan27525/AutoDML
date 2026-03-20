@@ -1,9 +1,9 @@
 import pandas as pd
 import os
 import json
-from utils.logger import get_logger
-from utils.exception import DataAnalysisError
-from utils.utiltiy import Functions
+from autodml.utils.logger import get_logger
+from autodml.utils.exception import DataAnalysisError
+from autodml.utils.utiltiy import Functions
 from autodml.preprocessing import Preprocessor
 
 

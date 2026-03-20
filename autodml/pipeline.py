@@ -3,10 +3,11 @@ from autodml.modeling import ModelTrainer
 from autodml.evaluation import Evaluator
 from autodml.optimization import ModelOptimizer
 from autodml.data_analysis import DataAnalyzer
-from utils.logger import get_logger
-from utils.exception import AutoDMLError
+from autodml.utils.logger import get_logger
+from autodml.utils.exception import AutoDMLError
 from autodml.registry import ModelRegistry
 import pickle
+from autodml.nlp.nltk_setup import download_nltk_data
 
 Models = ModelRegistry()
 logger = get_logger(__name__)
@@ -14,6 +15,7 @@ logger = get_logger(__name__)
 
 class AutoDMLPipeline:
     def __init__(self, target, df):
+        download_nltk_data()
         self.df = df
         self.target = target
         self.preprocessor = None
@@ -29,7 +31,7 @@ class AutoDMLPipeline:
             analysis = analyzer.generate_report()
 
             self.preprocessor = Preprocessor(df=self.df, target_column=self.target)
-            x_train, x_test, y_train, y_test = self.preprocessor.process()
+            x_train, x_test, y_train, y_test, meta = self.preprocessor.process()
 
             problem = self.preprocessor.problem_type
             self.input_features = self.preprocessor.input_features
@@ -67,7 +69,7 @@ class AutoDMLPipeline:
             logger.info("AUTODML Pipeline Finished.")
             self.results = results
             self.analysis = analysis
-            return model_name, param, results, analysis
+            return model_name, param, results, analysis, meta, self.best_model_obj
 
         except Exception as e:
             logger.error(str(e))

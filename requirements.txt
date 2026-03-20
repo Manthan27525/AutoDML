@@ -1,0 +1,11 @@
+scikit-learn
+pandas 
+numpy
+feature-engine
+nltk
+cloudpickle
+matplotlib
+seaborn
+optuna
+fastapi
+uvicorn

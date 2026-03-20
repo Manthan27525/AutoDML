@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-from utils.logger import get_logger
-from utils.exception import ModelTrainingError
+from autodml.utils.logger import get_logger
+from autodml.utils.exception import ModelTrainingError
 from sklearn.metrics import r2_score, f1_score
 from autodml.registry import ModelRegistry
 from autodml.preprocessing import Preprocessor

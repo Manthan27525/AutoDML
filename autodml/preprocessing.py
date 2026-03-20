@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from utils.logger import get_logger
-from utils.exception import PreprocessingError
+from autodml.utils.logger import get_logger
+from autodml.utils.exception import PreprocessingError
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import PowerTransformer
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder
@@ -14,7 +14,7 @@ import re
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
-import pickle
+import cloudpickle
 import os
 import json
 
@@ -65,6 +65,7 @@ class Preprocessor:
         self.pca = None
         self.input = None
         self.input_features = None
+        self.preprocess_text = preprocess_text
 
     def validate(self):
         logger.info("Starting Data Validation")
@@ -138,24 +139,21 @@ class Preprocessor:
         return True
 
     def remove_unwanted_columns(self) -> pd.DataFrame:
-        logger.info("Removing Unwanted Columns.")
+        logger.info("Handling Unwanted Columns.")
         try:
             columns_to_drop = []
 
             for col in self.df.columns:
-                logger.debug("Checking for unnamed columns.")
                 if col.lower().startswith("unnamed"):
                     columns_to_drop.append(col)
                     logger.info(f"Unnamed columns found : {col} and Removed.")
                     continue
 
-                logger.debug("Checking for constant columns")
                 if self.df[col].nunique(dropna=True) <= 1:
                     columns_to_drop.append(col)
                     logger.info("Removing Constant Columns.")
                     continue
 
-                logger.debug("Checking for Duplicate Index Column.")
                 if pd.api.types.is_integer_dtype(self.df[col]):
                     if (
                         self.df[col]
@@ -164,7 +162,6 @@ class Preprocessor:
                         .equals(pd.Series(range(len(self.df))))
                     ):
                         columns_to_drop.append(col)
-                        logger.info("Duplicate Index Removed.")
                         continue
 
             if columns_to_drop:
@@ -206,7 +203,6 @@ class Preprocessor:
             for col in df.columns:
                 series = df[col]
 
-                logger.debug("Checking for Null Columns.")
                 if series.isna().all():
                     feature_types["all_null"].append(col)
                     logger.warning("Null columns found !")
@@ -214,7 +210,6 @@ class Preprocessor:
 
                 non_null = series.dropna()
 
-                logger.debug("Checking for Constant Columns.")
                 if non_null.nunique() <= 1:
                     feature_types["constant"].append(col)
                     logger.warning("Constant Columns Found !")
@@ -299,7 +294,7 @@ class Preprocessor:
                 if col not in df.columns:
                     continue
 
-                df[col] = df[col].astype(str).apply(preprocess_text)
+                df[col] = df[col].astype(str).apply(self.preprocess_text)
 
                 vectorizer = TfidfVectorizer(max_features=100)
 
@@ -702,34 +697,62 @@ class Preprocessor:
             )
 
     def save_preprocessors(self):
+        enc = self.encoders
+        vec = self.vectorizers
+        skw = self.skew_transformers
+        sca = self.scaler
+        pca = self.pca
+        ft = self.feature_types
+        ni = self.num_imputer
+        ci = self.cat_imputer
+        inp = self.input
+        catcol = self.cat_imputer_features
+        numcol = self.num_imputer_features
+        pt = self.preprocess_text
+
+        meta = {
+            "encoders": enc,
+            "pca": pca,
+            "vectorizers": vec,
+            "skew_transformers": skw,
+            "scaler": sca,
+            "feature_types": ft,
+            "num_imputer": ni,
+            "cat_imputer": ci,
+            "input_features": inp,
+            "preprocess_text": pt,
+        }
+
         os.makedirs("data/preprocessors", exist_ok=True)
         os.makedirs("data/inputs", exist_ok=True)
         with open("data/preprocessors/encoders.pkl", "wb") as f:
-            pickle.dump(self.encoders, f)
+            cloudpickle.dump(enc, f)
         with open("data/preprocessors/vectorizers.pkl", "wb") as f:
-            pickle.dump(self.vectorizers, f)
+            cloudpickle.dump(vec, f)
         with open("data/preprocessors/skewtransformers.pkl", "wb") as f:
-            pickle.dump(self.skew_transformers, f)
+            cloudpickle.dump(skw, f)
         with open("data/preprocessors/scaler.pkl", "wb") as f:
-            pickle.dump(self.scaler, f)
+            cloudpickle.dump(sca, f)
         with open("data/preprocessors/pca.pkl", "wb") as f:
-            pickle.dump(self.pca, f)
+            cloudpickle.dump(pca, f)
         with open("data/preprocessors/featuretypes.pkl", "wb") as f:
-            pickle.dump(self.feature_types, f)
+            cloudpickle.dump(ft, f)
         with open("data/preprocessors/numimputer.pkl", "wb") as f:
-            pickle.dump(self.num_imputer, f)
+            cloudpickle.dump(ni, f)
         with open("data/preprocessors/catimputer.pkl", "wb") as f:
-            pickle.dump(self.cat_imputer, f)
+            cloudpickle.dump(ci, f)
         with open("data/preprocessors/input.pkl", "wb") as f:
-            pickle.dump(self.input, f)
+            cloudpickle.dump(inp, f)
         with open("data/preprocessors/textprocessor.pkl", "wb") as f:
-            pickle.dump(preprocess_text, f)
+            cloudpickle.dump(preprocess_text, f)
         with open("data/inputs/inputs.json", "w") as f:
             json.dump(self.input_features, f)
         with open("data/preprocessors/catcol.pkl", "wb") as f:
-            pickle.dump(self.cat_imputer_features, f)
+            cloudpickle.dump(catcol, f)
         with open("data/preprocessors/numcol.pkl", "wb") as f:
-            pickle.dump(self.num_imputer_features, f)
+            cloudpickle.dump(numcol, f)
+
+        return meta
 
     def process(self):
         logger.info("Starting Preprocessing")
@@ -746,14 +769,14 @@ class Preprocessor:
         self.encoding()
         self.scaling()
         self.dimensionality_reduction()
-        self.save_preprocessors()
+        meta = self.save_preprocessors()
 
         logger.info("Preprocessing Completed.")
-        return self.x_train, self.x_test, self.y_train, self.y_test
+        return self.x_train, self.x_test, self.y_train, self.y_test, meta
 
 
 if __name__ == "__main__":
     df = pd.read_excel("temp/branch.xlsx")
     target = "Branch"
     prep = Preprocessor(df, target_column=target)
-    x_train, x_test, y_train, y_test = prep.process()
+    x_train, x_test, y_train, y_test, _ = prep.process()

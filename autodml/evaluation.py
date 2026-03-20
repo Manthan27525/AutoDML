@@ -19,10 +19,10 @@ from sklearn.metrics import (
 from autodml.preprocessing import Preprocessor
 from autodml.optimization import ModelOptimizer
 from autodml.modeling import ModelTrainer
-from utils.logger import get_logger
-from utils.exception import EvaluationError, AutoDMLError
+from autodml.utils.logger import get_logger
+from autodml.utils.exception import EvaluationError, AutoDMLError
 import pandas as pd
-from utils.utiltiy import Functions
+from autodml.utils.utiltiy import Functions
 from autodml.registry import ModelRegistry
 
 

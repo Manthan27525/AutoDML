@@ -11,7 +11,7 @@ from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegress
 from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from sklearn.svm import SVC, SVR
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from utils.logger import get_logger
+from autodml.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
