@@ -9,3 +9,5 @@ seaborn
 optuna
 fastapi
 uvicorn
+streamlit
+reportlab

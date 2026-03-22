@@ -22,14 +22,21 @@ class Autodml:
         self.model = None
         self.analysis_report = None
         self.evaluation_report = None
+        self.visualizations_report = None
 
     def train(self):
         from autodml.pipeline import AutoDMLPipeline
 
         pipeline = AutoDMLPipeline(target=self.target, df=self.data)
-        _, _, self.evaluation_report, self.analysis_report, meta, self.model = (
-            pipeline.run()
-        )
+        (
+            _,
+            _,
+            self.evaluation_report,
+            self.analysis_report,
+            self.visualizations_report,
+            meta,
+            self.model,
+        ) = pipeline.run()
 
         self.encoders = meta["encoders"]
         self.pca = meta["pca"]

@@ -1,0 +1,247 @@
+{
+    "dataset_overview": {
+        "rows": 3072,
+        "columns": 11,
+        "memory_usage_MB": 0.5743408203125,
+        "duplicate_rows": 0
+    },
+    "column_analysis": [
+        {
+            "column": "Year",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 8
+        },
+        {
+            "column": "Month",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 12
+        },
+        {
+            "column": "Region",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 4
+        },
+        {
+            "column": "Model",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 8
+        },
+        {
+            "column": "Units_Sold",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 2688
+        },
+        {
+            "column": "Avg_Price_EUR",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 2924
+        },
+        {
+            "column": "Revenue_EUR",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 3072
+        },
+        {
+            "column": "BEV_Share",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 225
+        },
+        {
+            "column": "Premium_Share",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 309
+        },
+        {
+            "column": "GDP_Growth",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 242
+        },
+        {
+            "column": "Fuel_Price_Index",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 49
+        }
+    ],
+    "target_analysis": {
+        "task_type": "Regression",
+        "unique_values": 2924,
+        "missing_values": 0
+    },
+    "numeric_analysis": {
+        "Units_Sold": {
+            "count": 3072.0,
+            "mean": 7980.2880859375,
+            "std": 3174.917444014675,
+            "min": 2379.0,
+            "25%": 5225.5,
+            "50%": 7985.5,
+            "75%": 10528.25,
+            "max": 15914.0,
+            "skewness": 0.1348634314109079
+        },
+        "BEV_Share": {
+            "count": 3072.0,
+            "mean": 0.107572265625,
+            "std": 0.058098704335533005,
+            "min": -0.015,
+            "25%": 0.057,
+            "50%": 0.108,
+            "75%": 0.15725,
+            "max": 0.223,
+            "skewness": -0.003549290070238944
+        },
+        "Premium_Share": {
+            "count": 3072.0,
+            "mean": 14.660234375000002,
+            "std": 5.334603656109723,
+            "min": 5.09,
+            "25%": 12.275,
+            "50%": 16.259999999999998,
+            "75%": 18.9325,
+            "max": 20.97,
+            "skewness": -0.7834980012903202
+        },
+        "GDP_Growth": {
+            "count": 3072.0,
+            "mean": 3.0575260416666663,
+            "std": 1.0181034714503145,
+            "min": 0.1,
+            "25%": 2.37,
+            "50%": 3.0599999999999996,
+            "75%": 3.8525,
+            "max": 5.82,
+            "skewness": -0.033376973021249756
+        },
+        "Fuel_Price_Index": {
+            "count": 3072.0,
+            "mean": 1.1762239583333332,
+            "std": 0.11812300340105945,
+            "min": 0.92,
+            "25%": 1.08,
+            "50%": 1.18,
+            "75%": 1.27,
+            "max": 1.41,
+            "skewness": -0.021513112479446813
+        }
+    },
+    "outlier_analysis": {
+        "Units_Sold": {
+            "Q1": 5225.5,
+            "Q3": 10528.25,
+            "IQR": 5302.75,
+            "lower_bound": -2728.625,
+            "upper_bound": 18482.375,
+            "outlier_count": 0,
+            "outlier_percent": 0.0
+        },
+        "BEV_Share": {
+            "Q1": 0.057,
+            "Q3": 0.15725,
+            "IQR": 0.10025,
+            "lower_bound": -0.09337500000000001,
+            "upper_bound": 0.30762500000000004,
+            "outlier_count": 0,
+            "outlier_percent": 0.0
+        },
+        "Premium_Share": {
+            "Q1": 12.275,
+            "Q3": 18.9325,
+            "IQR": 6.657500000000001,
+            "lower_bound": 2.2887499999999985,
+            "upper_bound": 28.918750000000003,
+            "outlier_count": 0,
+            "outlier_percent": 0.0
+        },
+        "GDP_Growth": {
+            "Q1": 2.37,
+            "Q3": 3.8525,
+            "IQR": 1.4825,
+            "lower_bound": 0.1462500000000002,
+            "upper_bound": 6.07625,
+            "outlier_count": 8,
+            "outlier_percent": 0.26041666666666663
+        },
+        "Fuel_Price_Index": {
+            "Q1": 1.08,
+            "Q3": 1.27,
+            "IQR": 0.18999999999999995,
+            "lower_bound": 0.7950000000000002,
+            "upper_bound": 1.555,
+            "outlier_count": 0,
+            "outlier_percent": 0.0
+        }
+    },
+    "categorical_analysis": {
+        "Year": {
+            "Categories Count": 8
+        },
+        "Month": {
+            "Categories Count": 12
+        },
+        "Region": {
+            "Categories Count": 4
+        },
+        "Model": {
+            "Categories Count": 8
+        }
+    },
+    "correlations": {
+        "Units_Sold": {
+            "Units_Sold": 1.0,
+            "BEV_Share": 0.15924582869959672,
+            "Premium_Share": -0.005593740165044502,
+            "GDP_Growth": -0.015431998185444802,
+            "Fuel_Price_Index": 0.15810791240725217
+        },
+        "BEV_Share": {
+            "Units_Sold": 0.15924582869959672,
+            "BEV_Share": 1.0,
+            "Premium_Share": -0.008305550003021637,
+            "GDP_Growth": -0.029707824059527713,
+            "Fuel_Price_Index": 0.9520000120373205
+        },
+        "Premium_Share": {
+            "Units_Sold": -0.005593740165044502,
+            "BEV_Share": -0.008305550003021637,
+            "Premium_Share": 1.0,
+            "GDP_Growth": 0.02079546010242728,
+            "Fuel_Price_Index": -0.041085470289615456
+        },
+        "GDP_Growth": {
+            "Units_Sold": -0.015431998185444802,
+            "BEV_Share": -0.029707824059527713,
+            "Premium_Share": 0.02079546010242728,
+            "GDP_Growth": 1.0,
+            "Fuel_Price_Index": -0.041056481112948275
+        },
+        "Fuel_Price_Index": {
+            "Units_Sold": 0.15810791240725217,
+            "BEV_Share": 0.9520000120373205,
+            "Premium_Share": -0.041085470289615456,
+            "GDP_Growth": -0.041056481112948275,
+            "Fuel_Price_Index": 1.0
+        }
+    }
+}

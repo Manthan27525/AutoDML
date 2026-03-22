@@ -6,6 +6,7 @@ from autodml.data_analysis import DataAnalyzer
 from autodml.utils.logger import get_logger
 from autodml.utils.exception import AutoDMLError
 from autodml.registry import ModelRegistry
+from autodml.data_visualization import DataVisualizer
 import pickle
 from autodml.nlp.nltk_setup import download_nltk_data
 
@@ -66,10 +67,30 @@ class AutoDMLPipeline:
             with open("data/model/model.pkl", "rb") as f:
                 self.best_model_obj = pickle.load(f)
 
+            visualizer = DataVisualizer(
+                model=self.best_model_obj,
+                feature_names=meta["inputs"],
+                df=self.df,
+                target=problem,
+            )
+
+            plots = visualizer.generate_all_visuals()
+            reports = visualizer.generate_pdf_report(plots=plots)
+
             logger.info("AUTODML Pipeline Finished.")
             self.results = results
             self.analysis = analysis
-            return model_name, param, results, analysis, meta, self.best_model_obj
+            self.visualizations = reports
+
+            return (
+                model_name,
+                param,
+                results,
+                analysis,
+                self.visualizations,
+                meta,
+                self.best_model_obj,
+            )
 
         except Exception as e:
             logger.error(str(e))
