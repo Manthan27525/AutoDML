@@ -71,7 +71,7 @@ class AutoDMLPipeline:
                 model=self.best_model_obj,
                 feature_names=meta["inputs"],
                 df=self.df,
-                target=problem,
+                target=self.target,
             )
 
             plots = visualizer.generate_all_visuals()

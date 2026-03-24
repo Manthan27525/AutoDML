@@ -2,482 +2,485 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from autodml.utils.logger import get_logger
-from autodml.utils.exception import DataVisualizationError
+from wordcloud import WordCloud
+import os
 from reportlab.platypus import SimpleDocTemplate, Image, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
-import streamlit as st
-import os
+from reportlab.lib.pagesizes import A4
+
+from autodml.utils.logger import get_logger
+from autodml.utils.exception import DataVisualizationError
 
 logger = get_logger(__name__)
 
 sns.set_theme(style="whitegrid")
+sns.set_palette("husl")
+sns.set_context("notebook", font_scale=1.1)
+
+
+def safe_plot(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            logger.error(f"{func.__name__} failed: {str(e)}")
+            raise DataVisualizationError(
+                message=f"Error Occurred in {func.__name__}", details=str(e)
+            )
+            return None
+
+    return wrapper
 
 
 class DataVisualizer:
-    def __init__(self, model, feature_names, df: pd.DataFrame, target):
+    def __init__(self, model=None, feature_names=None, df=None, target=None):
         self.df = df
         self.target = target
         self.model = model
         self.feature_names = feature_names
 
     def clean_for_visualization(self):
-        df = self.df.copy()
+        try:
+            df = self.df.copy()
 
-        df = df.loc[:, ~df.columns.str.contains("^Unnamed")]
+            df = df.loc[:, ~df.columns.str.contains("^Unnamed")]
+            df = df.drop_duplicates()
 
-        df = df.drop_duplicates()
-
-        for col in df.columns:
-            if df[col].dtype == "object":
-                try:
+            for col in df.columns:
+                if df[col].dtype == "object":
                     parsed = pd.to_datetime(df[col], errors="coerce")
                     if parsed.notna().mean() > 0.8:
                         df[col] = parsed
-                except Exception as e:
-                    raise DataVisualizationError(
-                        message="Error Occurred While Data Visualization",
-                        details=str(e),
-                    )
+        except Exception as e:
+            logger.error(str(e))
+            raise DataVisualizationError(
+                message="Error occured while Data Visualization", details=str(e)
+            )
+
         self.df = df
         return df
 
+    def detect_dataset_type(self):
+        df = self.df
+
+        text_cols = [
+            col
+            for col in df.columns
+            if df[col].dtype == "object" and df[col].astype(str).str.len().mean() > 20
+        ]
+
+        if text_cols and len(df.columns) <= 3:
+            return "text"
+
+        return "structured"
+
+    @safe_plot
     def plot_missing_values(self):
-        try:
-            df = self.df.copy()
+        df = self.df
+        missing = df.isnull().sum()
+        missing = missing[missing > 0]
 
-            missing = df.isnull().sum()
-            missing = missing[missing > 0]
+        if missing.empty:
+            return None
 
-            if missing.empty:
-                logger.info("No missing values found")
-                return None
+        plt.figure(figsize=(8, 4))
+        missing.sort_values().plot(
+            kind="bar", color=sns.color_palette("magma", len(missing))
+        )
 
-            missing_percent = (missing / len(df)) * 100
+        plt.title("Missing Values", fontsize=14, fontweight="bold")
+        plt.tight_layout(pad=1.2)
+        return plt.gcf()
 
-            plot_df = pd.DataFrame(
-                {"Missing Count": missing, "Missing %": missing_percent}
-            ).sort_values(by="Missing Count", ascending=False)
-
-            plt.figure(figsize=(10, 5))
-
-            plot_df["Missing Count"].plot(kind="bar")
-
-            plt.title("Missing Values Analysis")
-            plt.ylabel("Count")
-            plt.xticks(rotation=45)
-            plt.tight_layout()
-
-            return plt.gcf()
-
-        except Exception as e:
-            raise DataVisualizationError(
-                message="Error Occurred While Plotting Missing Values",
-                details=str(e),
-            )
-
+    @safe_plot
     def plot_numerical_distributions(self, max_cols=6):
-        try:
-            df = self.df.copy()
+        df = self.df
+        num_cols = df.select_dtypes(include=np.number).columns[:max_cols]
 
-            num_cols = df.select_dtypes(include=np.number).columns.tolist()
+        if len(num_cols) == 0:
+            return None
 
-            if not num_cols:
-                logger.info("No numerical columns found")
-                return None
+        figs = []
 
-            num_cols = num_cols[:max_cols]
-
-            figs = []
-
-            for col in num_cols:
-                data = df[col].dropna()
-
-                if data.empty:
-                    continue
-
-                plt.figure(figsize=(6, 4))
-
-                sns.histplot(data, kde=True)
-
-                plt.title(f"Distribution of {col}")
-                plt.xlabel(col)
-                plt.ylabel("Frequency")
-                plt.tight_layout()
-
-                figs.append(plt.gcf())
-
-            return figs if figs else None
-
-        except Exception as e:
-            logger.error(str(e))
-            raise DataVisualizationError(
-                message="Error in numerical distribution plots", details=str(e)
-            )
-
-    def plot_boxplots(self, max_cols=6):
-        try:
-            df = self.df.copy()
-
-            num_cols = df.select_dtypes(include=np.number).columns.tolist()
-
-            if not num_cols:
-                logger.info("No numerical columns found for boxplots")
-                return None
-
-            num_cols = num_cols[:max_cols]
-
-            figs = []
-
-            for col in num_cols:
-                data = df[col].dropna()
-
-                if data.empty:
-                    continue
-
-                plt.figure(figsize=(6, 4))
-
-                sns.boxplot(x=data)
-
-                plt.title(f"Boxplot of {col}")
-                plt.xlabel(col)
-                plt.tight_layout()
-
-                figs.append(plt.gcf())
-
-            return figs if figs else None
-
-        except Exception as e:
-            logger.error(str(e))
-            raise DataVisualizationError(
-                message="Error in boxplot generation", details=str(e)
-            )
-
-    def plot_correlation_heatmap(self, max_cols=20):
-        try:
-            df = self.df.copy()
-
-            num_df = df.select_dtypes(include=np.number)
-
-            if num_df.shape[1] < 2:
-                logger.info("Not enough numerical features for correlation heatmap")
-                return None
-
-            if num_df.shape[1] > max_cols:
-                num_df = num_df.iloc[:, :max_cols]
-
-            corr = num_df.corr()
-
-            plt.figure(figsize=(10, 6))
-
-            sns.heatmap(corr, cmap="coolwarm", annot=False, linewidths=0.5)
-
-            plt.title("Feature Correlation Heatmap")
-            plt.tight_layout()
-
-            return plt.gcf()
-
-        except Exception as e:
-            logger.error(str(e))
-            raise DataVisualizationError(
-                message="Error in correlation heatmap", details=str(e)
-            )
-
-    def plot_target_distribution(self):
-        try:
-            df = self.df.copy()
-
-            if self.target is None or self.target not in df.columns:
-                logger.info("Target column not provided")
-                return None
-
-            target_series = df[self.target].dropna()
-
-            if target_series.empty:
-                logger.info("Target column is empty")
-                return None
+        for col in num_cols:
+            data = df[col].dropna()
+            if data.empty:
+                continue
 
             plt.figure(figsize=(6, 4))
+            sns.histplot(data, kde=True, bins=30, color=sns.color_palette()[0])
 
-            if target_series.dtype == "object" or target_series.nunique() < 20:
-                sns.countplot(x=target_series)
+            plt.title(col, fontsize=13, fontweight="bold")
+            plt.grid(alpha=0.3)
+            plt.tight_layout(pad=1.2)
+
+            figs.append(plt.gcf())
+
+        return figs if figs else None
+
+    @safe_plot
+    def plot_boxplots(self, max_cols=6):
+        df = self.df
+        num_cols = df.select_dtypes(include=np.number).columns[:max_cols]
+
+        if len(num_cols) == 0:
+            return None
+
+        figs = []
+
+        for col in num_cols:
+            data = df[col].dropna()
+            if data.empty:
+                continue
+
+            plt.figure(figsize=(6, 4))
+            sns.boxplot(x=data, color=sns.color_palette()[1])
+
+            plt.title(col, fontsize=13, fontweight="bold")
+            plt.tight_layout(pad=1.2)
+
+            figs.append(plt.gcf())
+
+        return figs if figs else None
+
+    @safe_plot
+    def plot_categorical_distributions(self, max_cols=5):
+        df = self.df
+        cat_cols = df.select_dtypes(include=["object", "category"]).columns[:max_cols]
+
+        if len(cat_cols) == 0:
+            return None
+
+        figs = []
+
+        for col in cat_cols:
+            data = df[col].dropna()
+            if data.empty:
+                continue
+
+            plt.figure(figsize=(6, 4))
+            sns.countplot(x=data, palette="viridis")
+
+            plt.xticks(rotation=45)
+            plt.title(col, fontsize=13, fontweight="bold")
+            plt.tight_layout(pad=1.2)
+
+            figs.append(plt.gcf())
+
+        return figs if figs else None
+
+    @safe_plot
+    def plot_categorical_vs_categorical(self):
+        df = self.df
+        cat_cols = df.select_dtypes(include=["object"]).columns
+
+        if len(cat_cols) < 2:
+            return None
+
+        figs = []
+
+        for i in range(len(cat_cols)):
+            for j in range(i + 1, len(cat_cols)):
+                data = df[[cat_cols[i], cat_cols[j]]].dropna()
+
+                if data.empty:
+                    continue
+
+                cross = pd.crosstab(data.iloc[:, 0], data.iloc[:, 1])
+
+                if cross.empty:
+                    continue
+
+                plt.figure(figsize=(6, 4))
+                sns.heatmap(
+                    cross,
+                    annot=True,
+                    fmt="d",
+                    cmap="coolwarm",
+                    linewidths=0.5,
+                    linecolor="white",
+                )
+
+                plt.title(f"{cat_cols[i]} vs {cat_cols[j]}", fontweight="bold")
+                plt.tight_layout(pad=1.2)
+
+                figs.append(plt.gcf())
+
+        return figs if figs else None
+
+    @safe_plot
+    def plot_numerical_vs_numerical(self):
+        df = self.df
+        num_cols = df.select_dtypes(include=np.number).columns
+
+        if len(num_cols) < 2:
+            return None
+
+        figs = []
+
+        for i in range(len(num_cols)):
+            for j in range(i + 1, len(num_cols)):
+                data = df[[num_cols[i], num_cols[j]]].dropna()
+
+                if data.empty:
+                    continue
+
+                plt.figure(figsize=(6, 4))
+                sns.scatterplot(
+                    x=data.iloc[:, 0],
+                    y=data.iloc[:, 1],
+                    alpha=0.7,
+                    color=sns.color_palette()[2],
+                )
+
+                plt.title(f"{num_cols[i]} vs {num_cols[j]}", fontweight="bold")
+                plt.tight_layout(pad=1.2)
+
+                figs.append(plt.gcf())
+
+        return figs if figs else None
+
+    @safe_plot
+    def plot_numerical_vs_categorical(self):
+        df = self.df
+        num_cols = df.select_dtypes(include=np.number).columns
+        cat_cols = df.select_dtypes(include=["object"]).columns
+
+        if len(num_cols) == 0 or len(cat_cols) == 0:
+            return None
+
+        figs = []
+
+        for num in num_cols:
+            for cat in cat_cols:
+                data = df[[num, cat]].dropna()
+
+                if data.empty:
+                    continue
+
+                plt.figure(figsize=(6, 4))
+                sns.boxplot(x=cat, y=num, data=data, palette="Set2")
+
                 plt.xticks(rotation=45)
-                plt.title(f"Target Distribution (Classification): {self.target}")
-            else:
-                sns.histplot(target_series, kde=True)
-                plt.title(f"Target Distribution (Regression): {self.target}")
-
-            plt.tight_layout()
-
-            return plt.gcf()
-
-        except Exception as e:
-            logger.error(str(e))
-            raise DataVisualizationError(
-                message="Error in target distribution plot", details=str(e)
-            )
-
-    def plot_feature_vs_target(self, max_cols=5):
-        try:
-            df = self.df.copy()
-
-            if self.target is None or self.target not in df.columns:
-                logger.info("Target column not provided")
-                return None
-
-            target = df[self.target]
-            figs = []
-
-            num_cols = df.select_dtypes(include=np.number).columns.tolist()
-            cat_cols = df.select_dtypes(include=["object", "category"]).columns.tolist()
-
-            if self.target in num_cols:
-                num_cols.remove(self.target)
-            if self.target in cat_cols:
-                cat_cols.remove(self.target)
-
-            is_classification = target.dtype == "object" or target.nunique() < 20
-
-            for col in num_cols[:max_cols]:
-                data = df[[col, self.target]].dropna()
-
-                if data.empty:
-                    continue
-
-                plt.figure(figsize=(6, 4))
-
-                if is_classification:
-                    sns.boxplot(x=data[self.target], y=data[col])
-                    plt.title(f"{col} vs {self.target} (Class Distribution)")
-                else:
-                    sns.scatterplot(x=data[col], y=data[self.target])
-                    plt.title(f"{col} vs {self.target} (Regression)")
-
-                plt.tight_layout()
-                figs.append(plt.gcf())
-
-            for col in cat_cols[:max_cols]:
-                data = df[[col, self.target]].dropna()
-
-                if data.empty:
-                    continue
-
-                top_categories = data[col].value_counts().index[:10]
-                data = data[data[col].isin(top_categories)]
-
-                plt.figure(figsize=(6, 4))
-
-                if is_classification:
-                    sns.countplot(x=col, hue=self.target, data=data)
-                    plt.title(f"{col} vs {self.target}")
-                    plt.xticks(rotation=45)
-                else:
-                    sns.boxplot(x=col, y=self.target, data=data)
-                    plt.title(f"{col} vs {self.target}")
-                    plt.xticks(rotation=45)
-
-                plt.tight_layout()
-                figs.append(plt.gcf())
-
-            return figs if figs else None
-
-        except Exception as e:
-            logger.error(str(e))
-            raise DataVisualizationError(
-                message="Error in feature vs target plots", details=str(e)
-            )
-
-    def plot_categorical_distributions(self, max_cols=5, top_n=10):
-        try:
-            df = self.df.copy()
-
-            cat_cols = df.select_dtypes(include=["object", "category"]).columns.tolist()
-
-            if not cat_cols:
-                logger.info("No categorical columns found")
-                return None
-
-            cat_cols = cat_cols[:max_cols]
-
-            figs = []
-
-            for col in cat_cols:
-                data = df[col].dropna()
-
-                if data.empty:
-                    continue
-
-                top_categories = data.value_counts().head(top_n)
-
-                plt.figure(figsize=(6, 4))
-
-                top_categories.plot(kind="bar")
-
-                plt.title(f"Top {top_n} Categories in {col}")
-                plt.xlabel(col)
-                plt.ylabel("Count")
-                plt.xticks(rotation=45)
-                plt.tight_layout()
+                plt.title(f"{num} vs {cat}", fontweight="bold")
+                plt.tight_layout(pad=1.2)
 
                 figs.append(plt.gcf())
 
-            return figs if figs else None
+        return figs if figs else None
 
-        except Exception as e:
-            logger.error(str(e))
-            raise DataVisualizationError(
-                message="Error in categorical distribution plots", details=str(e)
-            )
+    @safe_plot
+    def plot_target_distribution(self):
+        df = self.df
 
-    def plot_feature_importance(self, top_n=15):
-        try:
-            model = self.model
+        if not self.target or self.target not in df.columns:
+            return None
 
-            if model is None:
-                logger.info("Model not provided")
-                return None
+        data = df[self.target].dropna()
 
-            importances = None
+        if data.empty:
+            return None
 
-            if hasattr(model, "feature_importances_"):
-                importances = model.feature_importances_
+        plt.figure(figsize=(6, 4))
 
-            elif hasattr(model, "coef_"):
-                importances = np.abs(model.coef_)
-                if isinstance(importances, np.ndarray) and importances.ndim > 1:
-                    importances = importances.flatten()
+        if data.dtype == "object" or data.nunique() < 20:
+            sns.countplot(x=data, palette="viridis")
+            plt.xticks(rotation=45)
+        else:
+            sns.histplot(data, kde=True, color=sns.color_palette()[3])
 
-            if importances is None:
-                logger.info("Model does not support feature importance")
-                return None
+        plt.title(f"Target: {self.target}", fontweight="bold")
+        plt.tight_layout(pad=1.2)
 
-            feature_names = self.feature_names
+        return plt.gcf()
 
-            if feature_names is None or len(feature_names) != len(importances):
-                feature_names = [f"Feature_{i}" for i in range(len(importances))]
+    @safe_plot
+    def plot_wordcloud(self):
+        df = self.df
 
-            imp_df = pd.DataFrame({"feature": feature_names, "importance": importances})
+        text_cols = [
+            col
+            for col in df.columns
+            if df[col].dtype == "object" and df[col].astype(str).str.len().mean() > 20
+        ]
 
-            imp_df = imp_df.sort_values(by="importance", ascending=False).head(top_n)
+        if not text_cols:
+            return None
 
-            plt.figure(figsize=(8, 5))
+        text = " ".join(df[text_cols[0]].dropna().astype(str))
 
-            sns.barplot(x="importance", y="feature", data=imp_df)
+        if not text.strip():
+            return None
 
-            plt.title("Top Feature Importance")
-            plt.tight_layout()
+        wc = WordCloud(
+            width=800,
+            height=400,
+            background_color="white",
+            colormap="viridis",
+        ).generate(text)
 
-            return plt.gcf()
+        plt.figure(figsize=(8, 4))
+        plt.imshow(wc)
+        plt.axis("off")
+        plt.tight_layout(pad=1.2)
 
-        except Exception as e:
-            logger.error(str(e))
-            raise DataVisualizationError(
-                message="Error in feature importance plot", details=str(e)
-            )
+        return plt.gcf()
+
+    @safe_plot
+    def plot_feature_importance(self):
+        if self.model is None:
+            return None
+
+        importances = None
+
+        if hasattr(self.model, "feature_importances_"):
+            importances = self.model.feature_importances_
+
+        elif hasattr(self.model, "coef_"):
+            importances = np.abs(self.model.coef_)
+
+            if isinstance(importances, np.ndarray) and importances.ndim > 1:
+                importances = importances.flatten()
+
+        if importances is None:
+            return None
+
+        feature_names = self.feature_names
+
+        if feature_names is None or len(feature_names) != len(importances):
+            logger.warning("Feature names mismatch — auto generating names")
+            feature_names = [f"Feature_{i}" for i in range(len(importances))]
+
+        df_imp = pd.DataFrame({"feature": feature_names, "importance": importances})
+
+        df_imp = df_imp.sort_values(by="importance", ascending=False).head(15)
+
+        plt.figure(figsize=(6, 4))
+        sns.barplot(
+            x="importance",
+            y="feature",
+            data=df_imp,
+            hue="feature",
+            palette="magma",
+            legend=False,
+        )
+
+        plt.title("Feature Importance", fontweight="bold")
+        plt.tight_layout()
+
+        fig = plt.gcf()
+        plt.close()
+
+        return fig
 
     def generate_all_visuals(self):
-        return {
-            "missing": self.plot_missing_values(),
-            "distributions": self.plot_numerical_distributions(),
-            "boxplots": self.plot_boxplots(),
-            "correlation": self.plot_correlation_heatmap(),
-            "target": self.plot_target_distribution(),
-            "feature_vs_target": self.plot_feature_vs_target(),
-            "categorical": self.plot_categorical_distributions(),
-            "feature_importance": self.plot_feature_importance(),
-        }
+        self.clean_for_visualization()
+        mode = self.detect_dataset_type()
 
-    def save_plots(self, plots: dict, folder="data/plots"):
-        os.makedirs(folder, exist_ok=True)
+        plots = {}
 
-        for name, plot in plots.items():
-            if plot is None:
-                continue
+        if mode == "text":
+            logger.info("Text dataset detected")
+            plots["wordcloud"] = self.plot_wordcloud()
+            plots["target"] = self.plot_target_distribution()
+            return plots
 
-            if isinstance(plot, list):
-                for i, fig in enumerate(plot):
-                    fig.savefig(f"{folder}/{name}_{i}.png")
-            else:
-                plot.savefig(f"{folder}/{name}.png")
+        logger.info("Structured dataset detected")
 
-    def generate_html_report(self, plots, output_file="data/reports/report.html"):
-        self.save_plots(plots)
-        os.makedirs("data/reports", exist_ok=True)
+        plots["missing"] = self.plot_missing_values()
+        plots["num_dist"] = self.plot_numerical_distributions()
+        plots["box"] = self.plot_boxplots()
+        plots["cat"] = self.plot_categorical_distributions()
+        plots["target"] = self.plot_target_distribution()
+        plots["cat_vs_cat"] = self.plot_categorical_vs_categorical()
+        plots["num_vs_cat"] = self.plot_numerical_vs_categorical()
+        plots["num_vs_num"] = self.plot_numerical_vs_numerical()
+        plots["feature_imp"] = self.plot_feature_importance()
 
-        html = "<html><head><title>AutoDML Report</title></head><body>"
-        html += "<h1>AutoDML Analysis Report</h1>"
+        return plots
+
+    def save_plots(self, plots):
+        os.makedirs("data/plots", exist_ok=True)
 
         for name, plot in plots.items():
-            if plot is None:
+            if not plot:
                 continue
 
-            html += f"<h2>{name.replace('_', ' ').title()}</h2>"
-
-            if isinstance(plot, list):
-                for i, fig in enumerate(plot):
-                    path = f"data/plots/{name}_{i}.png"
-                    fig.savefig(path)
-                    html += f"<img src='{path}' width='600'><br>"
-            else:
-                path = f"data/plots/{name}.png"
-                plot.savefig(path)
-                html += f"<img src='{path}' width='600'><br>"
-
-        html += "</body></html>"
-
-        with open(output_file, "w") as f:
-            f.write(html)
-
-        return output_file
+            try:
+                if isinstance(plot, list):
+                    for i, fig in enumerate(plot):
+                        fig.savefig(f"data/plots/{name}_{i}.png")
+                        plt.close(fig)
+                else:
+                    plot.savefig(f"data/plots/{name}.png")
+                    plt.close(plot)
+            except Exception as e:
+                logger.error(f"Failed saving {name}: {str(e)}")
 
     def generate_pdf_report(self, plots, output_file="data/reports/report.pdf"):
-        os.makedirs("data/reports", exist_ok=True)
+        try:
+            os.makedirs("data/plots", exist_ok=True)
+            os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
-        doc = SimpleDocTemplate(output_file)
-        styles = getSampleStyleSheet()
+            doc = SimpleDocTemplate(output_file, pagesize=A4)
+            styles = getSampleStyleSheet()
 
-        elements = []
+            elements = []
 
-        elements.append(Paragraph("AutoDML Report", styles["Title"]))
-        elements.append(Spacer(1, 20))
-
-        for name, plot in plots.items():
-            if plot is None:
-                continue
-
-            elements.append(
-                Paragraph(name.replace("_", " ").title(), styles["Heading2"])
-            )
-
-            if isinstance(plot, list):
-                for i, fig in enumerate(plot):
-                    path = f"data/plots/{name}_{i}.png"
-                    fig.savefig(path)
-                    elements.append(Image(path, width=400, height=250))
-            else:
-                path = f"data/plots/{name}.png"
-                plot.savefig(path)
-                elements.append(Image(path, width=400, height=250))
-
+            elements.append(Paragraph("AutoDML Report", styles["Title"]))
             elements.append(Spacer(1, 20))
 
-        doc.build(elements)
+            try:
+                elements.append(
+                    Paragraph(f"Dataset Shape: {self.df.shape}", styles["Normal"])
+                )
+                elements.append(Spacer(1, 15))
+            except Exception as e:
+                raise DataVisualizationError(
+                    message="Error Occurred While Generating Report", details=str(e)
+                )
+            for name, plot in plots.items():
+                if not plot:
+                    continue
 
-        return output_file
+                elements.append(
+                    Paragraph(name.replace("_", " ").title(), styles["Heading2"])
+                )
+                elements.append(Spacer(1, 10))
 
+                try:
+                    if isinstance(plot, list):
+                        for i, fig in enumerate(plot):
+                            if fig is None:
+                                continue
 
-if __name__ == "__main__":
-    df = pd.read_csv("temp/bmw_sales.csv")
-    visualizer = DataVisualizer(df=df, target="Avg_Price_EUR")
-    plots = visualizer.generate_all()
+                            img_path = f"data/plots/{name}_{i}.png"
 
-    st.title("AutoDML Dashboard")
+                            fig.savefig(img_path)
+                            plt.close(fig)
 
-    for key, value in plots.items():
-        st.subheader(key)
+                            elements.append(Image(img_path, width=450, height=250))
+                            elements.append(Spacer(1, 15))
 
-        if isinstance(value, list):
-            for fig in value:
-                st.pyplot(fig)
-        elif value:
-            st.pyplot(value)
+                    else:
+                        img_path = f"data/plots/{name}.png"
+
+                        plot.savefig(img_path)
+                        plt.close(plot)
+
+                        elements.append(Image(img_path, width=450, height=250))
+                        elements.append(Spacer(1, 15))
+
+                except Exception as e:
+                    logger.error(f"Error adding plot {name}: {str(e)}")
+                    continue
+
+            doc.build(elements)
+
+            logger.info(f"PDF report generated at {output_file}")
+            return output_file
+
+        except Exception as e:
+            raise DataVisualizationError(
+                message="Error generating PDF report", details=str(e)
+            )

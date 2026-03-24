@@ -11,3 +11,5 @@ fastapi
 uvicorn
 streamlit
 reportlab
+wordcloud
+s
