@@ -67,11 +67,14 @@ class AutoDMLPipeline:
             with open("data/model/model.pkl", "rb") as f:
                 self.best_model_obj = pickle.load(f)
 
+            ft = self.preprocessor.feature_types
+
             visualizer = DataVisualizer(
                 model=self.best_model_obj,
                 feature_names=meta["inputs"],
                 df=self.df,
                 target=self.target,
+                feature_types=ft,
             )
 
             plots = visualizer.generate_all_visuals()

@@ -1,0 +1,35 @@
+{
+    "dataset_overview": {
+        "rows": 5572,
+        "columns": 2,
+        "memory_usage_MB": 1.0652704238891602,
+        "duplicate_rows": 415
+    },
+    "column_analysis": [
+        {
+            "column": "Category",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 2
+        },
+        {
+            "column": "Message",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 5157
+        }
+    ],
+    "target_analysis": {
+        "task_type": "Classification",
+        "unique_values": 2,
+        "missing_values": 0
+    },
+    "categorical_analysis": {
+        "Category": {
+            "Categories Count": 2
+        }
+    },
+    "correlations": {}
+}
