@@ -12,4 +12,4 @@ uvicorn
 streamlit
 reportlab
 wordcloud
-s
+python-multipart
