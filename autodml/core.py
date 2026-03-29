@@ -18,7 +18,7 @@ class Autodml:
         self.scaler = None
         self.skew_transformers = None
         self.vectorizers = None
-
+        self.inputs = None
         self.model = None
         self.analysis_report = None
         self.evaluation_report = None
@@ -48,6 +48,7 @@ class Autodml:
         self.cat_imputer = meta["cat_imputer"]
         self.input_features = meta["input_features"]
         self.preprocess_text = meta["preprocess_text"]
+        self.inputs = meta["inputs"]
 
         return self
 
@@ -84,14 +85,21 @@ class Autodml:
 
         if self.num_imputer:
             num_cols = self.feature_types["numerical"]
-            df[num_cols] = self.num_imputer.transform(df[num_cols])
+            available_num_cols = [col for col in num_cols if col in df.columns]
+            df[available_num_cols] = self.num_imputer.transform(df[available_num_cols])
 
         if self.cat_imputer:
             cat_cols = self.feature_types["categorical"]
-            df[cat_cols] = self.cat_imputer.transform(df[cat_cols])
+            available_cat_cols = [col for col in cat_cols if col in df.columns]
+            df[available_cat_cols] = self.cat_imputer.transform(df[available_cat_cols])
 
         from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder
         from feature_engine.encoding import CountFrequencyEncoder
+
+        if self.skew_transformers:
+            for col, transformer in self.skew_transformers.items():
+                if col in df.columns:
+                    df[col] = transformer.transform(df[[col]])
 
         for col, enc in self.encoders.items():
             if col == "_TARGET_":
@@ -111,33 +119,32 @@ class Autodml:
             elif isinstance(enc, CountFrequencyEncoder) and col in df.columns:
                 df[[col]] = enc.transform(df[[col]].astype(str))
 
-        missing_cols = list(set(self.input_features) - set(df.columns))
+        df = df.reindex(columns=self.inputs, fill_value=0)
+        missing_cols = list(set(self.inputs) - set(df.columns))
         if missing_cols:
             df = pd.concat(
                 [df, pd.DataFrame(0, index=df.index, columns=missing_cols)], axis=1
             )
 
-        df = df[self.input_features]
-
-        if self.skew_transformers:
-            for col, transformer in self.skew_transformers.items():
-                if col in df.columns:
-                    df[col] = transformer.transform(df[[col]])
+        df = df[self.inputs]
 
         if self.scaler:
             df = pd.DataFrame(
                 self.scaler.transform(df),
-                columns=self.input_features,
+                columns=self.inputs,
                 index=df.index,
             )
 
         if self.pca:
             df = self.pca.transform(df)
 
+        df = df.fillna(0)
+
         return df
 
     def predict(self, data):
         df = pd.DataFrame([data])
+
         X = self._preprocess(df)
         preds = self.model.predict(X)
 

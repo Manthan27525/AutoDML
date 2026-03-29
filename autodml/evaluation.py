@@ -11,7 +11,6 @@ from sklearn.metrics import (
     recall_score,
     f1_score,
     roc_auc_score,
-    confusion_matrix,
     mean_absolute_percentage_error,
     explained_variance_score,
 )
@@ -72,26 +71,29 @@ class Evaluator:
 
             if self.task_type == "Regression":
                 results = {
-                    "MAE": mean_absolute_error(self.y_test, predictions),
-                    "MSE": mean_squared_error(self.y_test, predictions),
-                    "RMSE": np.sqrt(mean_squared_error(self.y_test, predictions)),
-                    "R2": r2_score(self.y_test, predictions),
-                    "MAPE": mean_absolute_percentage_error(self.y_test, predictions),
-                    "EVS": explained_variance_score(self.y_test, predictions),
+                    "MAE": float(mean_absolute_error(self.y_test, predictions)),
+                    "MSE": float(mean_squared_error(self.y_test, predictions)),
+                    "RMSE": float(
+                        np.sqrt(mean_squared_error(self.y_test, predictions))
+                    ),
+                    "R2": float(r2_score(self.y_test, predictions)),
+                    "MAPE": float(
+                        mean_absolute_percentage_error(self.y_test, predictions)
+                    ),
+                    "EVS": float(explained_variance_score(self.y_test, predictions)),
                 }
 
             else:
                 results = {
-                    "Accuracy": accuracy_score(self.y_test, predictions),
-                    "Precision": precision_score(
-                        self.y_test, predictions, average="weighted"
+                    "Accuracy": float(accuracy_score(self.y_test, predictions)),
+                    "Precision": float(
+                        precision_score(self.y_test, predictions, average="weighted")
                     ),
-                    "Recall": recall_score(
-                        self.y_test, predictions, average="weighted"
+                    "Recall": float(
+                        recall_score(self.y_test, predictions, average="weighted")
                     ),
-                    "F1": f1_score(self.y_test, predictions, average="weighted"),
-                    "ROC-AUC": roc_auc_score(self.y_test, predictions),
-                    "Confusion Matrix": confusion_matrix(self.y_test, predictions),
+                    "F1": float(f1_score(self.y_test, predictions, average="weighted")),
+                    "ROC-AUC": float(roc_auc_score(self.y_test, predictions)),
                 }
 
             logger.info(f"Evaluation Results: {results}")

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File, Body
+from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import FileResponse
 import pandas as pd
 import os
@@ -45,7 +45,7 @@ async def train_model(target: str, file: UploadFile = File(...)):
 
         return {
             "message": "Model trained successfully ",
-            "shape": df.shape,
+            "shape": (int(df.shape[0]), int(df.shape[1])),
             "columns": df.columns.tolist(),
             "target": target,
             "report_path": model_obj.visualizations_report,
@@ -58,14 +58,12 @@ async def train_model(target: str, file: UploadFile = File(...)):
 
 
 @app.post("/predict")
-def predict(data: dict = Body(...)):
+def predict(data: dict):
     try:
         with open("pipeline/pipeline.pkl", "rb") as f:
             model_obj = pickle.load(f)
 
-        df = pd.DataFrame([data])
-
-        prediction = model_obj.model.predict(df)
+        prediction = model_obj.predict(data)
 
         return {"prediction": prediction.tolist()}
 

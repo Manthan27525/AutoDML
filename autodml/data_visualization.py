@@ -348,7 +348,7 @@ class DataVisualizer:
     def generate_pdf_report(self, plots, output_file="data/reports/report.pdf"):
         try:
             os.makedirs("data/plots", exist_ok=True)
-            os.makedirs(os.path.dirname(output_file), exist_ok=True)
+            os.makedirs("data/reports", exist_ok=True)
 
             doc = SimpleDocTemplate(output_file, pagesize=A4)
             styles = getSampleStyleSheet()

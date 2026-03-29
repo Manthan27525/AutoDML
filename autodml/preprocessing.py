@@ -709,7 +709,7 @@ class Preprocessor:
         catcol = self.cat_imputer_features
         numcol = self.num_imputer_features
         pt = self.preprocess_text
-        inps = self.input_features
+        inp_ft = self.input_features
 
         meta = {
             "encoders": enc,
@@ -720,9 +720,9 @@ class Preprocessor:
             "feature_types": ft,
             "num_imputer": ni,
             "cat_imputer": ci,
-            "input_features": inp,
+            "input_features": inp_ft,
             "preprocess_text": pt,
-            "inputs": inps,
+            "inputs": inp,
         }
 
         os.makedirs("data/preprocessors", exist_ok=True)
