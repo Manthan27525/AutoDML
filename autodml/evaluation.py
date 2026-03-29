@@ -1,7 +1,7 @@
 import numpy as np
 import os
 import json
-
+from sklearn.preprocessing import label_binarize
 from sklearn.metrics import (
     mean_absolute_error,
     mean_squared_error,
@@ -69,6 +69,22 @@ class Evaluator:
 
             predictions = model.predict(self.x_test)
 
+            probs = None
+            if hasattr(model, "predict_proba"):
+                probs = model.predict_proba(self.x_test)
+
+            if len(np.unique(self.y_test)) > 2:
+                if probs is not None:
+                    y_bin = label_binarize(self.y_test, classes=np.unique(self.y_test))
+                    roc_auc = roc_auc_score(y_bin, probs, multi_class="ovr")
+                else:
+                    roc_auc = None
+            else:
+                if probs is not None:
+                    roc_auc = roc_auc_score(self.y_test, probs[:, 1])
+                else:
+                    roc_auc = None
+
             if self.task_type == "Regression":
                 results = {
                     "MAE": float(mean_absolute_error(self.y_test, predictions)),
@@ -93,7 +109,7 @@ class Evaluator:
                         recall_score(self.y_test, predictions, average="weighted")
                     ),
                     "F1": float(f1_score(self.y_test, predictions, average="weighted")),
-                    "ROC-AUC": float(roc_auc_score(self.y_test, predictions)),
+                    "ROC-AUC": float(roc_auc) if roc_auc is not None else None,
                 }
 
             logger.info(f"Evaluation Results: {results}")
