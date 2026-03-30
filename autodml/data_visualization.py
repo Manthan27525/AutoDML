@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from wordcloud import WordCloud
@@ -7,9 +6,12 @@ import os
 from reportlab.platypus import SimpleDocTemplate, Image, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.pagesizes import A4
-
+import matplotlib
 from autodml.utils.logger import get_logger
 from autodml.utils.exception import DataVisualizationError
+import gc
+
+matplotlib.use("Agg")
 
 logger = get_logger(__name__)
 
@@ -47,30 +49,31 @@ class DataVisualizer:
         self.df = df
         return df
 
-    def plot_numerical_distributions(self, max_cols=6):
+    def plot_numerical_distributions(self, max_cols=5):
         try:
             df = self.df
-            num_cols = self.feature_types["numerical"]
-
-            if len(num_cols) == 0:
-                return None
+            num_cols = self.feature_types["numerical"][:max_cols]
 
             figs = []
 
             for col in num_cols:
                 data = df[col].dropna()
+
                 if data.empty:
                     continue
 
-                plt.figure(figsize=(6, 4))
-                sns.histplot(data, kde=True, bins=30, color=sns.color_palette()[0])
+                if len(data) > 5000:
+                    data = data.sample(5000)
 
-                plt.title(col, fontsize=13, fontweight="bold")
-                plt.grid(alpha=0.3)
-                plt.tight_layout(pad=1.2)
+                plt.figure(figsize=(4, 3))
+                sns.histplot(data, kde=True)
 
-                figs.append(plt.gcf())
+                plt.title(col)
+                fig = plt.gcf()
+                figs.append(fig)
+                plt.close(fig)
 
+            gc.collect()
             return figs if figs else None
         except Exception as e:
             raise DataVisualizationError(
@@ -80,7 +83,7 @@ class DataVisualizer:
     def plot_boxplots(self, max_cols=6):
         try:
             df = self.df
-            num_cols = self.feature_types["numerical"]
+            num_cols = self.feature_types["numerical"][:max_cols]
 
             if len(num_cols) == 0:
                 return None
@@ -93,13 +96,13 @@ class DataVisualizer:
                     continue
 
                 plt.figure(figsize=(6, 4))
-                sns.boxplot(x=data, color=sns.color_palette()[1])
+                sns.boxplot(x=data)
 
                 plt.title(col, fontsize=13, fontweight="bold")
                 plt.tight_layout(pad=1.2)
 
                 figs.append(plt.gcf())
-
+            gc.collect()
             return figs if figs else None
         except Exception as e:
             raise DataVisualizationError(
@@ -109,27 +112,30 @@ class DataVisualizer:
     def plot_categorical_distributions(self, max_cols=5):
         try:
             df = self.df
-            cat_cols = self.feature_types["categorical"]
-
-            if len(cat_cols) == 0:
-                return None
+            cat_cols = self.feature_types["categorical"][:max_cols]
 
             figs = []
 
             for col in cat_cols:
                 data = df[col].dropna()
+
                 if data.empty:
                     continue
 
-                plt.figure(figsize=(6, 4))
-                sns.countplot(x=data, palette="viridis")
+                if len(data) > 5000:
+                    data = data.sample(5000)
+
+                top = data.value_counts().nlargest(10).index
+                data = data[data.isin(top)]
+
+                plt.figure(figsize=(4, 3))
+                sns.countplot(x=data)
 
                 plt.xticks(rotation=45)
-                plt.title(col, fontsize=13, fontweight="bold")
-                plt.tight_layout(pad=1.2)
-
-                figs.append(plt.gcf())
-
+                fig = plt.gcf()
+                figs.append(fig)
+                plt.close(fig)
+            gc.collect()
             return figs if figs else None
         except Exception as e:
             raise DataVisualizationError(
@@ -137,80 +143,36 @@ class DataVisualizer:
                 details=str(e),
             )
 
-    def plot_categorical_vs_categorical(self):
-        try:
-            df = self.df
-            cat_cols = self.feature_types["categorical"]
-
-            if len(cat_cols) < 2:
-                return None
-
-            figs = []
-
-            for i in range(len(cat_cols)):
-                for j in range(i + 1, len(cat_cols)):
-                    data = df[[cat_cols[i], cat_cols[j]]].dropna()
-
-                    if data.empty:
-                        continue
-
-                    cross = pd.crosstab(data.iloc[:, 0], data.iloc[:, 1])
-
-                    if cross.empty:
-                        continue
-
-                    plt.figure(figsize=(6, 4))
-                    sns.heatmap(
-                        cross,
-                        annot=True,
-                        fmt="d",
-                        cmap="coolwarm",
-                        linewidths=0.5,
-                        linecolor="white",
-                    )
-
-                    plt.title(f"{cat_cols[i]} vs {cat_cols[j]}", fontweight="bold")
-                    plt.tight_layout(pad=1.2)
-
-                    figs.append(plt.gcf())
-
-            return figs if figs else None
-        except Exception as e:
-            raise DataVisualizationError(
-                message="Error While Plotting Categorical vs Categorical plots",
-                details=str(e),
-            )
-
     def plot_numerical_vs_numerical(self):
         try:
             df = self.df
-            num_cols = self.feature_types["numerical"]
-
-            if len(num_cols) < 2:
-                return None
+            num_cols = self.feature_types["numerical"][:4]
 
             figs = []
 
-            for i in range(len(num_cols)):
-                for j in range(i + 1, len(num_cols)):
-                    data = df[[num_cols[i], num_cols[j]]].dropna()
+            pairs = [
+                (num_cols[i], num_cols[j])
+                for i in range(len(num_cols))
+                for j in range(i + 1, len(num_cols))
+            ]
 
-                    if data.empty:
-                        continue
+            pairs = pairs[:3]
 
-                    plt.figure(figsize=(6, 4))
-                    sns.scatterplot(
-                        x=data.iloc[:, 0],
-                        y=data.iloc[:, 1],
-                        alpha=0.7,
-                        color=sns.color_palette()[2],
-                    )
+            for x, y in pairs:
+                data = df[[x, y]].dropna()
 
-                    plt.title(f"{num_cols[i]} vs {num_cols[j]}", fontweight="bold")
-                    plt.tight_layout(pad=1.2)
+                if len(data) > 3000:
+                    data = data.sample(3000)
 
-                    figs.append(plt.gcf())
+                plt.figure(figsize=(4, 3))
+                sns.scatterplot(x=data[x], y=data[y])
 
+                plt.title(f"{x} vs {y}")
+                fig = plt.gcf()
+                figs.append(fig)
+                plt.close(fig)
+
+            gc.collect()
             return figs if figs else None
 
         except Exception as e:
@@ -219,62 +181,25 @@ class DataVisualizer:
                 details=str(e),
             )
 
-    def plot_numerical_vs_categorical(self):
-        try:
-            df = self.df
-            num_cols = df.select_dtypes(include=np.number).columns
-            cat_cols = df.select_dtypes(include=["object"]).columns
-
-            if len(num_cols) == 0 or len(cat_cols) == 0:
-                return None
-
-            figs = []
-
-            for num in num_cols:
-                for cat in cat_cols:
-                    data = df[[num, cat]].dropna()
-
-                    if data.empty:
-                        continue
-
-                    plt.figure(figsize=(6, 4))
-                    sns.boxplot(x=cat, y=num, data=data, palette="Set2")
-
-                    plt.xticks(rotation=45)
-                    plt.title(f"{num} vs {cat}", fontweight="bold")
-                    plt.tight_layout(pad=1.2)
-
-                    figs.append(plt.gcf())
-
-            return figs if figs else None
-
-        except Exception as e:
-            raise DataVisualizationError(
-                message="Error While Plotting Numerical vs Categorical Plots",
-                details=str(e),
-            )
-
     def plot_target_distribution(self):
         try:
             df = self.df
-
             data = df[self.target].dropna()
 
-            if data.empty:
-                return None
+            if len(data) > 5000:
+                data = data.sample(5000)
 
-            plt.figure(figsize=(6, 4))
+            plt.figure(figsize=(4, 3))
 
-            if data.dtype == "object" or data.nunique() < 20:
-                sns.countplot(x=data, palette="viridis")
-                plt.xticks(rotation=45)
+            if data.nunique() < 20:
+                sns.countplot(x=data)
             else:
-                sns.histplot(data, kde=True, color=sns.color_palette()[3])
+                sns.histplot(data, kde=True)
 
-            plt.title(f"Target: {self.target}", fontweight="bold")
-            plt.tight_layout(pad=1.2)
-
-            return plt.gcf()
+            fig = plt.gcf()
+            plt.close(fig)
+            gc.collect()
+            return fig
         except Exception as e:
             raise DataVisualizationError(
                 message="Error While Plotting Target Distribution", details=str(e)
@@ -304,8 +229,8 @@ class DataVisualizer:
             plt.figure(figsize=(8, 4))
             plt.imshow(wc)
             plt.axis("off")
-            plt.tight_layout(pad=1.2)
-
+            plt.tight_layout()
+            gc.collect()
             return plt.gcf()
         except Exception as e:
             raise DataVisualizationError(
@@ -321,9 +246,8 @@ class DataVisualizer:
         plots["box"] = self.plot_boxplots()
         plots["cat"] = self.plot_categorical_distributions()
         plots["target"] = self.plot_target_distribution()
-        plots["cat_vs_cat"] = self.plot_categorical_vs_categorical()
-        plots["num_vs_cat"] = self.plot_numerical_vs_categorical()
         plots["num_vs_num"] = self.plot_numerical_vs_numerical()
+        plots["word_cloud"] = self.plot_wordcloud()
 
         return plots
 

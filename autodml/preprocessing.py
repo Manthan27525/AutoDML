@@ -144,6 +144,24 @@ class Preprocessor:
             columns_to_drop = []
 
             for col in self.df.columns:
+                col_lower = col.lower()
+
+                if any(
+                    keyword in col_lower
+                    for keyword in ["name", "first", "last", "full"]
+                ):
+                    columns_to_drop.append(col)
+                    logger.info(f"Removed name column: {col}")
+                    continue
+
+                if any(
+                    keyword in col_lower
+                    for keyword in ["id", "uuid", "uid", "identifier"]
+                ):
+                    columns_to_drop.append(col)
+                    logger.info(f"Removed ID column: {col}")
+                    continue
+
                 if col.lower().startswith("unnamed"):
                     columns_to_drop.append(col)
                     logger.info(f"Unnamed columns found : {col} and Removed.")
@@ -526,7 +544,9 @@ class Preprocessor:
             datetime_cols = self.feature_types["datetime"]
 
             for col in datetime_cols:
-                df[col] = pd.to_datetime(df[col], errors="coerce")
+                df[col] = pd.to_datetime(
+                    df[col], errors="coerce", infer_datetime_format=True
+                )
 
                 if df[col].isnull().all():
                     continue
@@ -677,7 +697,7 @@ class Preprocessor:
 
     def dimensionality_reduction(self):
         try:
-            if self.df.shape[1] > 250:
+            if self.df.shape[1] > 50:
                 logger.debug(f"{self.df.shape[1]} features found.")
                 logger.info("Initiating Dimensionality Reduction")
                 pca = PCA(n_components=10)
