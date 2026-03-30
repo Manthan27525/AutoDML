@@ -138,8 +138,6 @@ class Autodml:
         if self.pca:
             df = self.pca.transform(df)
 
-        df = df.fillna(0)
-
         return df
 
     def predict(self, data):

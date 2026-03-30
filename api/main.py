@@ -4,8 +4,17 @@ import pandas as pd
 import os
 from autodml import Autodml
 import pickle
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="AutoDML API")
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
@@ -51,6 +60,7 @@ async def train_model(target: str, file: UploadFile = File(...)):
             "report_path": model_obj.visualizations_report,
             "input_structure": model_obj.input_features,
             "evaluation_report": model_obj.evaluation_report,
+            "analysis_report": model_obj.analysis_report,
         }
 
     except Exception as e:

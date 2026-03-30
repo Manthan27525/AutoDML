@@ -22,10 +22,10 @@ class DataAnalyzer:
             logger.info("Analyzing dataset overview...")
             df = self.df
             overview = {
-                "rows": df.shape[0],
-                "columns": df.shape[1],
-                "memory_usage_MB": df.memory_usage(deep=True).sum() / 1024**2,
-                "duplicate_rows": df.duplicated().sum(),
+                "rows": int(df.shape[0]),
+                "columns": int(df.shape[1]),
+                "memory_usage_MB": float(df.memory_usage(deep=True).sum() / 1024**2),
+                "duplicate_rows": int(df.duplicated().sum()),
             }
 
             self.report["dataset_overview"] = overview
@@ -51,9 +51,9 @@ class DataAnalyzer:
                 info = {
                     "column": col,
                     "dtype": str(df[col].dtype),
-                    "missing_values": df[col].isnull().sum(),
-                    "missing_percent": (df[col].isnull().sum() / len(df)) * 100,
-                    "unique_values": df[col].nunique(),
+                    "missing_values": int(df[col].isnull().sum()),
+                    "missing_percent": float((df[col].isnull().sum() / len(df)) * 100),
+                    "unique_values": int(df[col].nunique()),
                 }
 
                 column_info.append(info)
@@ -81,8 +81,8 @@ class DataAnalyzer:
 
             target_stats = {
                 "task_type": task_type,
-                "unique_values": self.df[self.target].nunique(),
-                "missing_values": self.df[self.target].isnull().sum(),
+                "unique_values": int(self.df[self.target].nunique()),
+                "missing_values": int(self.df[self.target].isnull().sum()),
             }
 
             self.report["target_analysis"] = target_stats
@@ -128,13 +128,13 @@ class DataAnalyzer:
                 outliers = df[(df[i] < lower_bound) | (df[i] > upper_bound)]
 
                 outlier_report[i] = {
-                    "Q1": Q1,
-                    "Q3": Q3,
-                    "IQR": IQR,
+                    "Q1": int(Q1),
+                    "Q3": int(Q3),
+                    "IQR": int(IQR),
                     "lower_bound": lower_bound,
                     "upper_bound": upper_bound,
-                    "outlier_count": len(outliers),
-                    "outlier_percent": (len(outliers) / len(df)) * 100,
+                    "outlier_count": int(len(outliers)),
+                    "outlier_percent": int((len(outliers) / len(df)) * 100),
                 }
 
             self.report["outlier_analysis"] = outlier_report

@@ -544,9 +544,7 @@ class Preprocessor:
             datetime_cols = self.feature_types["datetime"]
 
             for col in datetime_cols:
-                df[col] = pd.to_datetime(
-                    df[col], errors="coerce", infer_datetime_format=True
-                )
+                df[col] = pd.to_datetime(df[col], errors="coerce")
 
                 if df[col].isnull().all():
                     continue
