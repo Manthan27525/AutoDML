@@ -4,7 +4,47 @@ import pandas as pd
 import os
 from autodml import Autodml
 import pickle
+import chardet
 from fastapi.middleware.cors import CORSMiddleware
+
+
+def detect_encoding(file_path, n_bytes=10000):
+    with open(file_path, "rb") as f:
+        raw_data = f.read(n_bytes)
+    result = chardet.detect(raw_data)
+    return result["encoding"] or "utf-8"
+
+
+def load_dataset(file_path: str) -> pd.DataFrame:
+    if not file_path or not isinstance(file_path, str):
+        raise ValueError("Invalid file path")
+
+    if not (file_path.endswith(".csv") or file_path.endswith(".xlsx")):
+        raise ValueError("Only CSV and XLSX files are supported")
+
+    if file_path.endswith(".csv"):
+        encoding = detect_encoding(file_path)
+
+        try:
+            df = pd.read_csv(
+                file_path, encoding=encoding, engine="python", on_bad_lines="skip"
+            )
+        except:
+            df = pd.read_csv(
+                file_path, encoding="latin1", engine="python", on_bad_lines="skip"
+            )
+
+    else:
+        df = pd.read_excel(file_path, engine="openpyxl")
+
+    if df is None or df.empty:
+        raise ValueError("Dataset is empty or could not be loaded")
+
+    if df.shape[1] < 2:
+        raise ValueError("Dataset must have at least 2 columns")
+
+    return df
+
 
 app = FastAPI(title="AutoDML API")
 
@@ -34,9 +74,9 @@ async def train_model(target: str, file: UploadFile = File(...)):
             f.write(await file.read())
 
         if file.filename.endswith(".csv"):
-            df = pd.read_csv(file_path)
+            df = load_dataset(file_path)
         elif file.filename.endswith(".xlsx"):
-            df = pd.read_excel(file_path)
+            df = load_dataset(file_path)
         else:
             return {"error": "Unsupported file format"}
 
