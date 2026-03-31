@@ -69,7 +69,11 @@ async def train_model(target: str, file: UploadFile = File(...)):
         os.makedirs("uploads", exist_ok=True)
         os.makedirs("data/reports", exist_ok=True)
 
-        file_path = f"uploads/{file.filename}"
+        for f in os.listdir("uploads"):
+            os.remove(os.path.join("uploads", f))
+
+        ext = file.filename.split(".")[-1]
+        file_path = f"uploads/data.{ext}"
 
         with open(file_path, "wb") as f:
             f.write(await file.read())
