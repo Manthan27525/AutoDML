@@ -557,11 +557,25 @@ class Preprocessor:
             df = self.df.copy()
             datetime_cols = self.feature_types["datetime"]
 
+            for col in df.columns:
+                if col in datetime_cols:
+                    pass
+                elif df[col].dtype == "object":
+                    parsed = pd.to_datetime(df[col], errors="coerce")
+
+                    if parsed.notna().mean() > 0.5:
+                        df[col] = parsed
+                        datetime_cols.append(col)
+
             for col in datetime_cols:
+                if col not in df.columns:
+                    continue
+
                 df[col] = pd.to_datetime(df[col], errors="coerce")
 
                 if df[col].isnull().all():
                     continue
+
                 df[f"{col}_year"] = df[col].dt.year
                 df[f"{col}_month"] = df[col].dt.month
                 df[f"{col}_day"] = df[col].dt.day
@@ -594,6 +608,7 @@ class Preprocessor:
             logger.info("Datetime Features Extracted.")
             self.df = df
             return df
+
         except Exception as e:
             logger.error(str(e))
             raise PreprocessingError(

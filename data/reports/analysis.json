@@ -1,536 +1,1273 @@
 {
     "dataset_overview": {
-        "rows": 8500,
-        "columns": 30,
-        "memory_usage_MB": 9.410439491271973,
+        "rows": 20000,
+        "columns": 36,
+        "memory_usage_MB": 12.01769733428955,
         "duplicate_rows": 0
     },
     "column_analysis": [
         {
-            "column": "athlete_id",
+            "column": "ApplicationDate",
             "dtype": "object",
             "missing_values": 0,
             "missing_percent": 0.0,
-            "unique_values": 8500
+            "unique_values": 20000
         },
         {
-            "column": "athlete_name",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 7478
-        },
-        {
-            "column": "gender",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 2
-        },
-        {
-            "column": "age",
+            "column": "Age",
             "dtype": "int64",
             "missing_values": 0,
             "missing_percent": 0.0,
-            "unique_values": 28
+            "unique_values": 63
         },
         {
-            "column": "date_of_birth",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 5590
-        },
-        {
-            "column": "nationality",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 62
-        },
-        {
-            "column": "country_name",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 61
-        },
-        {
-            "column": "sport",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 33
-        },
-        {
-            "column": "event",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 253
-        },
-        {
-            "column": "games_type",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 2
-        },
-        {
-            "column": "year",
+            "column": "AnnualIncome",
             "dtype": "int64",
             "missing_values": 0,
             "missing_percent": 0.0,
-            "unique_values": 39
+            "unique_values": 17516
         },
         {
-            "column": "host_city",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 31
-        },
-        {
-            "column": "team_or_individual",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 2
-        },
-        {
-            "column": "medal",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 4
-        },
-        {
-            "column": "result_value",
-            "dtype": "float64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 8194
-        },
-        {
-            "column": "result_unit",
-            "dtype": "object",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 8
-        },
-        {
-            "column": "total_olympics_attended",
+            "column": "CreditScore",
             "dtype": "int64",
             "missing_values": 0,
             "missing_percent": 0.0,
-            "unique_values": 5
+            "unique_values": 322
         },
         {
-            "column": "total_medals_won",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 10
-        },
-        {
-            "column": "gold_medals",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 9
-        },
-        {
-            "column": "silver_medals",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 9
-        },
-        {
-            "column": "bronze_medals",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 9
-        },
-        {
-            "column": "country_total_gold",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 50
-        },
-        {
-            "column": "country_total_medals",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 58
-        },
-        {
-            "column": "country_first_participation",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 16
-        },
-        {
-            "column": "country_best_rank",
-            "dtype": "int64",
-            "missing_values": 0,
-            "missing_percent": 0.0,
-            "unique_values": 32
-        },
-        {
-            "column": "is_record_holder",
+            "column": "EmploymentStatus",
             "dtype": "object",
             "missing_values": 0,
             "missing_percent": 0.0,
             "unique_values": 3
         },
         {
-            "column": "coach_name",
+            "column": "EducationLevel",
             "dtype": "object",
             "missing_values": 0,
             "missing_percent": 0.0,
-            "unique_values": 28
+            "unique_values": 5
         },
         {
-            "column": "height_cm",
-            "dtype": "float64",
+            "column": "Experience",
+            "dtype": "int64",
             "missing_values": 0,
             "missing_percent": 0.0,
-            "unique_values": 604
+            "unique_values": 62
         },
         {
-            "column": "weight_kg",
-            "dtype": "float64",
+            "column": "LoanAmount",
+            "dtype": "int64",
             "missing_values": 0,
             "missing_percent": 0.0,
-            "unique_values": 866
+            "unique_values": 15578
         },
         {
-            "column": "notes",
+            "column": "LoanDuration",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 10
+        },
+        {
+            "column": "MaritalStatus",
             "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 4
+        },
+        {
+            "column": "NumberOfDependents",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 6
+        },
+        {
+            "column": "HomeOwnershipStatus",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 4
+        },
+        {
+            "column": "MonthlyDebtPayments",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 1299
+        },
+        {
+            "column": "CreditCardUtilizationRate",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 20000
+        },
+        {
+            "column": "NumberOfOpenCreditLines",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 14
+        },
+        {
+            "column": "NumberOfCreditInquiries",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 8
+        },
+        {
+            "column": "DebtToIncomeRatio",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 20000
+        },
+        {
+            "column": "BankruptcyHistory",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 2
+        },
+        {
+            "column": "LoanPurpose",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 5
+        },
+        {
+            "column": "PreviousLoanDefaults",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 2
+        },
+        {
+            "column": "PaymentHistory",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 38
+        },
+        {
+            "column": "LengthOfCreditHistory",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 29
+        },
+        {
+            "column": "SavingsAccountBalance",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 9199
+        },
+        {
+            "column": "CheckingAccountBalance",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 5151
+        },
+        {
+            "column": "TotalAssets",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 18814
+        },
+        {
+            "column": "TotalLiabilities",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 17163
+        },
+        {
+            "column": "MonthlyIncome",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 17489
+        },
+        {
+            "column": "UtilityBillsPaymentHistory",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 20000
+        },
+        {
+            "column": "JobTenure",
+            "dtype": "int64",
             "missing_values": 0,
             "missing_percent": 0.0,
             "unique_values": 17
+        },
+        {
+            "column": "NetWorth",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 17724
+        },
+        {
+            "column": "BaseInterestRate",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 18742
+        },
+        {
+            "column": "InterestRate",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 19999
+        },
+        {
+            "column": "MonthlyLoanPayment",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 20000
+        },
+        {
+            "column": "TotalDebtToIncomeRatio",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 20000
+        },
+        {
+            "column": "LoanApproved",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 2
+        },
+        {
+            "column": "RiskScore",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 73
         }
     ],
     "target_analysis": {
         "task_type": "Classification",
-        "unique_values": 4,
+        "unique_values": 2,
         "missing_values": 0
     },
     "numeric_analysis": {
-        "age": {
-            "count": 8500.0,
-            "mean": 28.531176470588235,
-            "std": 8.074316090620309,
-            "min": 15.0,
-            "25%": 22.0,
-            "50%": 28.0,
-            "75%": 36.0,
-            "max": 42.0,
-            "skewness": -0.006264841365807659
+        "Age": {
+            "count": 20000.0,
+            "mean": 39.7526,
+            "std": 11.622712575486869,
+            "min": 18.0,
+            "25%": 32.0,
+            "50%": 40.0,
+            "75%": 48.0,
+            "max": 80.0,
+            "skewness": 0.1859639313618668
         },
-        "year": {
-            "count": 8500.0,
-            "mean": 1967.2508235294117,
-            "std": 45.06209550581178,
-            "min": 1896.0,
-            "25%": 1920.0,
-            "50%": 1984.0,
-            "75%": 2008.0,
-            "max": 2024.0,
-            "skewness": -0.3371952302944802
+        "AnnualIncome": {
+            "count": 20000.0,
+            "mean": 59161.47355,
+            "std": 40350.8451683616,
+            "min": 15000.0,
+            "25%": 31679.0,
+            "50%": 48566.0,
+            "75%": 74391.0,
+            "max": 485341.0,
+            "skewness": 2.088947958524819
         },
-        "result_value": {
-            "count": 8500.0,
-            "mean": 747.4506241176471,
-            "std": 1906.1761794745003,
-            "min": 0.011,
-            "25%": 10.35925,
-            "50%": 129.5075,
-            "75%": 345.38275,
-            "max": 14979.675,
-            "skewness": 3.8340593227654813
+        "CreditScore": {
+            "count": 20000.0,
+            "mean": 571.6124,
+            "std": 50.997357801803204,
+            "min": 343.0,
+            "25%": 540.0,
+            "50%": 578.0,
+            "75%": 609.0,
+            "max": 712.0,
+            "skewness": -0.5967271396622066
         },
-        "country_total_gold": {
-            "count": 8500.0,
-            "mean": 115.53835294117647,
-            "std": 176.86279858442091,
+        "Experience": {
+            "count": 20000.0,
+            "mean": 17.52275,
+            "std": 11.316836394363879,
             "min": 0.0,
-            "25%": 19.0,
-            "50%": 54.0,
-            "75%": 170.0,
-            "max": 1061.0,
-            "skewness": 3.838582962775506
+            "25%": 9.0,
+            "50%": 17.0,
+            "75%": 25.0,
+            "max": 61.0,
+            "skewness": 0.3399806516192076
         },
-        "country_total_medals": {
-            "count": 8500.0,
-            "mean": 341.8878823529412,
-            "std": 456.1938051697607,
-            "min": 5.0,
-            "25%": 60.0,
-            "50%": 196.0,
-            "75%": 497.0,
-            "max": 2638.0,
-            "skewness": 3.2325538480059803
+        "LoanAmount": {
+            "count": 20000.0,
+            "mean": 24882.8678,
+            "std": 13427.421217074787,
+            "min": 3674.0,
+            "25%": 15575.0,
+            "50%": 21914.5,
+            "75%": 30835.0,
+            "max": 184732.0,
+            "skewness": 1.833687791747409
         },
-        "country_best_rank": {
-            "count": 8500.0,
-            "mean": 19.995529411764707,
-            "std": 17.602926538572966,
+        "MonthlyDebtPayments": {
+            "count": 20000.0,
+            "mean": 454.2927,
+            "std": 240.50760928132007,
+            "min": 50.0,
+            "25%": 286.0,
+            "50%": 402.0,
+            "75%": 564.0,
+            "max": 2919.0,
+            "skewness": 1.6534346778754938
+        },
+        "CreditCardUtilizationRate": {
+            "count": 20000.0,
+            "mean": 0.28638103042597507,
+            "std": 0.1597928935315979,
+            "min": 0.0009744907528399,
+            "25%": 0.16079355273477816,
+            "50%": 0.2666726020550306,
+            "75%": 0.39063387392494103,
+            "max": 0.9173800815542682,
+            "skewness": 0.6011310015697946
+        },
+        "DebtToIncomeRatio": {
+            "count": 20000.0,
+            "mean": 0.28573464885752614,
+            "std": 0.16021077057903732,
+            "min": 0.0017200290084425,
+            "25%": 0.16103468016473504,
+            "50%": 0.2644540175411533,
+            "75%": 0.3903269296748394,
+            "max": 0.9022526895282088,
+            "skewness": 0.5938584679155554
+        },
+        "PaymentHistory": {
+            "count": 20000.0,
+            "mean": 23.99365,
+            "std": 4.9454355262329734,
+            "min": 8.0,
+            "25%": 21.0,
+            "50%": 24.0,
+            "75%": 27.0,
+            "max": 45.0,
+            "skewness": 0.2134654860091922
+        },
+        "LengthOfCreditHistory": {
+            "count": 20000.0,
+            "mean": 14.9573,
+            "std": 8.371551878477652,
             "min": 1.0,
-            "25%": 4.0,
+            "25%": 8.0,
             "50%": 15.0,
-            "75%": 33.0,
-            "max": 62.0,
-            "skewness": 0.7463110272238664
+            "75%": 22.0,
+            "max": 29.0,
+            "skewness": 0.002988582961076192
         },
-        "height_cm": {
-            "count": 8500.0,
-            "mean": 178.87381176470586,
-            "std": 11.375076898890834,
-            "min": 145.0,
-            "25%": 170.3,
-            "50%": 178.7,
-            "75%": 187.3,
-            "max": 215.0,
-            "skewness": 0.0960527873929267
+        "SavingsAccountBalance": {
+            "count": 20000.0,
+            "mean": 4946.05215,
+            "std": 6604.887477274669,
+            "min": 73.0,
+            "25%": 1541.75,
+            "50%": 2986.0,
+            "75%": 5873.25,
+            "max": 200089.0,
+            "skewness": 6.060098547056525
         },
-        "weight_kg": {
-            "count": 8500.0,
-            "mean": 77.15875294117647,
-            "std": 16.528411785120422,
-            "min": 40.1,
-            "25%": 65.1,
-            "50%": 75.3,
-            "75%": 87.3,
-            "max": 149.7,
-            "skewness": 0.7503115353995339
+        "CheckingAccountBalance": {
+            "count": 20000.0,
+            "mean": 1782.5551,
+            "std": 2245.3788123531713,
+            "min": 24.0,
+            "25%": 551.0,
+            "50%": 1116.0,
+            "75%": 2126.0,
+            "max": 52572.0,
+            "skewness": 4.74614205563194
+        },
+        "TotalAssets": {
+            "count": 20000.0,
+            "mean": 96964.3955,
+            "std": 120799.93921871252,
+            "min": 2098.0,
+            "25%": 31180.25,
+            "50%": 60699.0,
+            "75%": 117405.25,
+            "max": 2619627.0,
+            "skewness": 5.311326403353311
+        },
+        "TotalLiabilities": {
+            "count": 20000.0,
+            "mean": 36252.41275,
+            "std": 47251.51091260113,
+            "min": 372.0,
+            "25%": 11196.75,
+            "50%": 22203.0,
+            "75%": 43146.5,
+            "max": 1417302.0,
+            "skewness": 5.848873989948605
+        },
+        "MonthlyIncome": {
+            "count": 20000.0,
+            "mean": 4891.715520833333,
+            "std": 3296.7715980550824,
+            "min": 1250.0,
+            "25%": 2629.583333333333,
+            "50%": 4034.75,
+            "75%": 6163.0,
+            "max": 25000.0,
+            "skewness": 1.9929285551564344
+        },
+        "UtilityBillsPaymentHistory": {
+            "count": 20000.0,
+            "mean": 0.7999176481520213,
+            "std": 0.12066494914496363,
+            "min": 0.259203057820703,
+            "25%": 0.7273794781358836,
+            "50%": 0.8209617609728834,
+            "75%": 0.8923334527277864,
+            "max": 0.9994327597206204,
+            "skewness": -0.8462336676041113
+        },
+        "NetWorth": {
+            "count": 20000.0,
+            "mean": 72294.31885,
+            "std": 117920.02144409639,
+            "min": 1000.0,
+            "25%": 8734.75,
+            "50%": 32855.5,
+            "75%": 88825.5,
+            "max": 2603208.0,
+            "skewness": 5.599844163156552
+        },
+        "BaseInterestRate": {
+            "count": 20000.0,
+            "mean": 0.23912416779999998,
+            "std": 0.03550949244879659,
+            "min": 0.130101,
+            "25%": 0.21388925,
+            "50%": 0.236157,
+            "75%": 0.26153325,
+            "max": 0.405029,
+            "skewness": 0.4618501945348619
+        },
+        "InterestRate": {
+            "count": 20000.0,
+            "mean": 0.23911001653328232,
+            "std": 0.04220518833254566,
+            "min": 0.1133095948045364,
+            "25%": 0.20914249903730234,
+            "50%": 0.2353899899371778,
+            "75%": 0.2655318130128603,
+            "max": 0.4467873210539924,
+            "skewness": 0.4854910289063493
+        },
+        "MonthlyLoanPayment": {
+            "count": 20000.0,
+            "mean": 911.6070519223043,
+            "std": 674.5834731342931,
+            "min": 97.03019288626984,
+            "25%": 493.76369993495325,
+            "50%": 728.5114515123852,
+            "75%": 1112.7707585301966,
+            "max": 10892.629519897171,
+            "skewness": 3.081845321534023
+        },
+        "TotalDebtToIncomeRatio": {
+            "count": 20000.0,
+            "mean": 0.4021816565196185,
+            "std": 0.33892429634946947,
+            "min": 0.0160432112095298,
+            "25%": 0.1796931435823411,
+            "50%": 0.30271146497209966,
+            "75%": 0.5092136713469038,
+            "max": 4.647656816403158,
+            "skewness": 2.574494093155263
+        },
+        "RiskScore": {
+            "count": 20000.0,
+            "mean": 50.76678,
+            "std": 7.778262370213221,
+            "min": 28.8,
+            "25%": 46.0,
+            "50%": 52.0,
+            "75%": 56.0,
+            "max": 84.0,
+            "skewness": -0.16206215971440865
         }
     },
     "outlier_analysis": {
-        "age": {
-            "Q1": 22,
-            "Q3": 36,
-            "IQR": 14,
-            "lower_bound": 1.0,
-            "upper_bound": 57.0,
-            "outlier_count": 0,
+        "Age": {
+            "Q1": 32,
+            "Q3": 48,
+            "IQR": 16,
+            "lower_bound": 8.0,
+            "upper_bound": 72.0,
+            "outlier_count": 64,
             "outlier_percent": 0
         },
-        "year": {
-            "Q1": 1920,
-            "Q3": 2008,
-            "IQR": 88,
-            "lower_bound": 1788.0,
-            "upper_bound": 2140.0,
-            "outlier_count": 0,
+        "AnnualIncome": {
+            "Q1": 31679,
+            "Q3": 74391,
+            "IQR": 42712,
+            "lower_bound": -32389.0,
+            "upper_bound": 138459.0,
+            "outlier_count": 947,
+            "outlier_percent": 4
+        },
+        "CreditScore": {
+            "Q1": 540,
+            "Q3": 609,
+            "IQR": 69,
+            "lower_bound": 436.5,
+            "upper_bound": 712.5,
+            "outlier_count": 242,
+            "outlier_percent": 1
+        },
+        "Experience": {
+            "Q1": 9,
+            "Q3": 25,
+            "IQR": 16,
+            "lower_bound": -15.0,
+            "upper_bound": 49.0,
+            "outlier_count": 75,
             "outlier_percent": 0
         },
-        "result_value": {
-            "Q1": 10,
-            "Q3": 345,
-            "IQR": 335,
-            "lower_bound": -492.17600000000004,
-            "upper_bound": 847.918,
-            "outlier_count": 1103,
-            "outlier_percent": 12
-        },
-        "country_total_gold": {
-            "Q1": 19,
-            "Q3": 170,
-            "IQR": 151,
-            "lower_bound": -207.5,
-            "upper_bound": 396.5,
-            "outlier_count": 295,
+        "LoanAmount": {
+            "Q1": 15575,
+            "Q3": 30835,
+            "IQR": 15260,
+            "lower_bound": -7315.0,
+            "upper_bound": 53725.0,
+            "outlier_count": 746,
             "outlier_percent": 3
         },
-        "country_total_medals": {
-            "Q1": 60,
-            "Q3": 497,
-            "IQR": 437,
-            "lower_bound": -595.5,
-            "upper_bound": 1152.5,
-            "outlier_count": 209,
-            "outlier_percent": 2
+        "MonthlyDebtPayments": {
+            "Q1": 286,
+            "Q3": 564,
+            "IQR": 278,
+            "lower_bound": -131.0,
+            "upper_bound": 981.0,
+            "outlier_count": 744,
+            "outlier_percent": 3
         },
-        "country_best_rank": {
-            "Q1": 4,
-            "Q3": 33,
-            "IQR": 29,
-            "lower_bound": -39.5,
-            "upper_bound": 76.5,
+        "CreditCardUtilizationRate": {
+            "Q1": 0,
+            "Q3": 0,
+            "IQR": 0,
+            "lower_bound": -0.18396692905046616,
+            "upper_bound": 0.7353943557101854,
+            "outlier_count": 130,
+            "outlier_percent": 0
+        },
+        "DebtToIncomeRatio": {
+            "Q1": 0,
+            "Q3": 0,
+            "IQR": 0,
+            "lower_bound": -0.18290369410042145,
+            "upper_bound": 0.7342653039399959,
+            "outlier_count": 143,
+            "outlier_percent": 0
+        },
+        "PaymentHistory": {
+            "Q1": 21,
+            "Q3": 27,
+            "IQR": 6,
+            "lower_bound": 12.0,
+            "upper_bound": 36.0,
+            "outlier_count": 241,
+            "outlier_percent": 1
+        },
+        "LengthOfCreditHistory": {
+            "Q1": 8,
+            "Q3": 22,
+            "IQR": 14,
+            "lower_bound": -13.0,
+            "upper_bound": 43.0,
             "outlier_count": 0,
             "outlier_percent": 0
         },
-        "height_cm": {
-            "Q1": 170,
-            "Q3": 187,
-            "IQR": 17,
-            "lower_bound": 144.8,
-            "upper_bound": 212.8,
-            "outlier_count": 20,
-            "outlier_percent": 0
+        "SavingsAccountBalance": {
+            "Q1": 1541,
+            "Q3": 5873,
+            "IQR": 4331,
+            "lower_bound": -4955.5,
+            "upper_bound": 12370.5,
+            "outlier_count": 1592,
+            "outlier_percent": 7
         },
-        "weight_kg": {
-            "Q1": 65,
-            "Q3": 87,
-            "IQR": 22,
-            "lower_bound": 31.79999999999999,
-            "upper_bound": 120.6,
-            "outlier_count": 154,
+        "CheckingAccountBalance": {
+            "Q1": 551,
+            "Q3": 2126,
+            "IQR": 1575,
+            "lower_bound": -1811.5,
+            "upper_bound": 4488.5,
+            "outlier_count": 1522,
+            "outlier_percent": 7
+        },
+        "TotalAssets": {
+            "Q1": 31180,
+            "Q3": 117405,
+            "IQR": 86225,
+            "lower_bound": -98157.25,
+            "upper_bound": 246742.75,
+            "outlier_count": 1442,
+            "outlier_percent": 7
+        },
+        "TotalLiabilities": {
+            "Q1": 11196,
+            "Q3": 43146,
+            "IQR": 31949,
+            "lower_bound": -36727.875,
+            "upper_bound": 91071.125,
+            "outlier_count": 1533,
+            "outlier_percent": 7
+        },
+        "MonthlyIncome": {
+            "Q1": 2629,
+            "Q3": 6163,
+            "IQR": 3533,
+            "lower_bound": -2670.541666666667,
+            "upper_bound": 11463.125,
+            "outlier_count": 925,
+            "outlier_percent": 4
+        },
+        "UtilityBillsPaymentHistory": {
+            "Q1": 0,
+            "Q3": 0,
+            "IQR": 0,
+            "lower_bound": 0.47994851624802926,
+            "upper_bound": 1.1397644146156407,
+            "outlier_count": 294,
             "outlier_percent": 1
+        },
+        "NetWorth": {
+            "Q1": 8734,
+            "Q3": 88825,
+            "IQR": 80090,
+            "lower_bound": -111401.375,
+            "upper_bound": 208961.625,
+            "outlier_count": 1564,
+            "outlier_percent": 7
+        },
+        "BaseInterestRate": {
+            "Q1": 0,
+            "Q3": 0,
+            "IQR": 0,
+            "lower_bound": 0.14242325,
+            "upper_bound": 0.33299924999999997,
+            "outlier_count": 219,
+            "outlier_percent": 1
+        },
+        "InterestRate": {
+            "Q1": 0,
+            "Q3": 0,
+            "IQR": 0,
+            "lower_bound": 0.12455852807396543,
+            "upper_bound": 0.3501157839761972,
+            "outlier_count": 222,
+            "outlier_percent": 1
+        },
+        "MonthlyLoanPayment": {
+            "Q1": 493,
+            "Q3": 1112,
+            "IQR": 619,
+            "lower_bound": -434.7468879579118,
+            "upper_bound": 2041.2813464230617,
+            "outlier_count": 1089,
+            "outlier_percent": 5
+        },
+        "TotalDebtToIncomeRatio": {
+            "Q1": 0,
+            "Q3": 0,
+            "IQR": 0,
+            "lower_bound": -0.3145876480645029,
+            "upper_bound": 1.0034944629937477,
+            "outlier_count": 1152,
+            "outlier_percent": 5
+        },
+        "RiskScore": {
+            "Q1": 46,
+            "Q3": 56,
+            "IQR": 10,
+            "lower_bound": 31.0,
+            "upper_bound": 71.0,
+            "outlier_count": 94,
+            "outlier_percent": 0
         }
     },
     "categorical_analysis": {
-        "athlete_id": {
-            "Categories Count": 8500
-        },
-        "athlete_name": {
-            "Categories Count": 7478
-        },
-        "gender": {
-            "Categories Count": 2
-        },
-        "nationality": {
-            "Categories Count": 62
-        },
-        "country_name": {
-            "Categories Count": 61
-        },
-        "sport": {
-            "Categories Count": 33
-        },
-        "event": {
-            "Categories Count": 253
-        },
-        "games_type": {
-            "Categories Count": 2
-        },
-        "host_city": {
-            "Categories Count": 31
-        },
-        "team_or_individual": {
-            "Categories Count": 2
-        },
-        "medal": {
-            "Categories Count": 4
-        },
-        "result_unit": {
-            "Categories Count": 8
-        },
-        "total_olympics_attended": {
-            "Categories Count": 5
-        },
-        "total_medals_won": {
-            "Categories Count": 10
-        },
-        "gold_medals": {
-            "Categories Count": 9
-        },
-        "silver_medals": {
-            "Categories Count": 9
-        },
-        "bronze_medals": {
-            "Categories Count": 9
-        },
-        "country_first_participation": {
-            "Categories Count": 16
-        },
-        "is_record_holder": {
+        "EmploymentStatus": {
             "Categories Count": 3
         },
-        "coach_name": {
-            "Categories Count": 28
+        "EducationLevel": {
+            "Categories Count": 5
         },
-        "notes": {
+        "LoanDuration": {
+            "Categories Count": 10
+        },
+        "MaritalStatus": {
+            "Categories Count": 4
+        },
+        "NumberOfDependents": {
+            "Categories Count": 6
+        },
+        "HomeOwnershipStatus": {
+            "Categories Count": 4
+        },
+        "NumberOfOpenCreditLines": {
+            "Categories Count": 14
+        },
+        "NumberOfCreditInquiries": {
+            "Categories Count": 8
+        },
+        "LoanPurpose": {
+            "Categories Count": 5
+        },
+        "JobTenure": {
             "Categories Count": 17
         }
     },
     "correlations": {
-        "age": {
-            "age": 1.0,
-            "year": 0.009062612382566235,
-            "result_value": 0.016727093586986378,
-            "country_total_gold": -0.00516922211900235,
-            "country_total_medals": -0.004982829127128969,
-            "country_best_rank": 0.0028685864065861864,
-            "height_cm": -0.011496506691155399,
-            "weight_kg": -0.011454081378648562
+        "Age": {
+            "Age": 1.0,
+            "AnnualIncome": 0.14477359847110555,
+            "CreditScore": 0.3232427968850211,
+            "Experience": 0.9829802792421133,
+            "LoanAmount": -0.007492045440253887,
+            "MonthlyDebtPayments": 0.015684867166473687,
+            "CreditCardUtilizationRate": -0.0013944636954603578,
+            "DebtToIncomeRatio": 0.004438383038398006,
+            "PaymentHistory": -0.002487468543464003,
+            "LengthOfCreditHistory": -0.00013941046798564622,
+            "SavingsAccountBalance": 0.004236482432046245,
+            "CheckingAccountBalance": 0.010144974024099331,
+            "TotalAssets": 0.012209685392806367,
+            "TotalLiabilities": -0.001197270048635484,
+            "MonthlyIncome": 0.1446338542353076,
+            "UtilityBillsPaymentHistory": -0.0056010050486451,
+            "NetWorth": 0.014060929763094481,
+            "BaseInterestRate": -0.23899457024106327,
+            "InterestRate": -0.20270157154726848,
+            "MonthlyLoanPayment": -0.021379789309283255,
+            "TotalDebtToIncomeRatio": -0.11179960415675803,
+            "RiskScore": -0.16430398958788406
         },
-        "year": {
-            "age": 0.009062612382566235,
-            "year": 1.0,
-            "result_value": 0.0034292899588024635,
-            "country_total_gold": -0.18343858011181424,
-            "country_total_medals": -0.2140954207449915,
-            "country_best_rank": 0.3308641624528676,
-            "height_cm": 0.0008085084563278265,
-            "weight_kg": 0.007539970049885803
+        "AnnualIncome": {
+            "Age": 0.14477359847110555,
+            "AnnualIncome": 1.0,
+            "CreditScore": 0.10404468144058511,
+            "Experience": 0.14599946461776062,
+            "LoanAmount": -0.004116121827265819,
+            "MonthlyDebtPayments": -0.0010823172422964047,
+            "CreditCardUtilizationRate": -0.0079349769549015,
+            "DebtToIncomeRatio": 0.001507117733831956,
+            "PaymentHistory": 0.0037145711415310745,
+            "LengthOfCreditHistory": -0.005364587811513073,
+            "SavingsAccountBalance": -0.0013972769913992399,
+            "CheckingAccountBalance": 0.008613390870747573,
+            "TotalAssets": -0.0051577523832956945,
+            "TotalLiabilities": -0.0023531309481670307,
+            "MonthlyIncome": 0.9899107753669869,
+            "UtilityBillsPaymentHistory": -0.01235086409499473,
+            "NetWorth": -0.004358026087193874,
+            "BaseInterestRate": -0.07454870324777874,
+            "InterestRate": -0.06383155792880606,
+            "MonthlyLoanPayment": -0.004303669871327297,
+            "TotalDebtToIncomeRatio": -0.5320327960461293,
+            "RiskScore": -0.4832886369721459
         },
-        "result_value": {
-            "age": 0.016727093586986378,
-            "year": 0.0034292899588024635,
-            "result_value": 1.0,
-            "country_total_gold": 0.010905150976567109,
-            "country_total_medals": 0.009563599833070079,
-            "country_best_rank": -0.002215357420165484,
-            "height_cm": 0.01988749623945837,
-            "weight_kg": -0.12866978983279673
+        "CreditScore": {
+            "Age": 0.3232427968850211,
+            "AnnualIncome": 0.10404468144058511,
+            "CreditScore": 1.0,
+            "Experience": 0.32766409843531424,
+            "LoanAmount": -0.010833752733830259,
+            "MonthlyDebtPayments": 0.011153373263261067,
+            "CreditCardUtilizationRate": -0.009649603688149733,
+            "DebtToIncomeRatio": 0.0019125761128307522,
+            "PaymentHistory": 0.004294508698782175,
+            "LengthOfCreditHistory": 0.005216607750939993,
+            "SavingsAccountBalance": -0.006316283825556313,
+            "CheckingAccountBalance": 0.005514701577497594,
+            "TotalAssets": 0.0013418596483299398,
+            "TotalLiabilities": -0.006721520569167004,
+            "MonthlyIncome": 0.10479616447649483,
+            "UtilityBillsPaymentHistory": -0.006837959102610757,
+            "NetWorth": 0.001950996321403235,
+            "BaseInterestRate": -0.7226185591437013,
+            "InterestRate": -0.5988444601001294,
+            "MonthlyLoanPayment": -0.06393170792451,
+            "TotalDebtToIncomeRatio": -0.11536283739121037,
+            "RiskScore": -0.24019812662012927
         },
-        "country_total_gold": {
-            "age": -0.00516922211900235,
-            "year": -0.18343858011181424,
-            "result_value": 0.010905150976567109,
-            "country_total_gold": 1.0,
-            "country_total_medals": 0.9918400226769837,
-            "country_best_rank": -0.5375460523308883,
-            "height_cm": 0.0008294362732860851,
-            "weight_kg": -0.003848385432828228
+        "Experience": {
+            "Age": 0.9829802792421133,
+            "AnnualIncome": 0.14599946461776062,
+            "CreditScore": 0.32766409843531424,
+            "Experience": 1.0,
+            "LoanAmount": -0.00792103033992374,
+            "MonthlyDebtPayments": 0.01862868348772296,
+            "CreditCardUtilizationRate": -0.0017509851370735555,
+            "DebtToIncomeRatio": 0.003138880718223454,
+            "PaymentHistory": -0.0033464533915884206,
+            "LengthOfCreditHistory": -0.001131882224060504,
+            "SavingsAccountBalance": 0.005875693222588037,
+            "CheckingAccountBalance": 0.00929164282964137,
+            "TotalAssets": 0.013074027515238092,
+            "TotalLiabilities": -0.00044889392261399677,
+            "MonthlyIncome": 0.1459495036610223,
+            "UtilityBillsPaymentHistory": -0.0066033722302569695,
+            "NetWorth": 0.015048947467139048,
+            "BaseInterestRate": -0.2428711315667396,
+            "InterestRate": -0.20625165841905943,
+            "MonthlyLoanPayment": -0.02169083692074654,
+            "TotalDebtToIncomeRatio": -0.11282465716490317,
+            "RiskScore": -0.16649648754226765
         },
-        "country_total_medals": {
-            "age": -0.004982829127128969,
-            "year": -0.2140954207449915,
-            "result_value": 0.009563599833070079,
-            "country_total_gold": 0.9918400226769837,
-            "country_total_medals": 1.0,
-            "country_best_rank": -0.5930937882876647,
-            "height_cm": 0.000647006275924691,
-            "weight_kg": -0.0029722765048209774
+        "LoanAmount": {
+            "Age": -0.007492045440253887,
+            "AnnualIncome": -0.004116121827265819,
+            "CreditScore": -0.010833752733830259,
+            "Experience": -0.00792103033992374,
+            "LoanAmount": 1.0,
+            "MonthlyDebtPayments": 0.021103090350885607,
+            "CreditCardUtilizationRate": 0.0008055493388492413,
+            "DebtToIncomeRatio": -0.00957709686383536,
+            "PaymentHistory": -0.0028110576067719288,
+            "LengthOfCreditHistory": 0.000580337358174352,
+            "SavingsAccountBalance": 0.0014886500937939398,
+            "CheckingAccountBalance": 0.005408260213502499,
+            "TotalAssets": -0.00423758968728459,
+            "TotalLiabilities": 0.000501962390343352,
+            "MonthlyIncome": -0.005407243517132589,
+            "UtilityBillsPaymentHistory": -0.012107071140241633,
+            "NetWorth": -0.0036786603769580484,
+            "BaseInterestRate": 0.38566313861014,
+            "InterestRate": 0.3228237474336499,
+            "MonthlyLoanPayment": 0.7808278281607225,
+            "TotalDebtToIncomeRatio": 0.4571751916602651,
+            "RiskScore": 0.13798065780203436
         },
-        "country_best_rank": {
-            "age": 0.0028685864065861864,
-            "year": 0.3308641624528676,
-            "result_value": -0.002215357420165484,
-            "country_total_gold": -0.5375460523308883,
-            "country_total_medals": -0.5930937882876647,
-            "country_best_rank": 1.0,
-            "height_cm": 0.004316329620273776,
-            "weight_kg": -0.000266287291668119
+        "MonthlyDebtPayments": {
+            "Age": 0.015684867166473687,
+            "AnnualIncome": -0.0010823172422964047,
+            "CreditScore": 0.011153373263261067,
+            "Experience": 0.01862868348772296,
+            "LoanAmount": 0.021103090350885607,
+            "MonthlyDebtPayments": 1.0,
+            "CreditCardUtilizationRate": 0.0054196584916660065,
+            "DebtToIncomeRatio": 0.0012054334989077067,
+            "PaymentHistory": -0.003347394176586332,
+            "LengthOfCreditHistory": -0.00411514142638246,
+            "SavingsAccountBalance": -0.004223024435330079,
+            "CheckingAccountBalance": 0.0019094634797555288,
+            "TotalAssets": 0.0030700865263305396,
+            "TotalLiabilities": -0.004211329513183424,
+            "MonthlyIncome": -0.000355806323560851,
+            "UtilityBillsPaymentHistory": 0.0016381348765455563,
+            "NetWorth": 0.0044300297674631384,
+            "BaseInterestRate": 1.040941738324425e-05,
+            "InterestRate": 0.0038951383716871475,
+            "MonthlyLoanPayment": 0.018020533461376866,
+            "TotalDebtToIncomeRatio": 0.21945323181547421,
+            "RiskScore": 0.03693796593010322
         },
-        "height_cm": {
-            "age": -0.011496506691155399,
-            "year": 0.0008085084563278265,
-            "result_value": 0.01988749623945837,
-            "country_total_gold": 0.0008294362732860851,
-            "country_total_medals": 0.000647006275924691,
-            "country_best_rank": 0.004316329620273776,
-            "height_cm": 1.0,
-            "weight_kg": 0.21284554877918826
+        "CreditCardUtilizationRate": {
+            "Age": -0.0013944636954603578,
+            "AnnualIncome": -0.0079349769549015,
+            "CreditScore": -0.009649603688149733,
+            "Experience": -0.0017509851370735555,
+            "LoanAmount": 0.0008055493388492413,
+            "MonthlyDebtPayments": 0.0054196584916660065,
+            "CreditCardUtilizationRate": 1.0,
+            "DebtToIncomeRatio": 0.0022306227948983006,
+            "PaymentHistory": 0.004516681718264235,
+            "LengthOfCreditHistory": 0.007446072378671114,
+            "SavingsAccountBalance": 0.004025720511241414,
+            "CheckingAccountBalance": -0.0021146424196191687,
+            "TotalAssets": -0.005046680317167465,
+            "TotalLiabilities": -0.007778474810730612,
+            "MonthlyIncome": -0.009380569602983599,
+            "UtilityBillsPaymentHistory": 0.013039901823617186,
+            "NetWorth": -0.003506366869664516,
+            "BaseInterestRate": 0.003667969317243246,
+            "InterestRate": 0.001030214365016421,
+            "MonthlyLoanPayment": 0.0043661172469982475,
+            "TotalDebtToIncomeRatio": 0.010490273157735834,
+            "RiskScore": 0.10875836392268476
         },
-        "weight_kg": {
-            "age": -0.011454081378648562,
-            "year": 0.007539970049885803,
-            "result_value": -0.12866978983279673,
-            "country_total_gold": -0.003848385432828228,
-            "country_total_medals": -0.0029722765048209774,
-            "country_best_rank": -0.000266287291668119,
-            "height_cm": 0.21284554877918826,
-            "weight_kg": 1.0
+        "DebtToIncomeRatio": {
+            "Age": 0.004438383038398006,
+            "AnnualIncome": 0.001507117733831956,
+            "CreditScore": 0.0019125761128307522,
+            "Experience": 0.003138880718223454,
+            "LoanAmount": -0.00957709686383536,
+            "MonthlyDebtPayments": 0.0012054334989077067,
+            "CreditCardUtilizationRate": 0.0022306227948983006,
+            "DebtToIncomeRatio": 1.0,
+            "PaymentHistory": -0.006869427543169356,
+            "LengthOfCreditHistory": -0.002205460800838519,
+            "SavingsAccountBalance": -0.004452550070816505,
+            "CheckingAccountBalance": 0.0025605249197238104,
+            "TotalAssets": -0.007661613360679066,
+            "TotalLiabilities": -0.002644220083121159,
+            "MonthlyIncome": 0.0016765219972449217,
+            "UtilityBillsPaymentHistory": -0.014411929567151814,
+            "NetWorth": -0.00880329592149781,
+            "BaseInterestRate": -0.0038876168938583662,
+            "InterestRate": -0.006106101808115223,
+            "MonthlyLoanPayment": -0.007974149765301995,
+            "TotalDebtToIncomeRatio": -0.013075680195797225,
+            "RiskScore": 0.3265004184863021
+        },
+        "PaymentHistory": {
+            "Age": -0.002487468543464003,
+            "AnnualIncome": 0.0037145711415310745,
+            "CreditScore": 0.004294508698782175,
+            "Experience": -0.0033464533915884206,
+            "LoanAmount": -0.0028110576067719288,
+            "MonthlyDebtPayments": -0.003347394176586332,
+            "CreditCardUtilizationRate": 0.004516681718264235,
+            "DebtToIncomeRatio": -0.006869427543169356,
+            "PaymentHistory": 1.0,
+            "LengthOfCreditHistory": 0.0010900979247536443,
+            "SavingsAccountBalance": -0.004735777595593844,
+            "CheckingAccountBalance": -0.01738388310995592,
+            "TotalAssets": -0.007134529971578842,
+            "TotalLiabilities": -0.011323919701026839,
+            "MonthlyIncome": 0.003334792536033723,
+            "UtilityBillsPaymentHistory": 0.0105296953761695,
+            "NetWorth": -0.0028529737727146006,
+            "BaseInterestRate": -0.002998984969666078,
+            "InterestRate": 0.0020299286471767344,
+            "MonthlyLoanPayment": -0.0008834859386691929,
+            "TotalDebtToIncomeRatio": 0.0034199608757484986,
+            "RiskScore": -0.016991587875643192
+        },
+        "LengthOfCreditHistory": {
+            "Age": -0.00013941046798564622,
+            "AnnualIncome": -0.005364587811513073,
+            "CreditScore": 0.005216607750939993,
+            "Experience": -0.001131882224060504,
+            "LoanAmount": 0.000580337358174352,
+            "MonthlyDebtPayments": -0.00411514142638246,
+            "CreditCardUtilizationRate": 0.007446072378671114,
+            "DebtToIncomeRatio": -0.002205460800838519,
+            "PaymentHistory": 0.0010900979247536443,
+            "LengthOfCreditHistory": 1.0,
+            "SavingsAccountBalance": -0.011102686818251212,
+            "CheckingAccountBalance": -0.002911352605324973,
+            "TotalAssets": 0.0045882059016913385,
+            "TotalLiabilities": 0.00031762884198872595,
+            "MonthlyIncome": -0.00552551135007168,
+            "UtilityBillsPaymentHistory": 0.006534095705792905,
+            "NetWorth": 0.004313390083778073,
+            "BaseInterestRate": 0.00439945958203693,
+            "InterestRate": 0.004991345466527344,
+            "MonthlyLoanPayment": -0.010042290625914543,
+            "TotalDebtToIncomeRatio": -0.009380562272791174,
+            "RiskScore": -0.17779554624886473
+        },
+        "SavingsAccountBalance": {
+            "Age": 0.004236482432046245,
+            "AnnualIncome": -0.0013972769913992399,
+            "CreditScore": -0.006316283825556313,
+            "Experience": 0.005875693222588037,
+            "LoanAmount": 0.0014886500937939398,
+            "MonthlyDebtPayments": -0.004223024435330079,
+            "CreditCardUtilizationRate": 0.004025720511241414,
+            "DebtToIncomeRatio": -0.004452550070816505,
+            "PaymentHistory": -0.004735777595593844,
+            "LengthOfCreditHistory": -0.011102686818251212,
+            "SavingsAccountBalance": 1.0,
+            "CheckingAccountBalance": -0.0003920391316002531,
+            "TotalAssets": 0.006704845666701295,
+            "TotalLiabilities": -0.002127650855118073,
+            "MonthlyIncome": -0.0015715939754381409,
+            "UtilityBillsPaymentHistory": -0.008145152621597831,
+            "NetWorth": 0.0034582010601882395,
+            "BaseInterestRate": 0.006012397911181325,
+            "InterestRate": 0.0027311813500011596,
+            "MonthlyLoanPayment": 0.00021162048787891482,
+            "TotalDebtToIncomeRatio": -0.00348398393888998,
+            "RiskScore": 0.002190210200593453
+        },
+        "CheckingAccountBalance": {
+            "Age": 0.010144974024099331,
+            "AnnualIncome": 0.008613390870747573,
+            "CreditScore": 0.005514701577497594,
+            "Experience": 0.00929164282964137,
+            "LoanAmount": 0.005408260213502499,
+            "MonthlyDebtPayments": 0.0019094634797555288,
+            "CreditCardUtilizationRate": -0.0021146424196191687,
+            "DebtToIncomeRatio": 0.0025605249197238104,
+            "PaymentHistory": -0.01738388310995592,
+            "LengthOfCreditHistory": -0.002911352605324973,
+            "SavingsAccountBalance": -0.0003920391316002531,
+            "CheckingAccountBalance": 1.0,
+            "TotalAssets": 0.003321641822202598,
+            "TotalLiabilities": 0.0014731158798592194,
+            "MonthlyIncome": 0.009232615193332294,
+            "UtilityBillsPaymentHistory": -0.00569588248721037,
+            "NetWorth": 0.0015959187774198962,
+            "BaseInterestRate": -0.0035544652795352193,
+            "InterestRate": -0.0019425939959487025,
+            "MonthlyLoanPayment": 0.0022805784557808,
+            "TotalDebtToIncomeRatio": -0.006630159108301382,
+            "RiskScore": -0.004043878754490391
+        },
+        "TotalAssets": {
+            "Age": 0.012209685392806367,
+            "AnnualIncome": -0.0051577523832956945,
+            "CreditScore": 0.0013418596483299398,
+            "Experience": 0.013074027515238092,
+            "LoanAmount": -0.00423758968728459,
+            "MonthlyDebtPayments": 0.0030700865263305396,
+            "CreditCardUtilizationRate": -0.005046680317167465,
+            "DebtToIncomeRatio": -0.007661613360679066,
+            "PaymentHistory": -0.007134529971578842,
+            "LengthOfCreditHistory": 0.0045882059016913385,
+            "SavingsAccountBalance": 0.006704845666701295,
+            "CheckingAccountBalance": 0.003321641822202598,
+            "TotalAssets": 1.0,
+            "TotalLiabilities": -0.0002762979617998439,
+            "MonthlyIncome": -0.004127772686894244,
+            "UtilityBillsPaymentHistory": -0.0004789167361524488,
+            "NetWorth": 0.9789966954457313,
+            "BaseInterestRate": -0.0073682610017848475,
+            "InterestRate": -0.005806890729332028,
+            "MonthlyLoanPayment": -0.000875146459169331,
+            "TotalDebtToIncomeRatio": -0.007333284949331035,
+            "RiskScore": -0.2971168544187875
+        },
+        "TotalLiabilities": {
+            "Age": -0.001197270048635484,
+            "AnnualIncome": -0.0023531309481670307,
+            "CreditScore": -0.006721520569167004,
+            "Experience": -0.00044889392261399677,
+            "LoanAmount": 0.000501962390343352,
+            "MonthlyDebtPayments": -0.004211329513183424,
+            "CreditCardUtilizationRate": -0.007778474810730612,
+            "DebtToIncomeRatio": -0.002644220083121159,
+            "PaymentHistory": -0.011323919701026839,
+            "LengthOfCreditHistory": 0.00031762884198872595,
+            "SavingsAccountBalance": -0.002127650855118073,
+            "CheckingAccountBalance": 0.0014731158798592194,
+            "TotalAssets": -0.0002762979617998439,
+            "TotalLiabilities": 1.0,
+            "MonthlyIncome": -0.0017614511961357247,
+            "UtilityBillsPaymentHistory": -0.006187052105617617,
+            "NetWorth": -0.12996198232091996,
+            "BaseInterestRate": 0.007139519206668504,
+            "InterestRate": 0.010176191608077544,
+            "MonthlyLoanPayment": -0.0016678493738782106,
+            "TotalDebtToIncomeRatio": -0.002427386874351483,
+            "RiskScore": 0.05561728965245401
+        },
+        "MonthlyIncome": {
+            "Age": 0.1446338542353076,
+            "AnnualIncome": 0.9899107753669869,
+            "CreditScore": 0.10479616447649483,
+            "Experience": 0.1459495036610223,
+            "LoanAmount": -0.005407243517132589,
+            "MonthlyDebtPayments": -0.000355806323560851,
+            "CreditCardUtilizationRate": -0.009380569602983599,
+            "DebtToIncomeRatio": 0.0016765219972449217,
+            "PaymentHistory": 0.003334792536033723,
+            "LengthOfCreditHistory": -0.00552551135007168,
+            "SavingsAccountBalance": -0.0015715939754381409,
+            "CheckingAccountBalance": 0.009232615193332294,
+            "TotalAssets": -0.004127772686894244,
+            "TotalLiabilities": -0.0017614511961357247,
+            "MonthlyIncome": 1.0,
+            "UtilityBillsPaymentHistory": -0.010640979368821964,
+            "NetWorth": -0.003284454126974992,
+            "BaseInterestRate": -0.07552164640279443,
+            "InterestRate": -0.06456482845454209,
+            "MonthlyLoanPayment": -0.005905081269710097,
+            "TotalDebtToIncomeRatio": -0.5383141783605386,
+            "RiskScore": -0.4870394850746599
+        },
+        "UtilityBillsPaymentHistory": {
+            "Age": -0.0056010050486451,
+            "AnnualIncome": -0.01235086409499473,
+            "CreditScore": -0.006837959102610757,
+            "Experience": -0.0066033722302569695,
+            "LoanAmount": -0.012107071140241633,
+            "MonthlyDebtPayments": 0.0016381348765455563,
+            "CreditCardUtilizationRate": 0.013039901823617186,
+            "DebtToIncomeRatio": -0.014411929567151814,
+            "PaymentHistory": 0.0105296953761695,
+            "LengthOfCreditHistory": 0.006534095705792905,
+            "SavingsAccountBalance": -0.008145152621597831,
+            "CheckingAccountBalance": -0.00569588248721037,
+            "TotalAssets": -0.0004789167361524488,
+            "TotalLiabilities": -0.006187052105617617,
+            "MonthlyIncome": -0.010640979368821964,
+            "UtilityBillsPaymentHistory": 1.0,
+            "NetWorth": -0.0009684828739547458,
+            "BaseInterestRate": -0.005517180974379052,
+            "InterestRate": -0.004051054517347917,
+            "MonthlyLoanPayment": -0.007480956592949828,
+            "TotalDebtToIncomeRatio": 0.006941862662799348,
+            "RiskScore": -0.0051962485726842105
+        },
+        "NetWorth": {
+            "Age": 0.014060929763094481,
+            "AnnualIncome": -0.004358026087193874,
+            "CreditScore": 0.001950996321403235,
+            "Experience": 0.015048947467139048,
+            "LoanAmount": -0.0036786603769580484,
+            "MonthlyDebtPayments": 0.0044300297674631384,
+            "CreditCardUtilizationRate": -0.003506366869664516,
+            "DebtToIncomeRatio": -0.00880329592149781,
+            "PaymentHistory": -0.0028529737727146006,
+            "LengthOfCreditHistory": 0.004313390083778073,
+            "SavingsAccountBalance": 0.0034582010601882395,
+            "CheckingAccountBalance": 0.0015959187774198962,
+            "TotalAssets": 0.9789966954457313,
+            "TotalLiabilities": -0.12996198232091996,
+            "MonthlyIncome": -0.003284454126974992,
+            "UtilityBillsPaymentHistory": -0.0009684828739547458,
+            "NetWorth": 1.0,
+            "BaseInterestRate": -0.007873728360709733,
+            "InterestRate": -0.006422180038586354,
+            "MonthlyLoanPayment": 0.0001682520136078395,
+            "TotalDebtToIncomeRatio": -0.005965580006283077,
+            "RiskScore": -0.30433343630087173
+        },
+        "BaseInterestRate": {
+            "Age": -0.23899457024106327,
+            "AnnualIncome": -0.07454870324777874,
+            "CreditScore": -0.7226185591437013,
+            "Experience": -0.2428711315667396,
+            "LoanAmount": 0.38566313861014,
+            "MonthlyDebtPayments": 1.040941738324425e-05,
+            "CreditCardUtilizationRate": 0.003667969317243246,
+            "DebtToIncomeRatio": -0.0038876168938583662,
+            "PaymentHistory": -0.002998984969666078,
+            "LengthOfCreditHistory": 0.00439945958203693,
+            "SavingsAccountBalance": 0.006012397911181325,
+            "CheckingAccountBalance": -0.0035544652795352193,
+            "TotalAssets": -0.0073682610017848475,
+            "TotalLiabilities": 0.007139519206668504,
+            "MonthlyIncome": -0.07552164640279443,
+            "UtilityBillsPaymentHistory": -0.005517180974379052,
+            "NetWorth": -0.007873728360709733,
+            "BaseInterestRate": 1.0,
+            "InterestRate": 0.8345565713776919,
+            "MonthlyLoanPayment": 0.11803042756848488,
+            "TotalDebtToIncomeRatio": 0.13185316344078882,
+            "RiskScore": 0.2562325669640606
+        },
+        "InterestRate": {
+            "Age": -0.20270157154726848,
+            "AnnualIncome": -0.06383155792880606,
+            "CreditScore": -0.5988444601001294,
+            "Experience": -0.20625165841905943,
+            "LoanAmount": 0.3228237474336499,
+            "MonthlyDebtPayments": 0.0038951383716871475,
+            "CreditCardUtilizationRate": 0.001030214365016421,
+            "DebtToIncomeRatio": -0.006106101808115223,
+            "PaymentHistory": 0.0020299286471767344,
+            "LengthOfCreditHistory": 0.004991345466527344,
+            "SavingsAccountBalance": 0.0027311813500011596,
+            "CheckingAccountBalance": -0.0019425939959487025,
+            "TotalAssets": -0.005806890729332028,
+            "TotalLiabilities": 0.010176191608077544,
+            "MonthlyIncome": -0.06456482845454209,
+            "UtilityBillsPaymentHistory": -0.004051054517347917,
+            "NetWorth": -0.006422180038586354,
+            "BaseInterestRate": 0.8345565713776919,
+            "InterestRate": 1.0,
+            "MonthlyLoanPayment": 0.12749709965877196,
+            "TotalDebtToIncomeRatio": 0.13176532575837926,
+            "RiskScore": 0.26820280443991146
+        },
+        "MonthlyLoanPayment": {
+            "Age": -0.021379789309283255,
+            "AnnualIncome": -0.004303669871327297,
+            "CreditScore": -0.06393170792451,
+            "Experience": -0.02169083692074654,
+            "LoanAmount": 0.7808278281607225,
+            "MonthlyDebtPayments": 0.018020533461376866,
+            "CreditCardUtilizationRate": 0.0043661172469982475,
+            "DebtToIncomeRatio": -0.007974149765301995,
+            "PaymentHistory": -0.0008834859386691929,
+            "LengthOfCreditHistory": -0.010042290625914543,
+            "SavingsAccountBalance": 0.00021162048787891482,
+            "CheckingAccountBalance": 0.0022805784557808,
+            "TotalAssets": -0.000875146459169331,
+            "TotalLiabilities": -0.0016678493738782106,
+            "MonthlyIncome": -0.005905081269710097,
+            "UtilityBillsPaymentHistory": -0.007480956592949828,
+            "NetWorth": 0.0001682520136078395,
+            "BaseInterestRate": 0.11803042756848488,
+            "InterestRate": 0.12749709965877196,
+            "MonthlyLoanPayment": 1.0,
+            "TotalDebtToIncomeRatio": 0.5678417112764896,
+            "RiskScore": 0.11550148264225497
+        },
+        "TotalDebtToIncomeRatio": {
+            "Age": -0.11179960415675803,
+            "AnnualIncome": -0.5320327960461293,
+            "CreditScore": -0.11536283739121037,
+            "Experience": -0.11282465716490317,
+            "LoanAmount": 0.4571751916602651,
+            "MonthlyDebtPayments": 0.21945323181547421,
+            "CreditCardUtilizationRate": 0.010490273157735834,
+            "DebtToIncomeRatio": -0.013075680195797225,
+            "PaymentHistory": 0.0034199608757484986,
+            "LengthOfCreditHistory": -0.009380562272791174,
+            "SavingsAccountBalance": -0.00348398393888998,
+            "CheckingAccountBalance": -0.006630159108301382,
+            "TotalAssets": -0.007333284949331035,
+            "TotalLiabilities": -0.002427386874351483,
+            "MonthlyIncome": -0.5383141783605386,
+            "UtilityBillsPaymentHistory": 0.006941862662799348,
+            "NetWorth": -0.005965580006283077,
+            "BaseInterestRate": 0.13185316344078882,
+            "InterestRate": 0.13176532575837926,
+            "MonthlyLoanPayment": 0.5678417112764896,
+            "TotalDebtToIncomeRatio": 1.0,
+            "RiskScore": 0.34264348554322693
+        },
+        "RiskScore": {
+            "Age": -0.16430398958788406,
+            "AnnualIncome": -0.4832886369721459,
+            "CreditScore": -0.24019812662012927,
+            "Experience": -0.16649648754226765,
+            "LoanAmount": 0.13798065780203436,
+            "MonthlyDebtPayments": 0.03693796593010322,
+            "CreditCardUtilizationRate": 0.10875836392268476,
+            "DebtToIncomeRatio": 0.3265004184863021,
+            "PaymentHistory": -0.016991587875643192,
+            "LengthOfCreditHistory": -0.17779554624886473,
+            "SavingsAccountBalance": 0.002190210200593453,
+            "CheckingAccountBalance": -0.004043878754490391,
+            "TotalAssets": -0.2971168544187875,
+            "TotalLiabilities": 0.05561728965245401,
+            "MonthlyIncome": -0.4870394850746599,
+            "UtilityBillsPaymentHistory": -0.0051962485726842105,
+            "NetWorth": -0.30433343630087173,
+            "BaseInterestRate": 0.2562325669640606,
+            "InterestRate": 0.26820280443991146,
+            "MonthlyLoanPayment": 0.11550148264225497,
+            "TotalDebtToIncomeRatio": 0.34264348554322693,
+            "RiskScore": 1.0
         }
     }
 }
