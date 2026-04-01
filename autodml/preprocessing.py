@@ -194,6 +194,20 @@ class Preprocessor:
                 message="Failed during unwanted column removal", details=str(e)
             )
 
+    def force_datetime_conversion(self):
+        logger.info("Converting Datetime Format")
+        for col in self.df.columns:
+            if self.df[col].dtype == "object":
+                try:
+                    parsed = pd.to_datetime(self.df[col], errors="coerce")
+                    if parsed.notna().mean() > 0.6:
+                        self.df[col] = parsed
+                except Exception as e:
+                    raise PreprocessingError(
+                        "Error occurred while converting datetime features",
+                        details=str(e),
+                    )
+
     def detect_feature_types(
         self,
         cat_threshold: int = 20,
@@ -778,13 +792,14 @@ class Preprocessor:
         logger.info("Starting Preprocessing")
         self.validate()
         self.remove_unwanted_columns()
+        self.force_datetime_conversion()
         self.detect_feature_types()
+        self.extract_datetime_features()
         self.Problem_detection()
         self.missing_value_handler()
         self.duplicate_handling()
         self.handling_textual_data()
         self.skewness_handling()
-        self.extract_datetime_features()
         self.handle_outliers()
         self.encoding()
         self.scaling()

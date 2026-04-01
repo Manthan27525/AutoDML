@@ -1,0 +1,536 @@
+{
+    "dataset_overview": {
+        "rows": 8500,
+        "columns": 30,
+        "memory_usage_MB": 9.410439491271973,
+        "duplicate_rows": 0
+    },
+    "column_analysis": [
+        {
+            "column": "athlete_id",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 8500
+        },
+        {
+            "column": "athlete_name",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 7478
+        },
+        {
+            "column": "gender",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 2
+        },
+        {
+            "column": "age",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 28
+        },
+        {
+            "column": "date_of_birth",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 5590
+        },
+        {
+            "column": "nationality",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 62
+        },
+        {
+            "column": "country_name",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 61
+        },
+        {
+            "column": "sport",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 33
+        },
+        {
+            "column": "event",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 253
+        },
+        {
+            "column": "games_type",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 2
+        },
+        {
+            "column": "year",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 39
+        },
+        {
+            "column": "host_city",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 31
+        },
+        {
+            "column": "team_or_individual",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 2
+        },
+        {
+            "column": "medal",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 4
+        },
+        {
+            "column": "result_value",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 8194
+        },
+        {
+            "column": "result_unit",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 8
+        },
+        {
+            "column": "total_olympics_attended",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 5
+        },
+        {
+            "column": "total_medals_won",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 10
+        },
+        {
+            "column": "gold_medals",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 9
+        },
+        {
+            "column": "silver_medals",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 9
+        },
+        {
+            "column": "bronze_medals",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 9
+        },
+        {
+            "column": "country_total_gold",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 50
+        },
+        {
+            "column": "country_total_medals",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 58
+        },
+        {
+            "column": "country_first_participation",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 16
+        },
+        {
+            "column": "country_best_rank",
+            "dtype": "int64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 32
+        },
+        {
+            "column": "is_record_holder",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 3
+        },
+        {
+            "column": "coach_name",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 28
+        },
+        {
+            "column": "height_cm",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 604
+        },
+        {
+            "column": "weight_kg",
+            "dtype": "float64",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 866
+        },
+        {
+            "column": "notes",
+            "dtype": "object",
+            "missing_values": 0,
+            "missing_percent": 0.0,
+            "unique_values": 17
+        }
+    ],
+    "target_analysis": {
+        "task_type": "Classification",
+        "unique_values": 4,
+        "missing_values": 0
+    },
+    "numeric_analysis": {
+        "age": {
+            "count": 8500.0,
+            "mean": 28.531176470588235,
+            "std": 8.074316090620309,
+            "min": 15.0,
+            "25%": 22.0,
+            "50%": 28.0,
+            "75%": 36.0,
+            "max": 42.0,
+            "skewness": -0.006264841365807659
+        },
+        "year": {
+            "count": 8500.0,
+            "mean": 1967.2508235294117,
+            "std": 45.06209550581178,
+            "min": 1896.0,
+            "25%": 1920.0,
+            "50%": 1984.0,
+            "75%": 2008.0,
+            "max": 2024.0,
+            "skewness": -0.3371952302944802
+        },
+        "result_value": {
+            "count": 8500.0,
+            "mean": 747.4506241176471,
+            "std": 1906.1761794745003,
+            "min": 0.011,
+            "25%": 10.35925,
+            "50%": 129.5075,
+            "75%": 345.38275,
+            "max": 14979.675,
+            "skewness": 3.8340593227654813
+        },
+        "country_total_gold": {
+            "count": 8500.0,
+            "mean": 115.53835294117647,
+            "std": 176.86279858442091,
+            "min": 0.0,
+            "25%": 19.0,
+            "50%": 54.0,
+            "75%": 170.0,
+            "max": 1061.0,
+            "skewness": 3.838582962775506
+        },
+        "country_total_medals": {
+            "count": 8500.0,
+            "mean": 341.8878823529412,
+            "std": 456.1938051697607,
+            "min": 5.0,
+            "25%": 60.0,
+            "50%": 196.0,
+            "75%": 497.0,
+            "max": 2638.0,
+            "skewness": 3.2325538480059803
+        },
+        "country_best_rank": {
+            "count": 8500.0,
+            "mean": 19.995529411764707,
+            "std": 17.602926538572966,
+            "min": 1.0,
+            "25%": 4.0,
+            "50%": 15.0,
+            "75%": 33.0,
+            "max": 62.0,
+            "skewness": 0.7463110272238664
+        },
+        "height_cm": {
+            "count": 8500.0,
+            "mean": 178.87381176470586,
+            "std": 11.375076898890834,
+            "min": 145.0,
+            "25%": 170.3,
+            "50%": 178.7,
+            "75%": 187.3,
+            "max": 215.0,
+            "skewness": 0.0960527873929267
+        },
+        "weight_kg": {
+            "count": 8500.0,
+            "mean": 77.15875294117647,
+            "std": 16.528411785120422,
+            "min": 40.1,
+            "25%": 65.1,
+            "50%": 75.3,
+            "75%": 87.3,
+            "max": 149.7,
+            "skewness": 0.7503115353995339
+        }
+    },
+    "outlier_analysis": {
+        "age": {
+            "Q1": 22,
+            "Q3": 36,
+            "IQR": 14,
+            "lower_bound": 1.0,
+            "upper_bound": 57.0,
+            "outlier_count": 0,
+            "outlier_percent": 0
+        },
+        "year": {
+            "Q1": 1920,
+            "Q3": 2008,
+            "IQR": 88,
+            "lower_bound": 1788.0,
+            "upper_bound": 2140.0,
+            "outlier_count": 0,
+            "outlier_percent": 0
+        },
+        "result_value": {
+            "Q1": 10,
+            "Q3": 345,
+            "IQR": 335,
+            "lower_bound": -492.17600000000004,
+            "upper_bound": 847.918,
+            "outlier_count": 1103,
+            "outlier_percent": 12
+        },
+        "country_total_gold": {
+            "Q1": 19,
+            "Q3": 170,
+            "IQR": 151,
+            "lower_bound": -207.5,
+            "upper_bound": 396.5,
+            "outlier_count": 295,
+            "outlier_percent": 3
+        },
+        "country_total_medals": {
+            "Q1": 60,
+            "Q3": 497,
+            "IQR": 437,
+            "lower_bound": -595.5,
+            "upper_bound": 1152.5,
+            "outlier_count": 209,
+            "outlier_percent": 2
+        },
+        "country_best_rank": {
+            "Q1": 4,
+            "Q3": 33,
+            "IQR": 29,
+            "lower_bound": -39.5,
+            "upper_bound": 76.5,
+            "outlier_count": 0,
+            "outlier_percent": 0
+        },
+        "height_cm": {
+            "Q1": 170,
+            "Q3": 187,
+            "IQR": 17,
+            "lower_bound": 144.8,
+            "upper_bound": 212.8,
+            "outlier_count": 20,
+            "outlier_percent": 0
+        },
+        "weight_kg": {
+            "Q1": 65,
+            "Q3": 87,
+            "IQR": 22,
+            "lower_bound": 31.79999999999999,
+            "upper_bound": 120.6,
+            "outlier_count": 154,
+            "outlier_percent": 1
+        }
+    },
+    "categorical_analysis": {
+        "athlete_id": {
+            "Categories Count": 8500
+        },
+        "athlete_name": {
+            "Categories Count": 7478
+        },
+        "gender": {
+            "Categories Count": 2
+        },
+        "nationality": {
+            "Categories Count": 62
+        },
+        "country_name": {
+            "Categories Count": 61
+        },
+        "sport": {
+            "Categories Count": 33
+        },
+        "event": {
+            "Categories Count": 253
+        },
+        "games_type": {
+            "Categories Count": 2
+        },
+        "host_city": {
+            "Categories Count": 31
+        },
+        "team_or_individual": {
+            "Categories Count": 2
+        },
+        "medal": {
+            "Categories Count": 4
+        },
+        "result_unit": {
+            "Categories Count": 8
+        },
+        "total_olympics_attended": {
+            "Categories Count": 5
+        },
+        "total_medals_won": {
+            "Categories Count": 10
+        },
+        "gold_medals": {
+            "Categories Count": 9
+        },
+        "silver_medals": {
+            "Categories Count": 9
+        },
+        "bronze_medals": {
+            "Categories Count": 9
+        },
+        "country_first_participation": {
+            "Categories Count": 16
+        },
+        "is_record_holder": {
+            "Categories Count": 3
+        },
+        "coach_name": {
+            "Categories Count": 28
+        },
+        "notes": {
+            "Categories Count": 17
+        }
+    },
+    "correlations": {
+        "age": {
+            "age": 1.0,
+            "year": 0.009062612382566235,
+            "result_value": 0.016727093586986378,
+            "country_total_gold": -0.00516922211900235,
+            "country_total_medals": -0.004982829127128969,
+            "country_best_rank": 0.0028685864065861864,
+            "height_cm": -0.011496506691155399,
+            "weight_kg": -0.011454081378648562
+        },
+        "year": {
+            "age": 0.009062612382566235,
+            "year": 1.0,
+            "result_value": 0.0034292899588024635,
+            "country_total_gold": -0.18343858011181424,
+            "country_total_medals": -0.2140954207449915,
+            "country_best_rank": 0.3308641624528676,
+            "height_cm": 0.0008085084563278265,
+            "weight_kg": 0.007539970049885803
+        },
+        "result_value": {
+            "age": 0.016727093586986378,
+            "year": 0.0034292899588024635,
+            "result_value": 1.0,
+            "country_total_gold": 0.010905150976567109,
+            "country_total_medals": 0.009563599833070079,
+            "country_best_rank": -0.002215357420165484,
+            "height_cm": 0.01988749623945837,
+            "weight_kg": -0.12866978983279673
+        },
+        "country_total_gold": {
+            "age": -0.00516922211900235,
+            "year": -0.18343858011181424,
+            "result_value": 0.010905150976567109,
+            "country_total_gold": 1.0,
+            "country_total_medals": 0.9918400226769837,
+            "country_best_rank": -0.5375460523308883,
+            "height_cm": 0.0008294362732860851,
+            "weight_kg": -0.003848385432828228
+        },
+        "country_total_medals": {
+            "age": -0.004982829127128969,
+            "year": -0.2140954207449915,
+            "result_value": 0.009563599833070079,
+            "country_total_gold": 0.9918400226769837,
+            "country_total_medals": 1.0,
+            "country_best_rank": -0.5930937882876647,
+            "height_cm": 0.000647006275924691,
+            "weight_kg": -0.0029722765048209774
+        },
+        "country_best_rank": {
+            "age": 0.0028685864065861864,
+            "year": 0.3308641624528676,
+            "result_value": -0.002215357420165484,
+            "country_total_gold": -0.5375460523308883,
+            "country_total_medals": -0.5930937882876647,
+            "country_best_rank": 1.0,
+            "height_cm": 0.004316329620273776,
+            "weight_kg": -0.000266287291668119
+        },
+        "height_cm": {
+            "age": -0.011496506691155399,
+            "year": 0.0008085084563278265,
+            "result_value": 0.01988749623945837,
+            "country_total_gold": 0.0008294362732860851,
+            "country_total_medals": 0.000647006275924691,
+            "country_best_rank": 0.004316329620273776,
+            "height_cm": 1.0,
+            "weight_kg": 0.21284554877918826
+        },
+        "weight_kg": {
+            "age": -0.011454081378648562,
+            "year": 0.007539970049885803,
+            "result_value": -0.12866978983279673,
+            "country_total_gold": -0.003848385432828228,
+            "country_total_medals": -0.0029722765048209774,
+            "country_best_rank": -0.000266287291668119,
+            "height_cm": 0.21284554877918826,
+            "weight_kg": 1.0
+        }
+    }
+}
