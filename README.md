@@ -1,4 +1,4 @@
-# 🚀 AutoDML – Automated Deep Machine Learning Framework
+# 🚀 AutoDML – Automated Data Mining and Machine Learning Framework
 
 > ⚡ Build, optimize, and deploy ML/DL models automatically — faster than ever.
 
