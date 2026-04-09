@@ -1,50 +1,71 @@
-# 🚀 AutoDML – Automated Deep Machine Learning Framework
+# 🚀 AutoDML – End-to-End Automated Machine Learning Pipeline
 
-> ⚡ Build, optimize, and deploy ML/DL models automatically — faster than ever.
+<p align="center">
+  <b>Build, optimize, and deploy ML pipelines automatically with a modular architecture</b>
+</p>
+
+<p align="center">
+  <a href="https://autodml.streamlit.app/"><img src="https://img.shields.io/badge/Live-Demo-green?style=for-the-badge"></a>
+  <img src="https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge">
+  <img src="https://img.shields.io/badge/ML-Scikit--Learn-orange?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge">
+</p>
 
 ---
 
-## 🌐 Live Demo
+## 🌐 Live Application
 
 👉 https://autodml.streamlit.app/
 
 ---
 
-## 📌 Overview
+## 🧠 Problem Statement
 
-**AutoDML** is an end-to-end automation framework for Machine Learning and Deep Learning workflows.
+Building ML models involves repetitive steps:
 
-It eliminates repetitive tasks and allows you to focus on **results instead of process**.
+- Data cleaning
+- Feature engineering
+- Model selection
+- Hyperparameter tuning
+
+These steps are **time-consuming and error-prone**.
 
 ---
 
-## ✨ Key Features
+## 💡 Solution – AutoDML
 
-- 🔄 Automated Data Preprocessing
-- 🧠 Smart Model Selection (ML + DL)
+**AutoDML** automates the entire ML pipeline with a clean, modular design.
+
+✔ Upload dataset
+✔ Automatic preprocessing
+✔ Model training & optimization
+✔ Evaluation & reporting
+✔ Ready-to-use pipeline
+
+---
+
+## ⚡ Key Features
+
+- 🔄 End-to-End ML Pipeline Automation
+- 🧩 Modular Architecture (Plug & Play components)
+- 📊 Data Analysis & Visualization
+- 🤖 Model Training & Evaluation
 - ⚙️ Hyperparameter Optimization
-- 📊 Performance Evaluation
-- 🧩 Modular Architecture
-- 🚀 Streamlit Web App Integration
+- 📁 Pipeline Saving & Reusability
+- 📝 Logging & Exception Handling
 
 ---
 
-## 🧠 Workflow
+## 🏗️ Architecture
 
 ```mermaid
-
 flowchart LR
-
-    A[Raw Data] --> B[Preprocessing]
-
-    B --> C[Feature Engineering]
-
-    C --> D[Model Selection]
-
-    D --> E[Hyperparameter Tuning]
-
-    E --> F[Best Model Output]
-
+    A[Dataset Upload] --> B[Preprocessing]
+    B --> C[Data Analysis]
+    C --> D[Model Training]
+    D --> E[Optimization]
+    E --> F[Evaluation]
+    F --> G[Pipeline Saved]
 ```
 
 ---
@@ -52,146 +73,97 @@ flowchart LR
 ## 📂 Project Structure
 
 ```
-
 AutoDML/
-
-│── data/
-
-│── models/
-
-│── src/
-
-│   ├── preprocessing/
-
-│   ├── training/
-
-│   ├── tuning/
-
+│── api/                  # Entry point
+│── autodml/              # Core ML modules
+│   ├── preprocessing.py
+│   ├── modeling.py
+│   ├── optimization.py
+│   ├── evaluation.py
+│   ├── pipeline.py
+│   ├── data_analysis.py
+│   ├── data_visualization.py
+│   ├── registry.py
+│   ├── core.py
 │   ├── utils/
-
-│── app/
-
-│── notebooks/
-
+│   └── nlp/
+│
+│── data/                 # Outputs & artifacts
+│── uploads/              # Input dataset
+│── pipeline/             # Saved pipeline
+│── logs/                 # Logging
+│── Dockerfile
 │── requirements.txt
-
-│── README.md
-
+│── setup.py
 ```
 
 ---
 
-## ⚙️ Installation
+## 🚀 How to Run
 
 ```bash
+git clone https://github.com/Manthan27525/AutoDML.git
+cd AutoDML
 
-gitclonehttps://github.com/Manthan27525/AutoDML.git
-
-cdAutoDML
-
-
-python-mvenvvenv
-
-sourcevenv/bin/activate
-
-# Windows:
-
+python -m venv venv
 venv\Scripts\activate
 
-
-pipinstall-rrequirements.txt
-
+pip install -r requirements.txt
 ```
 
----
-
-## 🚀 Usage
-
-### Run Locally
+### ▶ Run App
 
 ```bash
-
-streamlitrunapp.py
-
-```
-
-### Python Usage
-
-```python
-
-from autodml import AutoDML
-
-
-model = AutoDML()
-
-model.fit(X_train, y_train)
-
-
-preds = model.predict(X_test)
-
+python api/main.py
 ```
 
 ---
 
-## 📊 Output
+## 📊 Output Artifacts
 
-- ✅ Best Model Automatically Selected
-- ⚡ Optimized Hyperparameters
-- 📈 Evaluation Metrics
-- 💾 Ready-to-use trained model
+- 📁 Processed Data
+- 📈 Visualizations
+- 📊 Analytical Reports
+- 🤖 Trained Models
+- 🔁 Serialized Pipeline (`pipeline.pkl`)
 
 ---
 
 ## 🛠️ Tech Stack
 
 - Python
+- Pandas, NumPy
 - Scikit-learn
-- TensorFlow / PyTorch
-- Pandas & NumPy
-- Optuna / GridSearch
+- NLTK
 - Streamlit
+- Docker
 
 ---
 
-## 🎯 Use Cases
+## 🎯 Why This Project Matters
 
-- 📈 Stock Market Prediction
-- 🤖 AutoML Systems
-- 🎓 Academic Projects
-- 📊 Data Science Pipelines
+This project demonstrates:
+
+✔ Strong understanding of ML lifecycle
+✔ Clean modular system design
+✔ Production-level practices (logging, pipelines)
+✔ Ability to build scalable ML systems
 
 ---
 
 ## 🔮 Future Scope
 
-- LLM + RAG Integration
-- Auto Feature Engineering
-- Explainable AI (SHAP/LIME)
-- Dashboard Analytics
-
----
-
-## 🤝 Contributing
-
-Pull requests are welcome!
-
-```bash
-
-gitcheckout-bfeature-name
-
-gitcommit-m"Added feature"
-
-gitpushoriginfeature-name
-
-```
+- 🔗 LLM + RAG integration
+- 📊 Advanced Auto Feature Engineering
+- ⚡ Real-time prediction API
+- 📉 Model explainability (SHAP/LIME)
 
 ---
 
 ## 👨‍💻 Author
 
 **Manthan Singh**
-
-GitHub: https://github.com/Manthan27525
+🔗 https://github.com/Manthan27525
 
 ---
 
@@ -205,7 +177,7 @@ If you like this project:
 
 ---
 
-## 💡 Tagline
+## 💬 Tagline
 
-> “Automate ML. Accelerate Innovation.”
+> Automate Machine Learning. Focus on Insights.
 >
