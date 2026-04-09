@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # 🚀 AutoDML – End-to-End Automated Machine Learning Pipeline
+=======
+# 🚀 AutoDML – Automated Data Mining and Machine Learning Framework
+>>>>>>> 6c73d212f854b6ca6c29f5a7ac0f5cb79c4b35ab
 
 <p align="center">
   <b>Build, optimize, and deploy ML pipelines automatically with a modular architecture</b>
